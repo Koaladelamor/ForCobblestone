@@ -13,7 +13,7 @@ public class CombatManager : MonoBehaviour
     int turn;
     public bool startCombat;
     public bool turnDone;
-    int i = 0;
+    //int i = 0;
 
     // Start is called before the first frame update
     void Start()
