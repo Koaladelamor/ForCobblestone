@@ -27,8 +27,13 @@ public class PawnController : MonoBehaviour
 
     int damage;
 
+    bool m_isAlive;
+
     float timer = 0f;
-    private float waitTime = 0.3f;
+    float waitTime = 0.3f;
+
+    float attackTimer = 0f;
+    float attackWaitTime = 2f;
 
     int m_maxSteps;
     int m_currentStep;
@@ -36,24 +41,29 @@ public class PawnController : MonoBehaviour
     public int m_turnOrder;
     public bool m_isMyTurn;
 
+    bool readyToAttack;
+
     PawnController m_pawnToAttack;
 
     private GameObject combatManager;
 
     private void Start()
     {
-        if (this.tag == "Player")
+
+        if (CompareTag("Player"))
         {
             damage = 5;
             max_hp = 15;
         }
-        else if (this.tag == "Enemy")
+        else if (CompareTag("Enemy"))
         {
             damage = 1;
             max_hp = 15;
         }
         current_hp = max_hp;
 
+        readyToAttack = true;
+        m_isAlive = true;
         m_isMyTurn = false;
         m_currentStep = 0;
         m_maxSteps = 4;
@@ -66,6 +76,9 @@ public class PawnController : MonoBehaviour
     private void Update()
     {
         timer += Time.deltaTime;
+        attackTimer += Time.deltaTime;
+
+        bool enemyIsClose = EnemyClose();
 
         switch (m_state)
         {
@@ -81,34 +94,31 @@ public class PawnController : MonoBehaviour
                 break;
 
             case PAWN_STATE.IDLE:
-                if (/*Input.GetKeyDown(KeyCode.Space) &&*/ m_isMyTurn && !EnemyClose())
+                if (m_isMyTurn && enemyIsClose && m_pawnToAttack.m_isAlive)
+                {
+                    m_state = PAWN_STATE.ATTACK;
+                }
+
+                else if (m_isMyTurn && !enemyIsClose)
                 {
                     m_state = PAWN_STATE.SEARCH;
                 }
-                if (m_isMyTurn && EnemyClose() ) {
-                    m_state = PAWN_STATE.ATTACK;
+
+                else if (m_isMyTurn && enemyIsClose && !m_pawnToAttack.m_isAlive) {
+                    m_isMyTurn = false;
+                    //combatManager.GetComponent<CombatManager>().turnDone = true;
                 }
                 break;
 
             case PAWN_STATE.ATTACK:
-
-                //attack
-                m_pawnToAttack.current_hp -= damage;
-                if (m_pawnToAttack.current_hp <= 0)
-                {
-                    m_pawnToAttack.gameObject.GetComponent<SpriteRenderer>().enabled = false;
+                if (readyToAttack) {
+                    Invoke("Attack", 0.6f);
                 }
-                Debug.Log(m_pawnToAttack.current_hp);
-
-                if (!EnemyClose() && m_currentStep < m_maxSteps)
-                {
-                    m_state = PAWN_STATE.SEARCH;
-                }
-
-                m_isMyTurn = false;
-                combatManager.GetComponent<CombatManager>().turnDone = true;
-                m_state = PAWN_STATE.IDLE;
-
+                readyToAttack = false;
+                /*if (attackTimer >= attackWaitTime) {
+                    Attack();
+                    attackTimer = 0;
+                }*/
 
                 break;
         }
@@ -165,13 +175,18 @@ public class PawnController : MonoBehaviour
     {
         if ((transform.position - m_positionToGo.transform.position).magnitude == 1)
         {
-            if (EnemyClose()) { m_state = PAWN_STATE.ATTACK; }
+            m_state = PAWN_STATE.IDLE;
+            m_isMyTurn = false;
+            //combatManager.GetComponent<CombatManager>().turnDone = true;
+            return;
+
+            /*if (EnemyClose()) { m_state = PAWN_STATE.ATTACK; }
             else {
                 m_state = PAWN_STATE.IDLE;
                 m_isMyTurn = false;
-                combatManager.GetComponent<CombatManager>().turnDone = true;
+                //combatManager.GetComponent<CombatManager>().turnDone = true;
                 return;
-            }
+            }*/
         }
 
         Vector3 closestDirection = Vector2.zero;
@@ -209,9 +224,43 @@ public class PawnController : MonoBehaviour
         {
             m_state = PAWN_STATE.IDLE;
             m_isMyTurn = false;
+            //combatManager.GetComponent<CombatManager>().turnDone = true;
             m_currentStep = 0;
-            combatManager.GetComponent<CombatManager>().turnDone = true;
         }
+    }
+
+    void Attack() {
+        //attack
+        if (m_isAlive && m_pawnToAttack.m_isAlive)
+        {
+            m_pawnToAttack.current_hp -= damage;
+
+
+            Debug.Log(m_pawnToAttack.current_hp);
+
+            /*if (!EnemyClose() && m_currentStep < m_maxSteps)
+            {
+                m_state = PAWN_STATE.SEARCH;
+            }*/
+
+            if (m_pawnToAttack.current_hp < 1)
+            {
+                m_pawnToAttack.gameObject.GetComponent<SpriteRenderer>().enabled = false;
+                m_pawnToAttack.gameObject.GetComponent<PawnController>().m_isAlive = false;
+
+
+            }
+
+            m_state = PAWN_STATE.IDLE;
+            m_isMyTurn = false;
+
+        }
+        else {
+            m_state = PAWN_STATE.IDLE;
+            m_isMyTurn = false;
+        }
+
+        readyToAttack = true;
     }
 
     public void SetPosition(Vector3 p_position)
@@ -224,38 +273,90 @@ public class PawnController : MonoBehaviour
     public bool EnemyClose() {
         for (int i = 0; i < m_directions.Length; i++)
         {
-            Vector2 positionToCheck = transform.position + m_directions[i];
+            Vector2 positionToCheck = GridManager.Instance.ScreenToTilePosition(Camera.main.WorldToScreenPoint(transform.position + m_directions[i]));
 
-            if (GridManager.Instance.IsTileEmpty(positionToCheck))
-            {
-                return false;
-            }
-            else {
-                if (this.tag == "Player") {
-                    for (int j = 0; j < combatManager.GetComponent<CombatManager>().m_enemies.Length; j++) {
-                        if (combatManager.GetComponent<CombatManager>().m_enemies[j].transform.position.x == positionToCheck.x && combatManager.GetComponent<CombatManager>().m_enemies[j].transform.position.y == positionToCheck.y) {
-                            m_pawnToAttack = combatManager.GetComponent<CombatManager>().m_enemies[j].GetComponent<PawnController>();
-                            //Debug.Log("Enemy Found");
-                            return true;
+            if (!GridManager.Instance.IsTileEmpty(positionToCheck)) {
+                if (CompareTag("Player"))
+                {
+                    for (int j = 0; j < combatManager.GetComponent<CombatManager>().m_enemies.Length; j++)
+                    {
+                        Vector2 enemyPosition = combatManager.GetComponent<CombatManager>().m_enemies[j].transform.position;
+
+                        if (positionToCheck == GridManager.Instance.ScreenToTilePosition(Camera.main.WorldToScreenPoint(enemyPosition)))
+                        {
+                            if (combatManager.GetComponent<CombatManager>().m_enemies[j].GetComponent<PawnController>().m_isAlive)
+                            {
+                                m_pawnToAttack = combatManager.GetComponent<CombatManager>().m_enemies[j].GetComponent<PawnController>();
+                                //Debug.Log("Enemy Found");
+                                return true;
+                            }
+                            else return false;
 
                         }
                     }
                 }
 
-                else if (this.tag == "Enemy") {
+                else if (CompareTag("Enemy"))
+                {
+                    for (int j = 0; j < combatManager.GetComponent<CombatManager>().m_players.Length; j++)
+                    {
+
+                        Vector2 playerPosition = combatManager.GetComponent<CombatManager>().m_players[j].transform.position;
+
+                        if (positionToCheck == GridManager.Instance.ScreenToTilePosition(Camera.main.WorldToScreenPoint(playerPosition)))
+                        {
+                            if (combatManager.GetComponent<CombatManager>().m_players[j].GetComponent<PawnController>().m_isAlive)
+                            {
+                                m_pawnToAttack = combatManager.GetComponent<CombatManager>().m_players[j].GetComponent<PawnController>();
+                                //Debug.Log("Player Found");
+                                return true;
+                            }
+                            else return false;
+                        }
+
+
+                    }
+                }
+
+                /*if (CompareTag("Player"))
+                {
+                    for (int j = 0; j < combatManager.GetComponent<CombatManager>().m_enemies.Length; j++)
+                    {
+
+                        if (combatManager.GetComponent<CombatManager>().m_enemies[j].transform.position.x == positionToCheck.x && combatManager.GetComponent<CombatManager>().m_enemies[j].transform.position.y == positionToCheck.y)
+                        {
+                            if (combatManager.GetComponent<CombatManager>().m_enemies[j].GetComponent<PawnController>().m_isAlive)
+                            {
+                                m_pawnToAttack = combatManager.GetComponent<CombatManager>().m_enemies[j].GetComponent<PawnController>();
+                                //Debug.Log("Enemy Found");
+                                return true;
+                            }
+                            else return false;
+
+                        }
+                    }
+                }
+
+                else if (CompareTag("Enemy"))
+                {
                     for (int j = 0; j < combatManager.GetComponent<CombatManager>().m_players.Length; j++)
                     {
                         if (combatManager.GetComponent<CombatManager>().m_players[j].transform.position.x == positionToCheck.x && combatManager.GetComponent<CombatManager>().m_players[j].transform.position.y == positionToCheck.y)
                         {
-                            m_pawnToAttack = combatManager.GetComponent<CombatManager>().m_players[j].GetComponent<PawnController>();
-                            //Debug.Log("Player Found");
-                            return true;
+                            if (combatManager.GetComponent<CombatManager>().m_players[j].GetComponent<PawnController>().m_isAlive)
+                            {
+                                m_pawnToAttack = combatManager.GetComponent<CombatManager>().m_players[j].GetComponent<PawnController>();
+                                //Debug.Log("Player Found");
+                                return true;
+                            }
+                            else return false;
                         }
+
+
                     }
-                }
+                }*/
             }
         }
-
         return false;
     }
 

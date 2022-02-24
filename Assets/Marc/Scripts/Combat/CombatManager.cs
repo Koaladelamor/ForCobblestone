@@ -12,7 +12,8 @@ public class CombatManager : MonoBehaviour
 
     int turn;
     public bool startCombat;
-    public bool turnDone;
+    //public bool turnDone;
+    bool turnChanged;
     //int i = 0;
 
     // Start is called before the first frame update
@@ -22,7 +23,7 @@ public class CombatManager : MonoBehaviour
         if (m_instance == null) { m_instance = this; }
         else { Destroy(this.gameObject); }
 
-        turnDone = false;
+        //turnDone = false;
         turn = 0;
 
         /*players[0] = GameObject.Find("AI_Player");
@@ -62,70 +63,98 @@ public class CombatManager : MonoBehaviour
             
             if (turn == 0)
             {
-                if (turnDone)
+                if (!turnChanged)
                 {
-                    turn++;
-                    turnDone = !turnDone;
+                    m_players[0].GetComponent<PawnController>().m_isMyTurn = true;
+                    turnChanged = !turnChanged;
                 }
-                else m_players[0].GetComponent<PawnController>().m_isMyTurn = true;
+
+                if (m_players[0].GetComponent<PawnController>().m_isMyTurn == false) {
+                    turn++;
+                    turnChanged = !turnChanged;
+                }
             }
 
             else if (turn == 1)
             {
-                if (turnDone)
+                if (!turnChanged)
+                {
+                    m_enemies[0].GetComponent<PawnController>().m_isMyTurn = true;
+                    turnChanged = !turnChanged;
+                }
+
+                if (m_enemies[0].GetComponent<PawnController>().m_isMyTurn == false)
                 {
                     turn++;
-                    turnDone = !turnDone;
+                    turnChanged = !turnChanged;
                 }
-                else m_enemies[0].GetComponent<PawnController>().m_isMyTurn = true;
 
             }
 
             else if (turn == 2)
             {
-                if (turnDone)
+                if (!turnChanged)
+                {
+                    m_players[1].GetComponent<PawnController>().m_isMyTurn = true;
+                    turnChanged = !turnChanged;
+                }
+
+                if (m_players[1].GetComponent<PawnController>().m_isMyTurn == false)
                 {
                     turn++;
-                    turnDone = !turnDone;
+                    turnChanged = !turnChanged;
                 }
-                else m_players[1].GetComponent<PawnController>().m_isMyTurn = true;
 
             }
 
             else if (turn == 3)
             {
-                if (turnDone)
+                if (!turnChanged)
+                {
+                    m_enemies[1].GetComponent<PawnController>().m_isMyTurn = true;
+                    turnChanged = !turnChanged;
+                }
+
+                if (m_enemies[1].GetComponent<PawnController>().m_isMyTurn == false)
                 {
                     turn++;
-                    turnDone = !turnDone;
+                    turnChanged = !turnChanged;
                 }
-                else m_enemies[1].GetComponent<PawnController>().m_isMyTurn = true;
-
             }
 
             else if (turn == 4)
             {
-                if (turnDone)
+                if (!turnChanged)
+                {
+                    m_players[2].GetComponent<PawnController>().m_isMyTurn = true;
+                    turnChanged = !turnChanged;
+                }
+
+                if (m_players[2].GetComponent<PawnController>().m_isMyTurn == false)
                 {
                     turn++;
-                    turnDone = !turnDone;
+                    turnChanged = !turnChanged;
                 }
-                else m_players[2].GetComponent<PawnController>().m_isMyTurn = true;
 
             }
 
-            else if (turn == 6)
+            else if (turn == 5)
             {
-                if (turnDone)
+                if (!turnChanged)
+                {
+                    m_enemies[2].GetComponent<PawnController>().m_isMyTurn = true;
+                    turnChanged = !turnChanged;
+                }
+
+                if (m_enemies[2].GetComponent<PawnController>().m_isMyTurn == false)
                 {
                     turn++;
-                    turnDone = !turnDone;
+                    turnChanged = !turnChanged;
                 }
-                else m_enemies[2].GetComponent<PawnController>().m_isMyTurn = true;
 
             }
 
-            else if (turn > 6) { turn = 1; }
+            else if (turn > 5) { turn = 0; }
             
         }
 

@@ -195,7 +195,7 @@ MonoBehaviour:
   draggable: 1
   m_positionToGo: {fileID: 249428501}
   m_turnOrder: 3
-  m_isMyTurn: 1
+  m_isMyTurn: 0
 --- !u!212 &139882270
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -582,7 +582,7 @@ MonoBehaviour:
   draggable: 1
   m_positionToGo: {fileID: 1066291513}
   m_turnOrder: 1
-  m_isMyTurn: 1
+  m_isMyTurn: 0
 --- !u!58 &829266884
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1113,7 +1113,7 @@ MonoBehaviour:
   draggable: 1
   m_positionToGo: {fileID: 1313320504}
   m_turnOrder: 5
-  m_isMyTurn: 1
+  m_isMyTurn: 0
 --- !u!212 &1620034595
 SpriteRenderer:
   m_ObjectHideFlags: 0

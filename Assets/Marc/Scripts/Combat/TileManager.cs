@@ -18,7 +18,7 @@ public class TileManager : MonoBehaviour
 
     public bool AddPawn(GameObject p_pawn)
     {
-        if (p_pawn.CompareTag("Player") || p_pawn.CompareTag("Enemy") && isEmpty)
+        if ((p_pawn.CompareTag("Player") || p_pawn.CompareTag("Enemy")) && isEmpty)
         {
             p_pawn.GetComponent<PawnController>().SetPosition(new Vector3(transform.position.x, transform.position.y, transform.position.z - 1));
             isEmpty = false;
