@@ -9,7 +9,6 @@ public class CombatManager : MonoBehaviour
     public GameObject[] m_players;
     public GameObject[] m_enemies;
 
-
     int turn;
     public bool startCombat;
     //public bool turnDone;
@@ -157,6 +156,8 @@ public class CombatManager : MonoBehaviour
             else if (turn > 5) { turn = 0; }
             
         }
+
+
 
 
     }

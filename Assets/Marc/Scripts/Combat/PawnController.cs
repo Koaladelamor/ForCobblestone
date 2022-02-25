@@ -17,7 +17,7 @@ public class PawnController : MonoBehaviour
     Vector2 m_tilePosition;
     Vector3 m_previousPosition;
 
-    [SerializeField] Transform m_positionToGo;
+    Transform m_positionToGo;
 
     PAWN_STATE m_state;
     Vector3[] m_directions = { Vector3.right, Vector3.down, Vector3.left, Vector3.up };
@@ -32,9 +32,6 @@ public class PawnController : MonoBehaviour
     float timer = 0f;
     float waitTime = 0.3f;
 
-    float attackTimer = 0f;
-    float attackWaitTime = 2f;
-
     int m_maxSteps;
     int m_currentStep;
 
@@ -46,6 +43,7 @@ public class PawnController : MonoBehaviour
     PawnController m_pawnToAttack;
 
     private GameObject combatManager;
+
 
     private void Start()
     {
@@ -76,9 +74,10 @@ public class PawnController : MonoBehaviour
     private void Update()
     {
         timer += Time.deltaTime;
-        attackTimer += Time.deltaTime;
 
-        bool enemyIsClose = EnemyClose();
+        ClosestPawn();
+
+        bool enemyIsClose = EnemyIsClose();
 
         switch (m_state)
         {
@@ -112,9 +111,9 @@ public class PawnController : MonoBehaviour
 
             case PAWN_STATE.ATTACK:
                 if (readyToAttack) {
-                    Invoke("Attack", 0.6f);
+                    Invoke("Attack", 0.8f);
+                    readyToAttack = false;
                 }
-                readyToAttack = false;
                 /*if (attackTimer >= attackWaitTime) {
                     Attack();
                     attackTimer = 0;
@@ -171,8 +170,52 @@ public class PawnController : MonoBehaviour
         }
     }
 
+    void ClosestPawn() {
+
+
+        if (CompareTag("Player"))
+        {
+            float distance;
+            float closestDistance = 999999999;
+
+            for (int i = 0; i < combatManager.GetComponent<CombatManager>().m_enemies.Length; i++)
+            {
+                distance = (transform.position - combatManager.GetComponent<CombatManager>().m_enemies[i].transform.position).magnitude;
+
+
+                if (distance < closestDistance) {
+
+                    closestDistance = distance;
+                    m_positionToGo = combatManager.GetComponent<CombatManager>().m_enemies[i].transform;
+                }
+            }
+
+        } 
+        
+        else if (CompareTag("Enemy"))
+        {
+            float distance;
+            float closestDistance = 999999999;
+
+            for (int i = 0; i < combatManager.GetComponent<CombatManager>().m_players.Length; i++)
+            {
+                distance = (transform.position - combatManager.GetComponent<CombatManager>().m_players[i].transform.position).magnitude;
+
+
+                if (distance < closestDistance)
+                {
+
+                    closestDistance = distance;
+                    m_positionToGo = combatManager.GetComponent<CombatManager>().m_players[i].transform;
+                }
+            }
+
+        }
+    }
+
     void Search()
     {
+
         if ((transform.position - m_positionToGo.transform.position).magnitude == 1)
         {
             m_state = PAWN_STATE.IDLE;
@@ -180,7 +223,7 @@ public class PawnController : MonoBehaviour
             //combatManager.GetComponent<CombatManager>().turnDone = true;
             return;
 
-            /*if (EnemyClose()) { m_state = PAWN_STATE.ATTACK; }
+            /*if (EnemyIsClose()) { m_state = PAWN_STATE.ATTACK; }
             else {
                 m_state = PAWN_STATE.IDLE;
                 m_isMyTurn = false;
@@ -235,8 +278,9 @@ public class PawnController : MonoBehaviour
         {
             m_pawnToAttack.current_hp -= damage;
 
+            combatManager.GetComponent<DamagePopUp>().Create(m_pawnToAttack.transform.position, damage);
 
-            Debug.Log(m_pawnToAttack.current_hp);
+            //Debug.Log(m_pawnToAttack.current_hp);
 
             /*if (!EnemyClose() && m_currentStep < m_maxSteps)
             {
@@ -270,7 +314,7 @@ public class PawnController : MonoBehaviour
     }
 
 
-    public bool EnemyClose() {
+    public bool EnemyIsClose() {
         for (int i = 0; i < m_directions.Length; i++)
         {
             Vector2 positionToCheck = GridManager.Instance.ScreenToTilePosition(Camera.main.WorldToScreenPoint(transform.position + m_directions[i]));
@@ -280,18 +324,21 @@ public class PawnController : MonoBehaviour
                 {
                     for (int j = 0; j < combatManager.GetComponent<CombatManager>().m_enemies.Length; j++)
                     {
-                        Vector2 enemyPosition = combatManager.GetComponent<CombatManager>().m_enemies[j].transform.position;
-
-                        if (positionToCheck == GridManager.Instance.ScreenToTilePosition(Camera.main.WorldToScreenPoint(enemyPosition)))
+                        if (combatManager.GetComponent<CombatManager>().m_enemies[j].GetComponent<PawnController>().m_isAlive)
                         {
-                            if (combatManager.GetComponent<CombatManager>().m_enemies[j].GetComponent<PawnController>().m_isAlive)
-                            {
-                                m_pawnToAttack = combatManager.GetComponent<CombatManager>().m_enemies[j].GetComponent<PawnController>();
-                                //Debug.Log("Enemy Found");
-                                return true;
-                            }
-                            else return false;
+                            Vector2 enemyPosition = combatManager.GetComponent<CombatManager>().m_enemies[j].transform.position;
 
+                            if (positionToCheck == GridManager.Instance.ScreenToTilePosition(Camera.main.WorldToScreenPoint(enemyPosition)))
+                            {
+                                if (combatManager.GetComponent<CombatManager>().m_enemies[j].GetComponent<PawnController>().m_isAlive)
+                                {
+                                    m_pawnToAttack = combatManager.GetComponent<CombatManager>().m_enemies[j].GetComponent<PawnController>();
+                                    //Debug.Log("Enemy Found");
+                                    return true;
+                                }
+                                else return false;
+
+                            }
                         }
                     }
                 }

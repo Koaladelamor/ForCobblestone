@@ -8,6 +8,7 @@ TagManager:
   - Pawn
   - Tile
   - CombatManager
+  - TextMaker
   layers:
   - Default
   - TransparentFX
@@ -50,4 +51,7 @@ TagManager:
     locked: 0
   - name: Essentials
     uniqueID: 1470511969
+    locked: 0
+  - name: Top
+    uniqueID: 2088475263
     locked: 0
