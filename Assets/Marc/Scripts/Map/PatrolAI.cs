@@ -5,7 +5,7 @@ using UnityEngine;
 public class PatrolAI : MonoBehaviour
 {
     public float speed;
-    public Transform[] patrolPoints;
+    public GameObject[] patrolPoints;
     private int currentPatrolPoint;
 
     private bool patrolling;
@@ -15,6 +15,7 @@ public class PatrolAI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         currentPatrolPoint = 0;
         patrolling = true;
         m_player = GameObject.FindGameObjectWithTag("PlayerMap");
@@ -40,16 +41,16 @@ public class PatrolAI : MonoBehaviour
 
     void Patrol() {
         if(patrolling) { 
-            if (transform.position != patrolPoints[currentPatrolPoint].position)
+            if (transform.position != patrolPoints[currentPatrolPoint].transform.position)
             {
-                transform.position = Vector2.MoveTowards(transform.position, patrolPoints[currentPatrolPoint].position, speed * Time.deltaTime);
+                transform.position = Vector2.MoveTowards(transform.position, patrolPoints[currentPatrolPoint].transform.position, speed * Time.deltaTime);
             }
             else
             {
                 currentPatrolPoint++;
             }
 
-            if (transform.position == patrolPoints[3].position)
+            if (transform.position == patrolPoints[3].transform.position)
             {
                 currentPatrolPoint = 0;
             }

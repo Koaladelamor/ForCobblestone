@@ -10,10 +10,19 @@ public class Game_Manager : MonoBehaviour
     private GameObject m_combatManager;
 
     public GameObject m_playerPrefab;
+    public GameObject m_enemyPrefab;
+
     private GameObject m_player;
     private GameObject m_pointToGo;
 
     Vector3 playerPosition;
+
+    Vector3 enemy1_respawnPosition = new Vector3(-270f, -150f, 0f);
+    Vector3 enemy2_respawnPosition = new Vector3(-500f, 250f, 0f);
+
+    GameObject enemy1;
+    GameObject enemy2;
+
 
     public bool enemyEngaged;
     public bool combatIsOver;
@@ -30,6 +39,9 @@ public class Game_Manager : MonoBehaviour
 
         m_player = GameObject.FindGameObjectWithTag("PlayerMap");
         enemyEngaged = false;
+
+        enemy1 = RespawnEnemy1();
+        enemy2 = RespawnEnemy2();
     }
 
     // Update is called once per frame
@@ -70,5 +82,30 @@ public class Game_Manager : MonoBehaviour
         m_pointToGo = GameObject.FindGameObjectWithTag("PointToGo");
         m_player.transform.position = playerPosition;
         m_pointToGo.transform.position = playerPosition;
+    }
+
+    GameObject RespawnEnemy1() {
+        GameObject enemy1 = Instantiate(m_enemyPrefab, enemy1_respawnPosition, Quaternion.identity);
+
+        enemy1.name = "Enemy1";
+        enemy1.GetComponent<PatrolAI>().patrolPoints[0] = GameObject.Find("Enemy1PatrolPoint1");
+        enemy1.GetComponent<PatrolAI>().patrolPoints[1] = GameObject.Find("Enemy1PatrolPoint2");
+        enemy1.GetComponent<PatrolAI>().patrolPoints[2] = GameObject.Find("Enemy1PatrolPoint3");
+        enemy1.GetComponent<PatrolAI>().patrolPoints[3] = GameObject.Find("Enemy1PatrolPoint4");
+
+        return enemy1;
+    }
+
+    GameObject RespawnEnemy2()
+    {
+        GameObject enemy1 = Instantiate(m_enemyPrefab, enemy2_respawnPosition, Quaternion.identity);
+
+        enemy1.name = "Enemy2";
+        enemy1.GetComponent<PatrolAI>().patrolPoints[0] = GameObject.Find("Enemy2PatrolPoint1");
+        enemy1.GetComponent<PatrolAI>().patrolPoints[1] = GameObject.Find("Enemy2PatrolPoint2");
+        enemy1.GetComponent<PatrolAI>().patrolPoints[2] = GameObject.Find("Enemy2PatrolPoint3");
+        enemy1.GetComponent<PatrolAI>().patrolPoints[3] = GameObject.Find("Enemy2PatrolPoint4");
+
+        return enemy1;
     }
 }
