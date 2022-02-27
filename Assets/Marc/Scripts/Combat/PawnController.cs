@@ -6,7 +6,7 @@ enum PAWN_STATUS { IDLE, SEARCH, ATTACK }
 
 public class PawnController : MonoBehaviour
 {
-    public bool draggable;
+    bool draggable;
     bool isDragged;
 
     private Vector3 mouseDragStartPos;
@@ -27,7 +27,7 @@ public class PawnController : MonoBehaviour
 
     int damage;
 
-    bool m_isAlive;
+    public bool m_isAlive;
 
     float timer = 0f;
     float waitTime = 0.3f;
@@ -52,11 +52,13 @@ public class PawnController : MonoBehaviour
         {
             damage = 5;
             max_hp = 15;
+            draggable = true;
         }
         else if (CompareTag("Enemy"))
         {
             damage = 1;
             max_hp = 15;
+            draggable = false;
         }
         current_hp = max_hp;
 
@@ -111,7 +113,7 @@ public class PawnController : MonoBehaviour
 
             case PAWN_STATE.ATTACK:
                 if (readyToAttack) {
-                    Invoke("Attack", 0.8f);
+                    Invoke("Attack", 0.9f);
                     readyToAttack = false;
                 }
                 /*if (attackTimer >= attackWaitTime) {

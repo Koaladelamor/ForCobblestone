@@ -11,6 +11,12 @@ public class CombatManager : MonoBehaviour
 
     private GameObject m_gameManager;
 
+    public GameObject m_enemyPrefab;
+
+    Vector2 EnemySpawnTile1 = new Vector2(6, 2);
+    Vector2 EnemySpawnTile2 = new Vector2(6, 3);
+    Vector2 EnemySpawnTile3 = new Vector2(6, 4);
+
     int turn;
 
     public bool startCombat;
@@ -23,6 +29,30 @@ public class CombatManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        m_enemies[0] = Instantiate(m_enemyPrefab, transform.position, Quaternion.identity);
+        m_enemies[1] = Instantiate(m_enemyPrefab, transform.position, Quaternion.identity);
+        m_enemies[2] = Instantiate(m_enemyPrefab, transform.position, Quaternion.identity);
+
+        int enemies = m_enemies.Length;
+        for (int i = 0; i < enemies; i++)
+        {
+            m_enemies[i].GetComponent<PawnController>().m_isAlive = true;
+        }
+        m_enemies[0].GetComponent<PawnController>().m_turnOrder = 2;
+        m_enemies[1].GetComponent<PawnController>().m_turnOrder = 4;
+        m_enemies[2].GetComponent<PawnController>().m_turnOrder = 6;
+
+
+        GridManager.Instance.AssignPawnToTile(m_enemies[0], EnemySpawnTile1);
+        GridManager.Instance.AssignPawnToTile(m_enemies[1], EnemySpawnTile2);
+        GridManager.Instance.AssignPawnToTile(m_enemies[2], EnemySpawnTile3);
+
+        GridManager.Instance.TakePawnFromTile(EnemySpawnTile1);
+        GridManager.Instance.TakePawnFromTile(EnemySpawnTile2);
+        GridManager.Instance.TakePawnFromTile(EnemySpawnTile3);
+
+
+
         //Singleton
         /*if (m_instance == null) { 
             m_instance = this;
@@ -49,9 +79,11 @@ public class CombatManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space)) {
+        if (enemiesDefeated()) {
             m_gameManager.GetComponent<Game_Manager>().combatIsOver = true;
+
         }
+
         if (startCombat)
         {
             /*if (turnDone)
@@ -174,5 +206,22 @@ public class CombatManager : MonoBehaviour
 
 
 
+    }
+
+    bool enemiesDefeated() {
+
+        int enemiesDead = 0;
+        int enemies = m_enemies.Length;
+        for (int i = 0; i < enemies; i++) {
+            if (!m_enemies[i].GetComponent<PawnController>().m_isAlive) {
+                enemiesDead++;
+            }
+        }
+
+        if (enemiesDead == enemies) {
+            return true;
+        }
+
+        return false;
     }
 }

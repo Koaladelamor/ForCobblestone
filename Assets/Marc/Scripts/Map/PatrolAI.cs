@@ -12,10 +12,15 @@ public class PatrolAI : MonoBehaviour
 
     private GameObject m_player;
 
+    public int totalEnemies;
+
+    public int enemyID;
+
     // Start is called before the first frame update
     void Start()
     {
 
+        totalEnemies = 3;
         currentPatrolPoint = 0;
         patrolling = true;
         m_player = GameObject.FindGameObjectWithTag("PlayerMap");

@@ -26,6 +26,10 @@ public class PlayerController : MonoBehaviour
             Debug.Log("entra");
             engaged = true;
             m_gameManager.GetComponent<Game_Manager>().enemyEngaged = true;
+
+            m_gameManager.GetComponent<Game_Manager>().enemyOnCombat = other.gameObject;
+
+
         }
     }
 
