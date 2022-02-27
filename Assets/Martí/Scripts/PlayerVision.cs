@@ -24,6 +24,9 @@ public class PlayerVision : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //transform = GetComponentInParent<Transform>();
+        
+        
         /*
         if (enemyDetected)
         {
