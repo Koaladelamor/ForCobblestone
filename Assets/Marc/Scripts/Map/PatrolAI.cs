@@ -10,35 +10,35 @@ public class PatrolAI : MonoBehaviour
 
     private bool patrolling;
 
-    private GameObject player;
+    private GameObject m_player;
 
     // Start is called before the first frame update
     void Start()
     {
         currentPatrolPoint = 0;
         patrolling = true;
-        player = GameObject.FindGameObjectWithTag("Player");
+        m_player = GameObject.FindGameObjectWithTag("PlayerMap");
     }
 
     // Update is called once per frame
     void Update()
     {
-        patrol();
-        moveTowardsPlayer();
+        Patrol();
+        MoveTowardsPlayer();
     }
 
-    void moveTowardsPlayer() {
+    void MoveTowardsPlayer() {
         if (GetComponentInChildren<VisionRange>().playerDetected == true)
         {
             patrolling = false;
-            transform.position = Vector3.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, m_player.transform.position, speed * Time.deltaTime);
         }
         else {
             patrolling = true;
         }
     }
 
-    void patrol() {
+    void Patrol() {
         if(patrolling) { 
             if (transform.position != patrolPoints[currentPatrolPoint].position)
             {

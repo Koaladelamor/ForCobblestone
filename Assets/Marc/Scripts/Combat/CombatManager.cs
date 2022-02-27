@@ -9,21 +9,32 @@ public class CombatManager : MonoBehaviour
     public GameObject[] m_players;
     public GameObject[] m_enemies;
 
+    private GameObject m_gameManager;
+
     int turn;
+
     public bool startCombat;
+
     //public bool turnDone;
     bool turnChanged;
+
     //int i = 0;
 
     // Start is called before the first frame update
     void Start()
     {
         //Singleton
-        if (m_instance == null) { m_instance = this; }
-        else { Destroy(this.gameObject); }
+        /*if (m_instance == null) { 
+            m_instance = this;
+            DontDestroyOnLoad(this);
+        }
+        else { Destroy(this.gameObject); }*/
 
         //turnDone = false;
         turn = 0;
+
+        m_gameManager = GameObject.FindGameObjectWithTag("GameManager");
+
 
         /*players[0] = GameObject.Find("AI_Player");
         players[1] = GameObject.Find("AI_Player2");
@@ -38,6 +49,9 @@ public class CombatManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            m_gameManager.GetComponent<Game_Manager>().combatIsOver = true;
+        }
         if (startCombat)
         {
             /*if (turnDone)

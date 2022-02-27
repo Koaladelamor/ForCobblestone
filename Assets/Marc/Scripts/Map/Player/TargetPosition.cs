@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class TargetPosition : MonoBehaviour
 {
+    private GameObject player;
     private Vector3 target;
     // Start is called before the first frame update
     void Start()
     {
-        target = transform.position;
+        player = GameObject.FindGameObjectWithTag("PlayerMap");
+        transform.position = player.transform.position;
     }
 
     // Update is called once per frame

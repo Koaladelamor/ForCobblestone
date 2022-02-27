@@ -9,6 +9,10 @@ TagManager:
   - Tile
   - CombatManager
   - TextMaker
+  - GameManager
+  - Obstacle
+  - PointToGo
+  - PlayerMap
   layers:
   - Default
   - TransparentFX
