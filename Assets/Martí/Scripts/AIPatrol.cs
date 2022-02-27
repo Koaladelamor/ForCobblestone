@@ -8,6 +8,8 @@ public class AIPatrol : MonoBehaviour
     public Transform[] patrolPoints;
     private int currentPatrolPoint;
 
+    private bool enemyDetected;
+
     private bool patrolling;
 
     private GameObject player;
@@ -18,13 +20,20 @@ public class AIPatrol : MonoBehaviour
         currentPatrolPoint = 0;
         patrolling = true;
         player = GameObject.FindGameObjectWithTag("Player");
+        enemyDetected = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        patrol();
-        moveTowardsPlayer();
+        /*if (enemyDetected = false)
+        {*/
+            patrol();
+        /*}
+        else
+        {*/
+            moveTowardsPlayer();
+        //}
     }
 
     void moveTowardsPlayer()
@@ -59,4 +68,21 @@ public class AIPatrol : MonoBehaviour
             }
         }
     }
+    /*
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            enemyDetected = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            enemyDetected = false;
+        }
+    }
+    */
 }
