@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class CombatManager : MonoBehaviour
 {
-    static CombatManager m_instance = null;
-
     public GameObject[] m_players;
     public GameObject[] m_enemies;
 
@@ -13,18 +11,15 @@ public class CombatManager : MonoBehaviour
 
     public GameObject m_enemyPrefab;
 
-    Vector2 EnemySpawnTile1 = new Vector2(6, 2);
-    Vector2 EnemySpawnTile2 = new Vector2(6, 3);
-    Vector2 EnemySpawnTile3 = new Vector2(6, 4);
+    Vector2 EnemySpawnTile1 = new Vector2(7, 1);
+    Vector2 EnemySpawnTile2 = new Vector2(7, 3);
+    Vector2 EnemySpawnTile3 = new Vector2(7, 5);
 
     int turn;
 
     public bool startCombat;
 
-    //public bool turnDone;
     bool turnChanged;
-
-    //int i = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -51,16 +46,6 @@ public class CombatManager : MonoBehaviour
         GridManager.Instance.TakePawnFromTile(EnemySpawnTile2);
         GridManager.Instance.TakePawnFromTile(EnemySpawnTile3);
 
-
-
-        //Singleton
-        /*if (m_instance == null) { 
-            m_instance = this;
-            DontDestroyOnLoad(this);
-        }
-        else { Destroy(this.gameObject); }*/
-
-        //turnDone = false;
         turn = 0;
 
         m_gameManager = GameObject.FindGameObjectWithTag("GameManager");
@@ -80,8 +65,7 @@ public class CombatManager : MonoBehaviour
     void Update()
     {
         if (enemiesDefeated()) {
-            m_gameManager.GetComponent<Game_Manager>().combatIsOver = true;
-
+            Invoke("combatIsOver", 1.5f);
         }
 
         if (startCombat)
@@ -223,5 +207,9 @@ public class CombatManager : MonoBehaviour
         }
 
         return false;
+    }
+
+    void combatIsOver() {
+        m_gameManager.GetComponent<Game_Manager>().combatIsOver = true;
     }
 }

@@ -48,6 +48,14 @@ public class GridManager : MonoBehaviour
             }
             blackTilePainted = !blackTilePainted;
         }
+
+        for (int i = 0; i < 6; i++)
+        {
+            for (int j = 0; j < 2; j++)
+            {
+                m_tiles[i, j].GetComponent<TileManager>().playerDraggableOnTile = true;
+            }
+        }
     }
 
     static public GridManager Instance
@@ -71,6 +79,14 @@ public class GridManager : MonoBehaviour
         TileManager currentTile = m_tiles[(int)p_tilePosition.y, (int)p_tilePosition.x].GetComponent<TileManager>();
 
         currentTile.TakePawn();
+
+    }
+
+    public TileManager GetTile(Vector2 p_tilePosition)
+    {
+        TileManager currentTile = m_tiles[(int)p_tilePosition.y, (int)p_tilePosition.x].GetComponent<TileManager>();
+
+        return currentTile;
 
     }
 
@@ -108,5 +124,26 @@ public class GridManager : MonoBehaviour
             return m_tiles[(int)p_tilePosition.y, (int)p_tilePosition.x].GetComponent<TileManager>().IsTileEmpty;
         }
         return false;
+    }
+
+    public void startingTiles_LightsOn()
+    {
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 2; j++)
+            {
+                m_tiles[i, j].GetComponentInChildren<TileManager>().enableHighlight();
+            }
+        }
+    }
+
+    public void startingTiles_LightsOff()
+    {
+        for (int i = 0; i < 6; i++)
+        {
+            for (int j = 0; j < 2; j++)
+            {
+                m_tiles[i, j].GetComponentInChildren<TileManager>().disableHighlight();
+            }
+        }
     }
 }

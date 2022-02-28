@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class TileManager : MonoBehaviour
 {
+    [SerializeField] GameObject _highlight;
+    public bool playerDraggableOnTile;
     bool isEmpty;
 
     private void Start()
     {
+        //playerDraggableOnTile = false;
         isEmpty = true;
     }
 
@@ -37,4 +40,15 @@ public class TileManager : MonoBehaviour
     {
         get { return isEmpty; }
     }
+
+    public void enableHighlight() {
+        _highlight.SetActive(true);
+    }
+
+    public void disableHighlight()
+    {
+        _highlight.SetActive(false);
+    }
+
+
 }
