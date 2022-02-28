@@ -6,6 +6,7 @@ using TMPro;
 public class DamagePopUp : MonoBehaviour
 {
     [SerializeField] GameObject m_damageText;
+
     TextMeshPro dmgTxtMesh;
     Color textColor;
 
@@ -26,6 +27,7 @@ public class DamagePopUp : MonoBehaviour
 
         return damagePopUp;
     }
+
 
     private void Update()
     {

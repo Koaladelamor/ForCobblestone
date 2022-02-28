@@ -136,6 +136,7 @@ GameObject:
   - component: {fileID: 139882270}
   - component: {fileID: 139882268}
   - component: {fileID: 139882267}
+  - component: {fileID: 139882272}
   m_Layer: 0
   m_Name: AI_Player2
   m_TagString: Player
@@ -195,6 +196,7 @@ MonoBehaviour:
   m_isAlive: 1
   m_turnOrder: 3
   m_isMyTurn: 0
+  animator: {fileID: 139882272}
 --- !u!212 &139882270
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -235,8 +237,8 @@ SpriteRenderer:
   m_SortingLayerID: 1470511969
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
-  m_Color: {r: 0.010902455, g: 0.22752683, b: 0.46226418, a: 1}
+  m_Sprite: {fileID: 2878228334272761120, guid: 8ffbf386d07fe604dbf7b12ad6954355, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -260,6 +262,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &139882272
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 139882266}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 583d27bc67af3af48be728906ffe90eb, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &535274771
 GameObject:
   m_ObjectHideFlags: 0
@@ -356,6 +377,7 @@ GameObject:
   - component: {fileID: 829266878}
   - component: {fileID: 829266885}
   - component: {fileID: 829266884}
+  - component: {fileID: 829266881}
   m_Layer: 0
   m_Name: AI_Player
   m_TagString: Player
@@ -403,8 +425,8 @@ SpriteRenderer:
   m_SortingLayerID: 1470511969
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
-  m_Color: {r: 0.010902455, g: 0.22752683, b: 0.46226418, a: 1}
+  m_Sprite: {fileID: -6591898653103452112, guid: 9f132309e7d6f494790a60d04f09170c, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -443,6 +465,26 @@ MonoBehaviour:
   m_isAlive: 1
   m_turnOrder: 1
   m_isMyTurn: 0
+  animator: {fileID: 829266881}
+--- !u!95 &829266881
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 829266877}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 395b0d2e29a1ce245a9fb40bd53f29e0, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!58 &829266884
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -638,6 +680,7 @@ GameObject:
   - component: {fileID: 1620034595}
   - component: {fileID: 1620034593}
   - component: {fileID: 1620034592}
+  - component: {fileID: 1620034596}
   m_Layer: 0
   m_Name: AI_Player3
   m_TagString: Player
@@ -711,6 +754,7 @@ MonoBehaviour:
   m_isAlive: 1
   m_turnOrder: 5
   m_isMyTurn: 0
+  animator: {fileID: 1620034596}
 --- !u!212 &1620034595
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -751,8 +795,8 @@ SpriteRenderer:
   m_SortingLayerID: 1470511969
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
-  m_Color: {r: 0.010902455, g: 0.22752683, b: 0.46226418, a: 1}
+  m_Sprite: {fileID: -1999211585602981535, guid: f7e1df4bf2866424e8a3c87b1aa804b6, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -762,3 +806,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &1620034596
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1620034590}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: aa79a879f8fb48f4f9195f03d386d977, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
