@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 
 
-enum PAWN_STATUS { IDLE, SEARCH, ATTACK }
+//enum PAWN_STATUS { IDLE, SEARCH, ATTACK }
 
 public class PawnController : MonoBehaviour
 {
