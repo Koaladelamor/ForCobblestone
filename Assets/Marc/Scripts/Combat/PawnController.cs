@@ -301,15 +301,14 @@ public class PawnController : MonoBehaviour
         //attack
         if (m_isAlive && m_pawnToAttack.m_isAlive)
         {
-            if (CompareTag("Player")) {
+            if (CompareTag("Player"))
+            {
                 animator.SetBool("playerAttack", true);
             }
-            m_pawnToAttack.current_hp -= damage;
-
-            if (CompareTag("Enemy")) { 
-                combatManager.GetComponent<DamagePopUp>().Create(m_pawnToAttack.transform.position, damage);
+            else if (CompareTag("Enemy")) {
+                animator.SetBool("isAttacking", true);
             }
-
+            m_pawnToAttack.current_hp -= damage;
 
             if (m_pawnToAttack.current_hp < 1)
             {
@@ -396,7 +395,13 @@ public class PawnController : MonoBehaviour
     }
 
     public void EndAttackAnimation() {
-        animator.SetBool("playerAttack", false);
+        if (CompareTag("Player"))
+        {
+            animator.SetBool("playerAttack", false);
+        }
+        else if (CompareTag("Enemy")) {
+            animator.SetBool("isAttacking", false);
+        }
     }
 
     public void spawnDamageText() {

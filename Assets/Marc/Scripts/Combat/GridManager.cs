@@ -42,7 +42,7 @@ public class GridManager : MonoBehaviour
                 if (!blackTilePainted)
                 {
                     //Black
-                    m_tiles[i, j].GetComponent<SpriteRenderer>().color = new Vector4((float)0.5, (float)0.5, (float)0.5, 1);
+                    m_tiles[i, j].GetComponent<SpriteRenderer>().color = new Vector4((float)0.5, (float)0.5, (float)0.5, (float)0.5f);
                 }
                 blackTilePainted = !blackTilePainted;
             }
