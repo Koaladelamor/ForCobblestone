@@ -12,9 +12,6 @@ EditorBuildSettings:
     path: Assets/David/Scene/Escena_Mapa_Buena.unity
     guid: 45ed0b137452d6a48904a517751df609
   - enabled: 1
-    path: Assets/Marc/Scenes/MenuScene.unity
-    guid: 470c77643ff7df24f973d7ae19eca3fe
-  - enabled: 1
     path: Assets/Marc/Scenes/MapScene.unity
     guid: c99b9072bcbbb3341b4d9b4594e6ce49
   - enabled: 1
@@ -32,4 +29,7 @@ EditorBuildSettings:
   - enabled: 0
     path: "Assets/Mart\xED/Scenes/UpdatedMap.unity"
     guid: 4c3119415aeff5b41a423ce597fd2ba2
+  - enabled: 1
+    path: Assets/Marc/Scenes/MenuScene.unity
+    guid: 470c77643ff7df24f973d7ae19eca3fe
   m_configObjects: {}

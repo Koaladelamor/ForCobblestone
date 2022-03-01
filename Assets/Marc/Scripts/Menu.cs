@@ -11,6 +11,6 @@ public class Menu : MonoBehaviour
     }
 
     public void exitPlayMode() {
-        //EditorApplication.ExitPlaymode();
+        EditorApplication.ExitPlaymode();
     }
 }
