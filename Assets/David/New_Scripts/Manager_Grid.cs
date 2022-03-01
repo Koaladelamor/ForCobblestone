@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GridManager : MonoBehaviour
+public class Manager_Grid : MonoBehaviour
 {
     [SerializeField] int MAX_FILAS = 5;
     [SerializeField] int MAX_COLUMNAS = 10;
 
     [SerializeField] Transform m_initialPosition;
-    static GridManager m_instance = null;
+    static Manager_Grid m_instance = null;
     public GameObject[,] m_tiles;
     public GameObject m_tile;
 
@@ -48,17 +48,9 @@ public class GridManager : MonoBehaviour
             }
             blackTilePainted = !blackTilePainted;
         }
-
-        for (int i = 0; i < 6; i++)
-        {
-            for (int j = 0; j < 2; j++)
-            {
-                m_tiles[i, j].GetComponent<TileManager>().playerDraggableOnTile = true;
-            }
-        }
     }
 
-    static public GridManager Instance
+    static public Manager_Grid Instance
     {
         get { return m_instance; }
         private set { }
@@ -66,9 +58,9 @@ public class GridManager : MonoBehaviour
 
     public bool AssignPawnToTile(GameObject p_pawn, Vector2 p_tilePosition)
     {
-        TileManager currentTile = m_tiles[(int)p_tilePosition.y, (int)p_tilePosition.x].GetComponent<TileManager>();
+        Manager_Tile currentTile = m_tiles[(int)p_tilePosition.y, (int)p_tilePosition.x].GetComponent<Manager_Tile>();
 
-        //Debug.Log(p_tilePosition.x + " | " + p_tilePosition.y);
+       
 
         return currentTile.AddPawn(p_pawn);
 
@@ -76,17 +68,9 @@ public class GridManager : MonoBehaviour
 
     public void TakePawnFromTile(Vector2 p_tilePosition)
     {
-        TileManager currentTile = m_tiles[(int)p_tilePosition.y, (int)p_tilePosition.x].GetComponent<TileManager>();
+        Manager_Tile currentTile = m_tiles[(int)p_tilePosition.y, (int)p_tilePosition.x].GetComponent<Manager_Tile>();
 
         currentTile.TakePawn();
-
-    }
-
-    public TileManager GetTile(Vector2 p_tilePosition)
-    {
-        TileManager currentTile = m_tiles[(int)p_tilePosition.y, (int)p_tilePosition.x].GetComponent<TileManager>();
-
-        return currentTile;
 
     }
 
@@ -121,29 +105,8 @@ public class GridManager : MonoBehaviour
     {
         if (p_tilePosition.x >= 0 && p_tilePosition.x < MAX_COLUMNAS && p_tilePosition.y >= 0 && p_tilePosition.y < MAX_FILAS)
         {
-            return m_tiles[(int)p_tilePosition.y, (int)p_tilePosition.x].GetComponent<TileManager>().IsTileEmpty;
+            return m_tiles[(int)p_tilePosition.y, (int)p_tilePosition.x].GetComponent<Manager_Tile>().IsTileEmpty;
         }
         return false;
-    }
-
-    public void startingTiles_LightsOn()
-    {
-        for (int i = 0; i < 6; i++) {
-            for (int j = 0; j < 2; j++)
-            {
-                m_tiles[i, j].GetComponentInChildren<TileManager>().enableHighlight();
-            }
-        }
-    }
-
-    public void startingTiles_LightsOff()
-    {
-        for (int i = 0; i < 6; i++)
-        {
-            for (int j = 0; j < 2; j++)
-            {
-                m_tiles[i, j].GetComponentInChildren<TileManager>().disableHighlight();
-            }
-        }
     }
 }

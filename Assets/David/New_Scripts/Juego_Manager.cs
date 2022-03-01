@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Game_Manager : MonoBehaviour
+public class Juego_Manager : MonoBehaviour
 {
-    static Game_Manager m_gameManager = null;
+    static Juego_Manager m_gameManager = null;
 
     private GameObject m_combatManager;
 
@@ -35,11 +35,13 @@ public class Game_Manager : MonoBehaviour
     void Start()
     {
         //Singleton
-        if (m_gameManager == null) { 
+        if (m_gameManager == null)
+        {
             m_gameManager = this;
             DontDestroyOnLoad(this);
         }
-        else { 
+        else
+        {
             Destroy(this.gameObject);
             return;
         }
@@ -57,7 +59,8 @@ public class Game_Manager : MonoBehaviour
     void Update()
     {
 
-        if (enemyEngaged) {
+        if (enemyEngaged)
+        {
 
             //Save stats
             playerPosition = m_player.transform.position;
@@ -74,9 +77,10 @@ public class Game_Manager : MonoBehaviour
             SceneManager.LoadScene("CombatScene");
 
         }
-        
 
-        if (combatIsOver) {
+
+        if (combatIsOver)
+        {
             SceneManager.LoadScene("MapScene");
 
             areEnemiesAlive[enemyIndex] = false;
@@ -88,14 +92,16 @@ public class Game_Manager : MonoBehaviour
         }
     }
 
-    void SetupPlayer() {
+    void SetupPlayer()
+    {
         m_player = GameObject.FindGameObjectWithTag("PlayerMap");
         m_pointToGo = GameObject.FindGameObjectWithTag("PointToGo");
         m_player.transform.position = playerPosition;
         m_pointToGo.transform.position = playerPosition;
     }
 
-    GameObject RespawnEnemy0() {
+    GameObject RespawnEnemy0()
+    {
         GameObject enemy = Instantiate(m_enemyPrefab, enemy1_respawnPosition, Quaternion.identity);
 
         enemy.name = "Enemy0";
@@ -124,7 +130,8 @@ public class Game_Manager : MonoBehaviour
         return enemy;
     }
 
-    void EnemiesRespawner() {
+    void EnemiesRespawner()
+    {
         if (areEnemiesAlive[0])
         {
             RespawnEnemy0();
@@ -135,6 +142,5 @@ public class Game_Manager : MonoBehaviour
             RespawnEnemy1();
         }
     }
-
 
 }
