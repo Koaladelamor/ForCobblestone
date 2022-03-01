@@ -55,13 +55,13 @@ public class PawnController : MonoBehaviour
         if (CompareTag("Player"))
         {
             damage = 5;
-            max_hp = 15;
+            max_hp = 70;
             draggable = true;
         }
         else if (CompareTag("Enemy"))
         {
             damage = 1;
-            max_hp = 15;
+            max_hp = 20;
             draggable = false;
         }
         current_hp = max_hp;
@@ -303,9 +303,12 @@ public class PawnController : MonoBehaviour
         {
             if (CompareTag("Player"))
             {
+                damage = Random.Range(2, 10);
                 animator.SetBool("playerAttack", true);
             }
-            else if (CompareTag("Enemy")) {
+            else if (CompareTag("Enemy")) 
+            {
+                damage = Random.Range(0, 16);
                 animator.SetBool("isAttacking", true);
             }
             m_pawnToAttack.current_hp -= damage;
