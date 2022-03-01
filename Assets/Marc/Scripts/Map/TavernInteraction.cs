@@ -6,16 +6,12 @@ public class TavernInteraction : MonoBehaviour
 {
 
     private GameObject m_canvasHostal;
-    private GameObject sleeping;
 
     // Start is called before the first frame update
     void Start()
     {
-        sleeping = GameObject.FindGameObjectWithTag("Sleeping");
-        sleeping.SetActive(false);
         m_canvasHostal = GameObject.FindGameObjectWithTag("CanvasHostal");
         m_canvasHostal.SetActive(false);
-
     }
 
     // Update is called once per frame
@@ -39,9 +35,5 @@ public class TavernInteraction : MonoBehaviour
 
     }
 
-    public void Sleeping()
-    {
-        sleeping.SetActive(true);
-    }
 
 }
