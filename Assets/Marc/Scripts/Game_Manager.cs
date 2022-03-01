@@ -15,13 +15,14 @@ public class Game_Manager : MonoBehaviour
     private GameObject m_player;
     private GameObject m_pointToGo;
 
+    private GameObject m_canvasToCombat;
+
     Vector3 playerPosition;
 
     Vector3 enemy1_respawnPosition = new Vector3(-270f, -150f, 0f);
     Vector3 enemy2_respawnPosition = new Vector3(-500f, 250f, 0f);
 
     public GameObject enemyOnCombat;
-    GameObject[] m_enemies;
 
     public int enemyIndex;
     public int totalEnemies;
@@ -44,6 +45,11 @@ public class Game_Manager : MonoBehaviour
             return;
         }
 
+        m_canvasToCombat = GameObject.FindGameObjectWithTag("CanvasToBattle");
+        m_canvasToCombat.SetActive(false);
+
+
+
         m_player = GameObject.FindGameObjectWithTag("PlayerMap");
         enemyEngaged = false;
 
@@ -58,33 +64,37 @@ public class Game_Manager : MonoBehaviour
     {
 
         if (enemyEngaged) {
-
             //Save stats
             playerPosition = m_player.transform.position;
-
-            m_player = null;
-            enemyEngaged = false;
 
             //Enemy info
             enemyIndex = enemyOnCombat.GetComponent<PatrolAI>().enemyID;
             totalEnemies = enemyOnCombat.GetComponent<PatrolAI>().totalEnemies;
 
+            m_canvasToCombat.SetActive(true);
 
             //Load scene
-            SceneManager.LoadScene("CombatScene");
+            //SceneManager.LoadScene("CombatScene", LoadSceneMode.Single);
+            //SceneManager.LoadScene("CombatScene", LoadSceneMode.Additive);
+
+            enemyEngaged = false;
 
         }
-        
+
 
         if (combatIsOver) {
-            SceneManager.LoadScene("MapScene");
+            combatIsOver = false;
+
+            SceneManager.LoadScene("MapScene", LoadSceneMode.Single);
 
             areEnemiesAlive[enemyIndex] = false;
             //RespawnPlayer();
-            Invoke("SetupPlayer", 0.2f);
-            Invoke("EnemiesRespawner", 0.3f);
+            Invoke("disableCanvas", 0.03f);
+            Invoke("SetupPlayer", 0.04f);
+            Invoke("EnemiesRespawner", 0.1f);
 
-            combatIsOver = false;
+
+
         }
     }
 
@@ -135,6 +145,23 @@ public class Game_Manager : MonoBehaviour
             RespawnEnemy1();
         }
     }
+
+    public void loadCombatScene() {
+        SceneManager.LoadScene("CombatScene", LoadSceneMode.Single);
+    }
+
+    public void loadMapScene()
+    {
+        SceneManager.LoadScene("MapScene", LoadSceneMode.Single);
+
+
+    }
+
+    public void disableCanvas() {
+        m_canvasToCombat = GameObject.FindGameObjectWithTag("CanvasToBattle");
+        m_canvasToCombat.SetActive(false);
+    }
+
 
 
 }

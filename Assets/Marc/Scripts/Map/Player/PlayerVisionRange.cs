@@ -7,7 +7,7 @@ public class PlayerVisionRange : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Enemy"))
+        if (other.gameObject.CompareTag("EnemyMap"))
         {
             other.gameObject.GetComponent<SpriteRenderer>().enabled = true;
 
@@ -18,7 +18,7 @@ public class PlayerVisionRange : MonoBehaviour
     private void OnTriggerExit2D(Collider2D other)
     {
 
-        if (other.gameObject.CompareTag("Enemy"))
+        if (other.gameObject.CompareTag("EnemyMap"))
         {
             //enemyDetected = false;
             other.gameObject.GetComponent<SpriteRenderer>().enabled = false;

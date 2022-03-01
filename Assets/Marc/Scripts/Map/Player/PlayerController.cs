@@ -7,9 +7,12 @@ public class PlayerController : MonoBehaviour
     private GameObject m_gameManager;
     private PlayerVisionRange _visionRange;
     public bool engaged;
+
     Vector2 previousPosition;
     Vector2 currentPosition;
+
     private Animator[] anims;
+    private SpriteRenderer[] sprites;
 
     // Start is called before the first frame update
     void Start()
@@ -19,38 +22,42 @@ public class PlayerController : MonoBehaviour
         engaged = false;
 
         anims = GetComponentsInChildren<Animator>();
+        sprites = GetComponentsInChildren<SpriteRenderer>();
 
-        for (int i = 0; i < anims.Length; i++)
+        /*for (int i = 0; i < anims.Length; i++)
         {
             anims[i].SetBool("isWalking", false);
-        }
+        }*/
     }
 
     // Update is called once per frame
     void Update()
     {
+
         previousPosition = currentPosition;
         currentPosition = transform.position;
+        //setWalkingAnimation();
+        flipSprites();
 
-        setWalkingAnimation();
     }
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("Enemy")) {
-            Debug.Log("entra");
+        if (other.gameObject.CompareTag("EnemyMap")) {
+            //Debug.Log("entra");
             engaged = true;
             m_gameManager.GetComponent<Game_Manager>().enemyEngaged = true;
 
             m_gameManager.GetComponent<Game_Manager>().enemyOnCombat = other.gameObject;
 
+            other.gameObject.GetComponent<CircleCollider2D>().enabled = false;
 
         }
     }
 
     private void OnCollisionExit2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("Enemy"))
+        if (other.gameObject.CompareTag("EnemyMap"))
         {
             engaged = false;
 
@@ -76,11 +83,26 @@ public class PlayerController : MonoBehaviour
             {
                 anims[i].SetBool("isWalking", true);
             }
+            return;
         }
         else {
             for (int i = 0; i < anims.Length; i++)
             {
                 anims[i].SetBool("isWalking", false);
+            }
+        }
+    }
+
+    public void flipSprites() {
+        if (currentPosition.x > previousPosition.x) {
+            for (int i = 0; i < sprites.Length; i++) {
+                sprites[i].flipX = false;
+            }
+        }
+        else if(currentPosition.x < previousPosition.x) {
+            for (int i = 0; i < sprites.Length; i++)
+            {
+                sprites[i].flipX = true;
             }
         }
     }
