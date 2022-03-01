@@ -13,8 +13,8 @@ public class Marti_Game_Manager : MonoBehaviour
     public GameObject m_enemyPrefab;
 
 
-    private GameObject m_canvas;
-
+    private GameObject m_canvasToCombat;
+    private GameObject m_canvasToMap;
 
 
     private GameObject m_player;
@@ -54,8 +54,11 @@ public class Marti_Game_Manager : MonoBehaviour
         m_player = GameObject.FindGameObjectWithTag("PlayerMap");
         enemyEngaged = false;
 
-        m_canvas = GameObject.FindGameObjectWithTag("CanvasToBattle");
-        m_canvas.SetActive(false);
+        m_canvasToCombat = GameObject.FindGameObjectWithTag("CanvasToBattle");
+        m_canvasToCombat.SetActive(false);
+
+        m_canvasToMap = GameObject.FindGameObjectWithTag("CanvasToMap");
+        m_canvasToMap.SetActive(false);
 
         RespawnEnemy0();
         RespawnEnemy1();
@@ -75,7 +78,7 @@ public class Marti_Game_Manager : MonoBehaviour
 
             m_player = null;
 
-            m_canvas.SetActive(true);
+            m_canvasToCombat.SetActive(true);
 
             enemyEngaged = false;
 
@@ -96,14 +99,17 @@ public class Marti_Game_Manager : MonoBehaviour
 
         if (combatIsOver)
         {
-            SceneManager.LoadScene("MapScene");
+            //SceneManager.LoadScene("MapScene");
 
+            m_canvasToMap.SetActive(true);//Después de esto se necesita parar el juego
+            /*
             areEnemiesAlive[enemyIndex] = false;
             //RespawnPlayer();
             Invoke("SetupPlayer", 0.2f);
             Invoke("EnemiesRespawner", 0.3f);
 
             combatIsOver = false;
+            */
         }
     }
 
@@ -161,6 +167,20 @@ public class Marti_Game_Manager : MonoBehaviour
     public void clickOnBattleButton() {
         Debug.Log("prueba");
         SceneManager.LoadScene("CombatScene_Marti");
+
+    }
+
+    public void clickOnExploreButton()
+    {
+        Debug.Log("prueba");
+        SceneManager.LoadScene("UpdatedMap");
+
+        areEnemiesAlive[enemyIndex] = false;
+        //RespawnPlayer();
+        Invoke("SetupPlayer", 0.2f);
+        Invoke("EnemiesRespawner", 0.3f);
+
+        combatIsOver = false;
 
     }
 
