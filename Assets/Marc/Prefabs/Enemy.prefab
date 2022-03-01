@@ -76,7 +76,7 @@ GameObject:
   - component: {fileID: 4116810184673629275}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Enemy
+  m_TagString: EnemyMap
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -103,7 +103,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4116810184673629248}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -165,6 +165,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  totalEnemies: 0
+  enemyID: 0
 --- !u!50 &4116810184673629252
 Rigidbody2D:
   serializedVersion: 4

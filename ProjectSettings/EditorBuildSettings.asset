@@ -15,9 +15,15 @@ EditorBuildSettings:
     path: Assets/Marc/Scenes/CombatScene.unity
     guid: 3b09861022bbd704fab2afa91c61e2cc
   - enabled: 1
-    path: Assets/David/Scene/Escena_Mapa_Buena.unity
-    guid: 45ed0b137452d6a48904a517751df609
+    path: "Assets/Mart\xED/Scenes/CombatScene_Marti.unity"
+    guid: 4c06cafb6facee14a9f8c037778fac02
   - enabled: 1
-    path: Assets/David/Scene/Escena_Combate.unity
-    guid: 02df04f512687164899f9c5b5022317f
+    path: "Assets/Mart\xED/Scenes/MapScene_Marti.unity"
+    guid: edbd8e18efec1ea499c7ff52ac97249e
+  - enabled: 1
+    path: "Assets/Mart\xED/Scenes/UpdatedCombat.unity"
+    guid: d82b1fc64683a59498f85271486d5acf
+  - enabled: 1
+    path: "Assets/Mart\xED/Scenes/UpdatedMap.unity"
+    guid: 4c3119415aeff5b41a423ce597fd2ba2
   m_configObjects: {}

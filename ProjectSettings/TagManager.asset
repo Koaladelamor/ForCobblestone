@@ -13,6 +13,9 @@ TagManager:
   - Obstacle
   - PointToGo
   - PlayerMap
+  - CanvasToBattle
+  - CanvasToMap
+  - EnemyMap
   layers:
   - Default
   - TransparentFX
@@ -52,6 +55,9 @@ TagManager:
     locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Grid
+    uniqueID: 2888516711
     locked: 0
   - name: Essentials
     uniqueID: 1470511969
