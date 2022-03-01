@@ -16,6 +16,9 @@ TagManager:
   - CanvasToBattle
   - CanvasToMap
   - EnemyMap
+  - CanvasHostal
+  - Hostal
+  - Sleeping
   layers:
   - Default
   - TransparentFX
