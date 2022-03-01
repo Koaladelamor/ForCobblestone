@@ -221,4 +221,8 @@ public class CombatManager : MonoBehaviour
     public void setCanvasActive() {
         m_canvasToMap.SetActive(true);
     }
+
+    public void setBoolCombat() {
+        startCombat = true;
+    }
 }
