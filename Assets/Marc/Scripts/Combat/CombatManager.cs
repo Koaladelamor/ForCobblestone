@@ -11,6 +11,8 @@ public class CombatManager : MonoBehaviour
 
     public GameObject m_enemyPrefab;
 
+    private GameObject m_canvasToMap;
+
     Vector2 EnemySpawnTile1 = new Vector2(7, 1);
     Vector2 EnemySpawnTile2 = new Vector2(7, 3);
     Vector2 EnemySpawnTile3 = new Vector2(7, 5);
@@ -24,6 +26,9 @@ public class CombatManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        m_canvasToMap = GameObject.FindGameObjectWithTag("CanvasToMap");
+        m_canvasToMap.SetActive(false);
+
         m_enemies[0] = Instantiate(m_enemyPrefab, transform.position, Quaternion.identity);
         m_enemies[1] = Instantiate(m_enemyPrefab, transform.position, Quaternion.identity);
         m_enemies[2] = Instantiate(m_enemyPrefab, transform.position, Quaternion.identity);
@@ -65,7 +70,7 @@ public class CombatManager : MonoBehaviour
     void Update()
     {
         if (enemiesDefeated()) {
-            Invoke("combatIsOver", 1.5f);
+            Invoke("setCanvasActive", 1f);
         }
 
         if (startCombat)
@@ -209,7 +214,11 @@ public class CombatManager : MonoBehaviour
         return false;
     }
 
-    void combatIsOver() {
+    public void combatIsOver() {
         m_gameManager.GetComponent<Game_Manager>().combatIsOver = true;
+    }
+
+    public void setCanvasActive() {
+        m_canvasToMap.SetActive(true);
     }
 }

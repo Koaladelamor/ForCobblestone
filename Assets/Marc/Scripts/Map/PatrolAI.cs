@@ -16,6 +16,9 @@ public class PatrolAI : MonoBehaviour
 
     public int enemyID;
 
+    Vector2 previousPosition;
+    Vector2 currentPosition;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,15 +32,32 @@ public class PatrolAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        previousPosition = currentPosition;
+        currentPosition = transform.position;
+
+        if (patrolling)
+        {
+            flipSprites();
+        }
+
+    }
+
+    void FixedUpdate()
+    {
+
+
         Patrol();
         MoveTowardsPlayer();
+
+
     }
 
     void MoveTowardsPlayer() {
         if (GetComponentInChildren<VisionRange>().playerDetected == true)
         {
             patrolling = false;
-            transform.position = Vector3.MoveTowards(transform.position, m_player.transform.position, speed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, m_player.transform.position, speed * 1.2f *Time.fixedDeltaTime);
         }
         else {
             patrolling = true;
@@ -48,7 +68,7 @@ public class PatrolAI : MonoBehaviour
         if(patrolling) { 
             if (transform.position != patrolPoints[currentPatrolPoint].transform.position)
             {
-                transform.position = Vector2.MoveTowards(transform.position, patrolPoints[currentPatrolPoint].transform.position, speed * Time.deltaTime);
+                transform.position = Vector2.MoveTowards(transform.position, patrolPoints[currentPatrolPoint].transform.position, speed * Time.fixedDeltaTime);
             }
             else
             {
@@ -59,6 +79,18 @@ public class PatrolAI : MonoBehaviour
             {
                 currentPatrolPoint = 0;
             }
+        }
+    }
+
+    public void flipSprites()
+    {
+        if (currentPosition.x > previousPosition.x)
+        {
+            GetComponent<SpriteRenderer>().flipX = true;
+        }
+        else if (currentPosition.x < previousPosition.x)
+        {
+            GetComponent<SpriteRenderer>().flipX = false;
         }
     }
 }
