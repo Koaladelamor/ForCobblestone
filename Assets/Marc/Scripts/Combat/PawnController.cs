@@ -120,7 +120,7 @@ public class PawnController : MonoBehaviour
                 {
                     if (readyToAttack)
                     {
-                        Invoke("Attack", 1.5f);
+                        Invoke("Attack", 1.2f);
                         readyToAttack = false;
                     }
                 }
