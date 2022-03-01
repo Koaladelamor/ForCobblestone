@@ -19,8 +19,8 @@ public class Game_Manager : MonoBehaviour
 
     Vector3 playerPosition;
 
-    Vector3 enemy1_respawnPosition = new Vector3(-270f, -150f, 0f);
-    Vector3 enemy2_respawnPosition = new Vector3(-500f, 250f, 0f);
+    Vector3 enemy1_respawnPosition = new Vector3(-237f, 33f, 0f);
+    Vector3 enemy2_respawnPosition = new Vector3(370f, -100f, 0f);
 
     public GameObject enemyOnCombat;
 

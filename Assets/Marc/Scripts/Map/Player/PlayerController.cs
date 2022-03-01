@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     private GameObject m_gameManager;
+    private GameObject m_pointToGo;
     private PlayerVisionRange _visionRange;
     public bool engaged;
 
@@ -20,6 +21,8 @@ public class PlayerController : MonoBehaviour
         m_gameManager = GameObject.FindGameObjectWithTag("GameManager");
            _visionRange = GetComponentInChildren<PlayerVisionRange>();
         engaged = false;
+
+        m_pointToGo = GameObject.FindGameObjectWithTag("PointToGo");
 
         anims = GetComponentsInChildren<Animator>();
         sprites = GetComponentsInChildren<SpriteRenderer>();
@@ -51,7 +54,7 @@ public class PlayerController : MonoBehaviour
             m_gameManager.GetComponent<Game_Manager>().enemyOnCombat = other.gameObject;
 
             other.gameObject.GetComponent<CircleCollider2D>().enabled = false;
-
+            m_pointToGo.transform.position = transform.position;
         }
     }
 

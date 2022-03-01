@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5088182347649500840}
   - component: {fileID: 5088182347649500841}
+  - component: {fileID: 1324448179942248163}
   - component: {fileID: 5088182347649500846}
   - component: {fileID: 5088182347649500847}
-  - component: {fileID: 5088182347649500843}
   m_Layer: 0
   m_Name: Hostal
   m_TagString: Hostal
@@ -72,7 +72,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1470511969
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: e8168e710df309243bc1b0bf217ab727, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -85,6 +85,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1324448179942248163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5088182347649500844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b60d5b351fa75a4d8f5b317906b2645, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!50 &5088182347649500846
 Rigidbody2D:
   serializedVersion: 4
@@ -132,15 +144,3 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 257.60696, y: 251.6062}
   m_EdgeRadius: 0
---- !u!114 &5088182347649500843
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5088182347649500844}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b055720e705392e439e6279f0ab5916d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
