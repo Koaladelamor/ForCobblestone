@@ -24,4 +24,6 @@ public class Marti_Player_Vision_Range : MonoBehaviour
             other.gameObject.GetComponent<SpriteRenderer>().enabled = false;
         }
     }
+
+
 }
