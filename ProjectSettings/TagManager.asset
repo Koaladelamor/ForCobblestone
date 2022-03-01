@@ -13,6 +13,7 @@ TagManager:
   - Obstacle
   - PointToGo
   - PlayerMap
+  - CanvasToBattle
   layers:
   - Default
   - TransparentFX
