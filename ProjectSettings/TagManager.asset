@@ -15,6 +15,8 @@ TagManager:
   - PlayerMap
   - CanvasToBattle
   - CanvasToMap
+  - Hostal
+  - CanvasHostal
   layers:
   - Default
   - TransparentFX

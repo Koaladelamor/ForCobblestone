@@ -17,6 +17,9 @@ public class Marti_Game_Manager : MonoBehaviour
     private GameObject m_canvasToMap;
 
 
+   
+
+
     private GameObject m_player;
     private GameObject m_pointToGo;
 
@@ -59,6 +62,9 @@ public class Marti_Game_Manager : MonoBehaviour
 
         m_canvasToMap = GameObject.FindGameObjectWithTag("CanvasToMap");
         m_canvasToMap.SetActive(false);
+
+        
+
 
         RespawnEnemy0();
         RespawnEnemy1();
