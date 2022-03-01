@@ -42,14 +42,14 @@ public class Manager_Combate : MonoBehaviour
         m_enemies[1].GetComponent<Controlador_Peon>().m_turnOrder = 4;
         m_enemies[2].GetComponent<Controlador_Peon>().m_turnOrder = 6;
 
-
+        Manager_Grid.Instance.TakePawnFromTile(EnemySpawnTile1);
+        Manager_Grid.Instance.TakePawnFromTile(EnemySpawnTile2);
+        Manager_Grid.Instance.TakePawnFromTile(EnemySpawnTile3);
         Manager_Grid.Instance.AssignPawnToTile(m_enemies[0], EnemySpawnTile1);
         Manager_Grid.Instance.AssignPawnToTile(m_enemies[1], EnemySpawnTile2);
         Manager_Grid.Instance.AssignPawnToTile(m_enemies[2], EnemySpawnTile3);
 
-        Manager_Grid.Instance.TakePawnFromTile(EnemySpawnTile1);
-        Manager_Grid.Instance.TakePawnFromTile(EnemySpawnTile2);
-        Manager_Grid.Instance.TakePawnFromTile(EnemySpawnTile3);
+      
 
 
 
