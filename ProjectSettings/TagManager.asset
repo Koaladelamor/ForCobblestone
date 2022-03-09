@@ -19,6 +19,7 @@ TagManager:
   - CanvasHostal
   - Hostal
   - Sleeping
+  - CanvasPause
   layers:
   - Default
   - TransparentFX

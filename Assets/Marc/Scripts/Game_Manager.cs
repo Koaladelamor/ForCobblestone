@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+public enum EnemyType  { MINOTAUR, WOLF, WORM }
 public class Game_Manager : MonoBehaviour
 {
     static Game_Manager m_gameManager = null;
@@ -10,12 +11,16 @@ public class Game_Manager : MonoBehaviour
     private GameObject m_combatManager;
 
     public GameObject m_playerPrefab;
-    public GameObject m_enemyPrefab;
+
+    public GameObject m_minotaurPrefab;
+    public GameObject m_wolfPrefab;
 
     private GameObject m_player;
     private GameObject m_pointToGo;
 
     private GameObject m_canvasToCombat;
+
+  
 
     Vector3 playerPosition;
 
@@ -23,6 +28,7 @@ public class Game_Manager : MonoBehaviour
     Vector3 enemy2_respawnPosition = new Vector3(370f, -100f, 0f);
 
     public GameObject enemyOnCombat;
+    public EnemyType enemyOnCombatType;
 
     public int enemyIndex;
     public int totalEnemies;
@@ -48,8 +54,6 @@ public class Game_Manager : MonoBehaviour
         m_canvasToCombat = GameObject.FindGameObjectWithTag("CanvasToBattle");
         m_canvasToCombat.SetActive(false);
 
-
-
         m_player = GameObject.FindGameObjectWithTag("PlayerMap");
         enemyEngaged = false;
 
@@ -70,6 +74,7 @@ public class Game_Manager : MonoBehaviour
             //Enemy info
             enemyIndex = enemyOnCombat.GetComponent<PatrolAI>().enemyID;
             totalEnemies = enemyOnCombat.GetComponent<PatrolAI>().totalEnemies;
+            enemyOnCombatType = enemyOnCombat.GetComponent<PatrolAI>().enemyType;
 
             m_canvasToCombat.SetActive(true);
 
@@ -106,7 +111,7 @@ public class Game_Manager : MonoBehaviour
     }
 
     GameObject RespawnEnemy0() {
-        GameObject enemy = Instantiate(m_enemyPrefab, enemy1_respawnPosition, Quaternion.identity);
+        GameObject enemy = Instantiate(m_minotaurPrefab, enemy1_respawnPosition, Quaternion.identity);
 
         enemy.name = "Enemy0";
         enemy.GetComponent<PatrolAI>().patrolPoints[0] = GameObject.Find("Enemy1PatrolPoint1");
@@ -116,12 +121,14 @@ public class Game_Manager : MonoBehaviour
 
         enemy.GetComponent<PatrolAI>().enemyID = 0;
 
+        enemy.GetComponent<PatrolAI>().enemyType = EnemyType.MINOTAUR;
+
         return enemy;
     }
 
     GameObject RespawnEnemy1()
     {
-        GameObject enemy = Instantiate(m_enemyPrefab, enemy2_respawnPosition, Quaternion.identity);
+        GameObject enemy = Instantiate(m_wolfPrefab, enemy2_respawnPosition, Quaternion.identity);
 
         enemy.name = "Enemy1";
         enemy.GetComponent<PatrolAI>().patrolPoints[0] = GameObject.Find("Enemy2PatrolPoint1");
@@ -130,6 +137,8 @@ public class Game_Manager : MonoBehaviour
         enemy.GetComponent<PatrolAI>().patrolPoints[3] = GameObject.Find("Enemy2PatrolPoint4");
 
         enemy.GetComponent<PatrolAI>().enemyID = 1;
+
+        enemy.GetComponent<PatrolAI>().enemyType = EnemyType.WOLF;
 
         return enemy;
     }

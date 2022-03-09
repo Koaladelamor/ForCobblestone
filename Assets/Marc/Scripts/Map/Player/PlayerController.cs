@@ -53,7 +53,7 @@ public class PlayerController : MonoBehaviour
 
             m_gameManager.GetComponent<Game_Manager>().enemyOnCombat = other.gameObject;
 
-            other.gameObject.GetComponent<CircleCollider2D>().enabled = false;
+            other.gameObject.GetComponent<Collider2D>().enabled = false;
             m_pointToGo.transform.position = transform.position;
         }
     }

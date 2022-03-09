@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 
 
-//enum PAWN_STATUS { IDLE, SEARCH, ATTACK }
+enum PAWN_STATUS { IDLE, SEARCH, ATTACK }
 
 public class PawnController : MonoBehaviour
 {
@@ -237,21 +237,41 @@ public class PawnController : MonoBehaviour
 
     void Search()
     {
-
-        if ((transform.position - m_positionToGo.transform.position).magnitude == 1)
+        if (CompareTag("Archer"))
         {
-            m_currentStep = 0;
-            if (EnemyIsClose()) { 
-                m_state = PAWN_STATUS.ATTACK;
+            if ((transform.position - m_positionToGo.transform.position).magnitude == 1)
+            {
+                m_currentStep = 0;
+                if (EnemyIsClose())
+                {
+                    m_state = PAWN_STATUS.ATTACK;
+                    return;
+                }
+
+                m_state = PAWN_STATUS.IDLE;
+                m_isMyTurn = false;
+                return;
+
+
+            }
+        }
+        else
+        {
+            if ((transform.position - m_positionToGo.transform.position).magnitude == 1)
+            {
+                m_currentStep = 0;
+                if (EnemyIsClose())
+                {
+                    m_state = PAWN_STATUS.ATTACK;
+                    return;
+                }
+
+                m_state = PAWN_STATUS.IDLE;
+                m_isMyTurn = false;
                 return;
             }
-
-            m_state = PAWN_STATUS.IDLE;
-            m_isMyTurn = false;
-            return;
-
-
         }
+        
 
         Vector3 closestDirection = Vector2.zero;
         float closestDistance = 100000;
@@ -321,7 +341,6 @@ public class PawnController : MonoBehaviour
                 m_pawnToAttack.gameObject.GetComponent<PawnController>().m_isAlive = false;
                 Vector2 pawnPosition = GridManager.Instance.ScreenToTilePosition(Camera.main.WorldToScreenPoint(m_pawnToAttack.transform.position));
                 GridManager.Instance.TakePawnFromTile(pawnPosition);
-
 
             }
 

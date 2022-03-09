@@ -9,7 +9,8 @@ public class CombatManager : MonoBehaviour
 
     private GameObject m_gameManager;
 
-    public GameObject m_enemyPrefab;
+    public GameObject m_minotaurPrefab;
+    public GameObject m_wolfPrefab;
 
     private GameObject m_canvasToMap;
 
@@ -18,20 +19,29 @@ public class CombatManager : MonoBehaviour
     Vector2 EnemySpawnTile3 = new Vector2(7, 5);
 
     int turn;
-
     public bool startCombat;
-
     bool turnChanged;
 
     // Start is called before the first frame update
     void Start()
     {
+        m_gameManager = GameObject.FindGameObjectWithTag("GameManager");
+
         m_canvasToMap = GameObject.FindGameObjectWithTag("CanvasToMap");
         m_canvasToMap.SetActive(false);
 
-        m_enemies[0] = Instantiate(m_enemyPrefab, transform.position, Quaternion.identity);
-        m_enemies[1] = Instantiate(m_enemyPrefab, transform.position, Quaternion.identity);
-        m_enemies[2] = Instantiate(m_enemyPrefab, transform.position, Quaternion.identity);
+        if (m_gameManager.GetComponent<Game_Manager>().enemyOnCombatType == EnemyType.MINOTAUR) {
+            m_enemies[0] = Instantiate(m_minotaurPrefab, transform.position, Quaternion.identity);
+            m_enemies[1] = Instantiate(m_minotaurPrefab, transform.position, Quaternion.identity);
+            m_enemies[2] = Instantiate(m_minotaurPrefab, transform.position, Quaternion.identity);
+        } 
+        
+        else if (m_gameManager.GetComponent<Game_Manager>().enemyOnCombatType == EnemyType.WOLF) {
+            m_enemies[0] = Instantiate(m_wolfPrefab, transform.position, Quaternion.identity);
+            m_enemies[1] = Instantiate(m_wolfPrefab, transform.position, Quaternion.identity);
+            m_enemies[2] = Instantiate(m_wolfPrefab, transform.position, Quaternion.identity);
+        }
+
 
         int enemies = m_enemies.Length;
         for (int i = 0; i < enemies; i++)
@@ -52,18 +62,6 @@ public class CombatManager : MonoBehaviour
         GridManager.Instance.TakePawnFromTile(EnemySpawnTile3);
 
         turn = 0;
-
-        m_gameManager = GameObject.FindGameObjectWithTag("GameManager");
-
-
-        /*players[0] = GameObject.Find("AI_Player");
-        players[1] = GameObject.Find("AI_Player2");
-        players[2] = GameObject.Find("AI_Player3");
-
-        enemies[0] = GameObject.Find("AI_Enemy");
-        enemies[1] = GameObject.Find("AI_Enemy2");
-        enemies[2] = GameObject.Find("AI_Enemy3");*/
-
     }
 
     // Update is called once per frame
@@ -73,7 +71,7 @@ public class CombatManager : MonoBehaviour
             Invoke("setCanvasActive", 1f);
         }
 
-        if (startCombat)
+            if (startCombat)
         {
             /*if (turnDone)
             {
@@ -222,7 +220,7 @@ public class CombatManager : MonoBehaviour
         m_canvasToMap.SetActive(true);
     }
 
-    public void setBoolCombat() {
+    public void setBoolCombatToTrue() {
         startCombat = true;
     }
 }

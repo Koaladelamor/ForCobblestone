@@ -19,6 +19,8 @@ public class PatrolAI : MonoBehaviour
     Vector2 previousPosition;
     Vector2 currentPosition;
 
+    public EnemyType enemyType;
+
     // Start is called before the first frame update
     void Start()
     {
