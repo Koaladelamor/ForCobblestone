@@ -24,15 +24,15 @@ public class BattleControl : MonoBehaviour
     public List<BattleUIProperties> BattleUI;
 
     
-    public WarriorsManager.WarriorProperties CurrentBattleTeam;
+    public WarriorProperties CurrentBattleTeam;
   
-    public WarriorsManager.WarriorProperties CurrentBattleWild;
+    public WarriorProperties CurrentBattleWild;
 
     public bool IsWildWarrior;
 
-    private WarriorsManager.WarriorProperties FinalWarrior;
-    public List<WarriorsManager.WarriorProperties> BattleTeam;
-    public List<WarriorsManager.WarriorProperties> BattleWild;
+    private WarriorProperties FinalWarrior;
+    public List<WarriorProperties> BattleTeam;
+    public List<WarriorProperties> BattleWild;
     public void SetUIBattle()
     {
       
@@ -64,26 +64,23 @@ public class BattleControl : MonoBehaviour
 
 
 
-    public void StartBattle(List<WarriorsManager.WarriorProperties> Team, List<WarriorsManager.WarriorProperties> Wilds )
+    public void StartBattle(List<WarriorProperties> Team, List<WarriorProperties> Wilds )
     {
       
-        BattleTeam = new List<WarriorsManager.WarriorProperties>();
+        BattleTeam = new List<WarriorProperties>();
         for (int i = 0; i < Team.Count; i++)
         {
-            BattleTeam.Add(WarriorsManager.CloneWarrior(Team[i]));
+            BattleTeam.Add(Team[i].CloneWarrior());
         }
 
-        BattleWild = new List<WarriorsManager.WarriorProperties>();
+        BattleWild = new List<WarriorProperties>();
         for (int i = 0; i < Wilds.Count; i++)
         {
-            BattleWild.Add(WarriorsManager.CloneWarrior(Wilds[i]));
+            BattleWild.Add(Wilds[i].CloneWarrior());
         }
       
         CurrentBattleTeam = GetWarrior(BattleTeam);
      
-
-
-
         
 
 
@@ -169,7 +166,7 @@ public class BattleControl : MonoBehaviour
     }
     private void LevelUpWarrior(int _exp)
     {
-        FinalWarrior = WarriorsManager.CloneWarrior(CurrentBattleTeam);
+        FinalWarrior = CurrentBattleTeam.CloneWarrior();
 
         
         FinalWarrior.Exp += _exp;
@@ -195,7 +192,7 @@ public class BattleControl : MonoBehaviour
 
     }
 
-    private WarriorsManager.WarriorProperties GetWarrior(List<WarriorsManager.WarriorProperties> Warriors)
+    private WarriorProperties GetWarrior(List<WarriorProperties> Warriors)
     {
         for (int i = 0; i < Warriors.Count; i++)
         {

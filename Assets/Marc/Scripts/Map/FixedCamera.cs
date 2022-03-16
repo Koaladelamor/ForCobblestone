@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class FixedCamera : MonoBehaviour
 {
-    enum Direction { UP, DOWN, LEFT, RIGHT, NONE }
-    Direction mDirection;
     private GameObject target;
     Vector3 offSet = new Vector3(0,0,-10);
     bool fixCameraOnPlayer;
@@ -19,7 +17,6 @@ public class FixedCamera : MonoBehaviour
 
     void Start()
     {
-        mDirection = Direction.NONE;
         cameraSpeed = 325f;
         fixCameraOnPlayer = true;
         target = GameObject.FindGameObjectWithTag("PlayerMap");
