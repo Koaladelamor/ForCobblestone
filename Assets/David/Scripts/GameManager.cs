@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public List<WarriorsManager.WarriorProperties> Team;
-    public List<WarriorsManager.WarriorProperties> BattleWild;
-    public List<WarriorsManager.WarriorProperties> WildWarrior  = new List<WarriorsManager.WarriorProperties>();
+    public List<WarriorProperties> Team;
+    public List<WarriorProperties> BattleWild;
+    public List<WarriorProperties> WildWarrior  = new List<WarriorProperties>();
     void Start()
     {
 
@@ -15,18 +15,18 @@ public class GameManager : MonoBehaviour
         Team.Add(WarriorsManager.GetWarriorById(2,  1));        
     }
 
-    public void SetTeam(List<WarriorsManager.WarriorProperties> BattleTeam)
+    public void SetTeam(List<WarriorProperties> BattleTeam)
     {
         Team = BattleTeam;
     }
-    public void AddWildWarrior(WarriorsManager.WarriorProperties warrior)
+    public void AddWildWarrior(WarriorProperties warrior)
     {
-        WildWarrior = new List<WarriorsManager.WarriorProperties>();
+        WildWarrior = new List<WarriorProperties>();
         WildWarrior.Add(warrior);
         GetComponent<BattleControl>().StartBattle(Team, WildWarrior);   
     }
 
-    public void AddWarrior(WarriorsManager.WarriorProperties _warrior)
+    public void AddWarrior(WarriorProperties _warrior)
     {
         Team.Add(_warrior);
     }

@@ -8,60 +8,7 @@ public class WarriorsManager : MonoBehaviour
     static public int MaxTeam = 3;
     static public int MaxLevel = 100;
 
-
-
-
-    [System.Serializable]
-    public class WarriorProperties
-    {
-        public int WarriorID;
-        public string Name;
-        public int Level;
-
-
-
-        public int BaseLife;
-        public int Life;
-
-        public int TotalLife;
-
-        public int Exp;
-
-        public int NextLevelExp;
-        public int PrevLevelExp;
-
-
-
-        public int BaseAtk;
-        public int BaseDef;
-        public int BaseSpeed;
-
-        public int Atk;
-        public int Def;
-        public int Speed;
-
-        [System.Serializable]
-        public class MySkillProperties
-        {
-            public SkillManager.SkillProperties Skill;
-            public bool Active;
-            public bool CanLearn;
-            public bool Canceled;
-        }
-        public List<MySkillProperties> MySkills;
-
-        public class SkillbyLevelProperties
-        {
-            public SkillManager.SkillProperties Skill;
-            public int Level;
-        }
-        public List<SkillbyLevelProperties> SkillbyLevel;
-
-
-
-
-    }
-
+    
     static public List<WarriorProperties> Warrior = new List<WarriorProperties>()
     {
 
@@ -109,7 +56,7 @@ public class WarriorsManager : MonoBehaviour
         {
             if (Warrior[i].WarriorID == id)
             {
-                WarriorProperties TempWarrior = CloneWarrior(Warrior[i]);
+                WarriorProperties TempWarrior = Warrior[i].CloneWarrior();
 
 
                 if (Level != -1)
@@ -151,38 +98,5 @@ public class WarriorsManager : MonoBehaviour
         int result = ((((Base) * 2) * Level) / 100) + 5;
         return result;
     }
-
-
-
-
-    static public WarriorProperties CloneWarrior(WarriorProperties _warrior)
-    {
-        WarriorProperties NewWarrior = new WarriorProperties()
-        {
-            Name = _warrior.Name,
-
-
-
-            BaseLife = _warrior.BaseLife,
-            BaseAtk = _warrior.BaseAtk,
-            BaseDef = _warrior.BaseDef,
-            BaseSpeed = _warrior.BaseSpeed,
-            Level = _warrior.Level,
-            Life = _warrior.Life,
-            TotalLife = _warrior.TotalLife,
-            Atk = _warrior.Atk,
-            Def = _warrior.Def,
-            Speed = _warrior.Speed,
-            Exp = _warrior.Exp,
-            NextLevelExp = _warrior.NextLevelExp,
-            PrevLevelExp = _warrior.PrevLevelExp
-        };
-
-        return NewWarrior;
-    }
-
-
-
-
 
 }
