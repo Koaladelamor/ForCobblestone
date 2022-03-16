@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class FixedCamera : MonoBehaviour
 {
-    enum Direction { UP, DOWN, LEFT, RIGHT, NONE }
-    Direction mDirection;
+
     private GameObject target;
     Vector3 offSet = new Vector3(0,0,-10);
     bool fixCameraOnPlayer;
@@ -19,7 +18,6 @@ public class FixedCamera : MonoBehaviour
 
     void Start()
     {
-        mDirection = Direction.NONE;
         cameraSpeed = 325f;
         fixCameraOnPlayer = true;
         target = GameObject.FindGameObjectWithTag("PlayerMap");
@@ -29,7 +27,7 @@ public class FixedCamera : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.V))
+        if (InputManager.Instance.CameraButtonPressed)
         {
             fixCameraOnPlayer = !fixCameraOnPlayer;
         }
@@ -50,14 +48,14 @@ public class FixedCamera : MonoBehaviour
 
 
         else {
-            if (Input.GetKey(KeyCode.W))
+            if (InputManager.Instance.UpButtonHold)
             {
                 transform.position += new Vector3(0, cameraSpeed * delta, 0);
                 if (transform.position.y > topBorder) {
                     transform.position = new Vector3(transform.position.x, topBorder, offSet.z);
                 }
             }
-            if (Input.GetKey(KeyCode.S))
+            if (InputManager.Instance.DownButtonHold)
             {
                 transform.position += new Vector3(0, -cameraSpeed * delta, 0);
                 if (transform.position.y < bottomBorder)
@@ -65,7 +63,7 @@ public class FixedCamera : MonoBehaviour
                     transform.position = new Vector3(transform.position.x, bottomBorder, offSet.z);
                 }
             }
-            if (Input.GetKey(KeyCode.A))
+            if (InputManager.Instance.LeftButtonHold)
             {
                 transform.position += new Vector3(-cameraSpeed * delta, 0, 0);
                 if (transform.position.x < leftBorder)
@@ -73,7 +71,7 @@ public class FixedCamera : MonoBehaviour
                     transform.position = new Vector3(leftBorder, transform.position.y, offSet.z);
                 }
             }
-            if (Input.GetKey(KeyCode.D))
+            if (InputManager.Instance.RightButtonHold)
             {
                 transform.position += new Vector3(cameraSpeed * delta, 0, 0);
                 if (transform.position.x > rightBorder)

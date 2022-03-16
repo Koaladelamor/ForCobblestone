@@ -3,53 +3,50 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-
-enum PAWN_STATUS { IDLE, SEARCH, ATTACK }
+public enum PAWN_STATUS { IDLE, SEARCH, ATTACK }
 
 public class PawnController : MonoBehaviour
 {
-    bool draggable;
-    bool isDragged;
+    protected bool draggable;
+    protected bool isDragged;
 
-    private Vector3 mouseDragStartPos;
-    private Vector3 objDragStartPos;
+    protected Vector3 mouseDragStartPos;
+    protected Vector3 objDragStartPos;
 
-    GridManager m_board;
-    Vector3 m_position;
-    Vector2 m_tilePosition;
-    Vector3 m_previousPosition;
+    protected Vector3 m_position;
+    protected Vector2 m_tilePosition;
+    protected Vector3 m_previousPosition;
 
-    Transform m_positionToGo;
+    protected Transform m_positionToGo;
 
-    PAWN_STATUS m_state;
-    Vector3[] m_directions = { Vector3.right, Vector3.down, Vector3.left, Vector3.up };
+    public PAWN_STATUS m_state;
+    protected Vector3[] m_directions = { Vector3.right, Vector3.down, Vector3.left, Vector3.up };
 
-    int current_hp;
-    int max_hp;
-
-    int damage;
+    public int current_hp;
+    protected int max_hp;
+    protected int damage;
 
     public bool m_isAlive;
 
-    float timer = 0f;
-    float waitTime = 0.3f;
+    protected float timer = 0f;
+    protected float timeBetweenSteps = 0.3f;
 
-    int m_maxSteps;
-    int m_currentStep;
+    protected int m_maxSteps;
+    protected int m_currentStep;
 
     public int m_turnOrder;
     public bool m_isMyTurn;
 
-    bool readyToAttack;
+    protected bool readyToAttack;
 
-    PawnController m_pawnToAttack;
+    protected PawnController m_pawnToAttack;
 
-    private GameObject combatManager;
+    protected GameObject combatManager;
 
     public Animator animator;
 
 
-    private void Start()
+    protected void Start()
     {
 
         if (CompareTag("Player"))
@@ -65,7 +62,7 @@ public class PawnController : MonoBehaviour
             draggable = false;
         }
         current_hp = max_hp;
-
+        
         readyToAttack = true;
         m_isAlive = true;
         m_isMyTurn = false;
@@ -77,7 +74,7 @@ public class PawnController : MonoBehaviour
 
         combatManager = GameObject.FindGameObjectWithTag("CombatManager");
     }
-    private void Update()
+    protected void Update()
     {
         timer += Time.deltaTime;
 
@@ -91,7 +88,7 @@ public class PawnController : MonoBehaviour
                 break;
             case PAWN_STATUS.SEARCH:
 
-                if (timer >= waitTime) { 
+                if (timer >= timeBetweenSteps) { 
                     Search();
                     timer = 0;
                 }
@@ -131,7 +128,7 @@ public class PawnController : MonoBehaviour
 
 
     }
-    private void OnMouseDown()
+    protected void OnMouseDown()
     {
         if (draggable)
         {
@@ -140,7 +137,7 @@ public class PawnController : MonoBehaviour
         }
     }
 
-    private void OnMouseDrag()
+    protected void OnMouseDrag()
     {
         if (isDragged)
         {
@@ -152,7 +149,7 @@ public class PawnController : MonoBehaviour
         }
     }
 
-    private void OnMouseUp()
+    protected void OnMouseUp()
     {
         if (isDragged)
         {
@@ -187,92 +184,42 @@ public class PawnController : MonoBehaviour
         }
     }
 
-    void ClosestPawn() {
+    protected virtual void ClosestPawn() {
 
+        float distance;
+        float closestDistance = 999999999;
 
-        if (CompareTag("Player"))
+        for (int i = 0; i < combatManager.GetComponent<CombatManager>().m_enemies.Length; i++)
         {
-            float distance;
-            float closestDistance = 999999999;
-
-            for (int i = 0; i < combatManager.GetComponent<CombatManager>().m_enemies.Length; i++)
-            {
-                if (combatManager.GetComponent<CombatManager>().m_enemies[i].GetComponent<PawnController>().m_isAlive) {
-                    distance = (transform.position - combatManager.GetComponent<CombatManager>().m_enemies[i].transform.position).magnitude;
+            if (combatManager.GetComponent<CombatManager>().m_enemies[i].GetComponent<PawnController>().m_isAlive) {
+                distance = (transform.position - combatManager.GetComponent<CombatManager>().m_enemies[i].transform.position).magnitude;
 
 
-                    if (distance < closestDistance) {
+                if (distance < closestDistance) {
 
-                        closestDistance = distance;
-                        m_positionToGo = combatManager.GetComponent<CombatManager>().m_enemies[i].transform;
-                    }
+                    closestDistance = distance;
+                    m_positionToGo = combatManager.GetComponent<CombatManager>().m_enemies[i].transform;
                 }
             }
-
-        } 
-        
-        else if (CompareTag("Enemy"))
-        {
-            float distance;
-            float closestDistance = 999999999;
-
-            for (int i = 0; i < combatManager.GetComponent<CombatManager>().m_players.Length; i++)
-            {
-                if (combatManager.GetComponent<CombatManager>().m_players[i].GetComponent<PawnController>().m_isAlive)
-                {
-                    distance = (transform.position - combatManager.GetComponent<CombatManager>().m_players[i].transform.position).magnitude;
-
-
-                    if (distance < closestDistance)
-                    {
-
-                        closestDistance = distance;
-                        m_positionToGo = combatManager.GetComponent<CombatManager>().m_players[i].transform;
-                    }
-                }
-            }
-
         }
     }
 
-    void Search()
-    {
-        if (CompareTag("Archer"))
+    protected virtual void Search()
+    {      
+        if ((transform.position - m_positionToGo.transform.position).magnitude == 1)
         {
-            if ((transform.position - m_positionToGo.transform.position).magnitude == 1)
+            m_currentStep = 0;
+            if (EnemyIsClose())
             {
-                m_currentStep = 0;
-                if (EnemyIsClose())
-                {
-                    m_state = PAWN_STATUS.ATTACK;
-                    return;
-                }
-
-                m_state = PAWN_STATUS.IDLE;
-                m_isMyTurn = false;
-                return;
-
-
-            }
-        }
-        else
-        {
-            if ((transform.position - m_positionToGo.transform.position).magnitude == 1)
-            {
-                m_currentStep = 0;
-                if (EnemyIsClose())
-                {
-                    m_state = PAWN_STATUS.ATTACK;
-                    return;
-                }
-
-                m_state = PAWN_STATUS.IDLE;
-                m_isMyTurn = false;
+                m_state = PAWN_STATUS.ATTACK;
                 return;
             }
+
+            m_state = PAWN_STATUS.IDLE;
+            m_isMyTurn = false;
+            return;
         }
         
-
         Vector3 closestDirection = Vector2.zero;
         float closestDistance = 100000;
 
@@ -317,22 +264,16 @@ public class PawnController : MonoBehaviour
         }
     }
 
-    void Attack() {
-        //attack
+    protected virtual void Attack() {
+        //Attack
         if (m_isAlive && m_pawnToAttack.m_isAlive)
         {
-            if (CompareTag("Player"))
-            {
-                damage = Random.Range(2, 10);
-                animator.SetBool("playerAttack", true);
-            }
-            else if (CompareTag("Enemy")) 
-            {
-                damage = Random.Range(0, 16);
-                animator.SetBool("isAttacking", true);
-            }
+            //Damage & Anim
+            damage = Random.Range(2, 10);
+            animator.SetBool("playerAttack", true);
             m_pawnToAttack.current_hp -= damage;
 
+            //Enemy Death
             if (m_pawnToAttack.current_hp < 1)
             {
 
@@ -363,52 +304,29 @@ public class PawnController : MonoBehaviour
     }
 
 
-    public bool EnemyIsClose() {
+    public virtual bool EnemyIsClose() {
         for (int i = 0; i < m_directions.Length; i++)
         {
             Vector2 positionToCheck = GridManager.Instance.ScreenToTilePosition(Camera.main.WorldToScreenPoint(transform.position + m_directions[i]));
 
             if (!GridManager.Instance.IsTileEmpty(positionToCheck)) {
-                if (CompareTag("Player"))
+                
+                for (int j = 0; j < combatManager.GetComponent<CombatManager>().m_enemies.Length; j++)
                 {
-                    for (int j = 0; j < combatManager.GetComponent<CombatManager>().m_enemies.Length; j++)
+                    if (combatManager.GetComponent<CombatManager>().m_enemies[j].GetComponent<PawnController>().m_isAlive)
                     {
-                        if (combatManager.GetComponent<CombatManager>().m_enemies[j].GetComponent<PawnController>().m_isAlive)
+                        Vector2 enemyPosition = combatManager.GetComponent<CombatManager>().m_enemies[j].transform.position;
+
+                        if (positionToCheck == GridManager.Instance.ScreenToTilePosition(Camera.main.WorldToScreenPoint(enemyPosition)))
                         {
-                            Vector2 enemyPosition = combatManager.GetComponent<CombatManager>().m_enemies[j].transform.position;
-
-                            if (positionToCheck == GridManager.Instance.ScreenToTilePosition(Camera.main.WorldToScreenPoint(enemyPosition)))
+                            if (combatManager.GetComponent<CombatManager>().m_enemies[j].GetComponent<PawnController>().m_isAlive)
                             {
-                                if (combatManager.GetComponent<CombatManager>().m_enemies[j].GetComponent<PawnController>().m_isAlive)
-                                {
-                                    m_pawnToAttack = combatManager.GetComponent<CombatManager>().m_enemies[j].GetComponent<PawnController>();
-                                    return true;
-                                }
-                                else return false;
-
-                            }
-                        }
-                    }
-                }
-
-                else if (CompareTag("Enemy"))
-                {
-                    for (int j = 0; j < combatManager.GetComponent<CombatManager>().m_players.Length; j++)
-                    {
-
-                        Vector2 playerPosition = combatManager.GetComponent<CombatManager>().m_players[j].transform.position;
-
-                        if (positionToCheck == GridManager.Instance.ScreenToTilePosition(Camera.main.WorldToScreenPoint(playerPosition)))
-                        {
-                            if (combatManager.GetComponent<CombatManager>().m_players[j].GetComponent<PawnController>().m_isAlive)
-                            {
-                                m_pawnToAttack = combatManager.GetComponent<CombatManager>().m_players[j].GetComponent<PawnController>();
+                                m_pawnToAttack = combatManager.GetComponent<CombatManager>().m_enemies[j].GetComponent<PawnController>();
                                 return true;
                             }
                             else return false;
+
                         }
-
-
                     }
                 }
             }

@@ -18,12 +18,12 @@ public class MapController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !gameIsPaused)
+        if (InputManager.Instance.PauseButtonPressed && !gameIsPaused)
         {
             Time.timeScale = 0;
             m_canvasPause.SetActive(true);
             gameIsPaused = true;
-        } else if (Input.GetKeyDown(KeyCode.Space) && gameIsPaused)
+        } else if (InputManager.Instance.PauseButtonPressed && gameIsPaused)
         {
             Time.timeScale = 1;
             m_canvasPause.SetActive(false);

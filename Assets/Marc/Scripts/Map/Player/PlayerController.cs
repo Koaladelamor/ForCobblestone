@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         m_gameManager = GameObject.FindGameObjectWithTag("GameManager");
-           _visionRange = GetComponentInChildren<PlayerVisionRange>();
+        _visionRange = GetComponentInChildren<PlayerVisionRange>();
         engaged = false;
 
         m_pointToGo = GameObject.FindGameObjectWithTag("PointToGo");

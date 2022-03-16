@@ -16,7 +16,7 @@ public class TargetPosition : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (InputManager.Instance.RightClickButtonPressed || InputManager.Instance.RightClickButtonHold)
         {
             target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             target.z = transform.position.z;
