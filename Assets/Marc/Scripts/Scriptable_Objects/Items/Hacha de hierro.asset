@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0c2873dbeff7514fa67dadfffefe0b8, type: 3}
+  m_Name: Hacha de hierro
+  m_EditorClassIdentifier: 
+  ID: 0
+  iDisplay: {fileID: -1891232040025806531, guid: bcb2ffbd2b9eadf48a91740acb089c4f, type: 3}
+  iType: 0
+  iDescription: 
+  Buffs:
+  - attribute: 0
+    value: 0
+    min: 7
+    max: 18
