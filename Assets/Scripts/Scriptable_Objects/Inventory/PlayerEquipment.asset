@@ -12,66 +12,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 740e1528a89284f46bf979891f776f78, type: 3}
   m_Name: PlayerEquipment
   m_EditorClassIdentifier: 
-  savePath: 
+  savePath: /equipment.Save
   Database: {fileID: 11400000, guid: cdb8a3ceeee4fb545b77a4d489574df9, type: 2}
   Container:
-    Items:
-    - AllowedItems: 03000000
-      parent: {fileID: 0}
+    Slots:
+    - AllowedItems: 
       Item:
-        Name: Coraza
-        ID: 2
-        Buffs:
-        - attribute: 0
-          value: 4
-          min: 1
-          max: 10
-        - attribute: 1
-          value: 5
-          min: 1
-          max: 10
-      Amount: 1
-    - AllowedItems: 0000000001000000
-      parent: {fileID: 0}
+        Name: 
+        ID: -1
+        Buffs: []
+      Amount: 0
+    - AllowedItems: 
       Item:
-        Name: Escudo
-        ID: 3
-        Buffs:
-        - attribute: 0
-          value: 3
-          min: 1
-          max: 10
-      Amount: 1
-    - AllowedItems: 04000000
-      parent: {fileID: 0}
+        Name: 
+        ID: -1
+        Buffs: []
+      Amount: 0
+    - AllowedItems: 
       Item:
-        Name: Botas de cuero
-        ID: 0
-        Buffs:
-        - attribute: 2
-          value: 2
-          min: 1
-          max: 10
-      Amount: 1
-    - AllowedItems: 00000000
-      parent: {fileID: 0}
+        Name: 
+        ID: -1
+        Buffs: []
+      Amount: 0
+    - AllowedItems: 
       Item:
-        Name: Espada oxidada
-        ID: 4
-        Buffs:
-        - attribute: 0
-          value: 2
-          min: 1
-          max: 10
-      Amount: 1
-    - AllowedItems: 02000000
-      parent: {fileID: 0}
+        Name: 
+        ID: -1
+        Buffs: []
+      Amount: 0
+    - AllowedItems: 
       Item:
-        Name: Casco
-        ID: 1
-        Buffs:
-        - attribute: 1
-          value: 8
-          min: 1
-          max: 10
-      Amount: 1
+        Name: 
+        ID: -1
+        Buffs: []
+      Amount: 0

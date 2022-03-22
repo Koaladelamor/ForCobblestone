@@ -15,212 +15,182 @@ MonoBehaviour:
   savePath: /inventory.Save
   Database: {fileID: 11400000, guid: cdb8a3ceeee4fb545b77a4d489574df9, type: 2}
   Container:
-    Items:
+    Slots:
     - AllowedItems: 
-      parent: {fileID: 0}
       Item:
         Name: 
         ID: -1
         Buffs: []
       Amount: 0
     - AllowedItems: 
-      parent: {fileID: 0}
       Item:
         Name: 
         ID: -1
         Buffs: []
       Amount: 0
     - AllowedItems: 
-      parent: {fileID: 0}
       Item:
         Name: 
         ID: -1
         Buffs: []
       Amount: 0
     - AllowedItems: 
-      parent: {fileID: 0}
       Item:
         Name: 
         ID: -1
         Buffs: []
       Amount: 0
     - AllowedItems: 
-      parent: {fileID: 0}
       Item:
         Name: 
         ID: -1
         Buffs: []
       Amount: 0
     - AllowedItems: 
-      parent: {fileID: 0}
       Item:
         Name: 
         ID: -1
         Buffs: []
       Amount: 0
     - AllowedItems: 
-      parent: {fileID: 0}
       Item:
         Name: 
         ID: -1
         Buffs: []
       Amount: 0
     - AllowedItems: 
-      parent: {fileID: 0}
       Item:
         Name: 
         ID: -1
         Buffs: []
       Amount: 0
     - AllowedItems: 
-      parent: {fileID: 0}
       Item:
         Name: 
         ID: -1
         Buffs: []
       Amount: 0
     - AllowedItems: 
-      parent: {fileID: 0}
       Item:
         Name: 
         ID: -1
         Buffs: []
       Amount: 0
     - AllowedItems: 
-      parent: {fileID: 0}
       Item:
         Name: 
         ID: -1
         Buffs: []
       Amount: 0
     - AllowedItems: 
-      parent: {fileID: 0}
       Item:
         Name: 
         ID: -1
         Buffs: []
       Amount: 0
     - AllowedItems: 
-      parent: {fileID: 0}
       Item:
         Name: 
         ID: -1
         Buffs: []
       Amount: 0
     - AllowedItems: 
-      parent: {fileID: 0}
       Item:
         Name: 
         ID: -1
         Buffs: []
       Amount: 0
     - AllowedItems: 
-      parent: {fileID: 0}
       Item:
         Name: 
         ID: -1
         Buffs: []
       Amount: 0
     - AllowedItems: 
-      parent: {fileID: 0}
       Item:
         Name: 
         ID: -1
         Buffs: []
       Amount: 0
     - AllowedItems: 
-      parent: {fileID: 0}
       Item:
         Name: 
         ID: -1
         Buffs: []
       Amount: 0
     - AllowedItems: 
-      parent: {fileID: 0}
       Item:
         Name: 
         ID: -1
         Buffs: []
       Amount: 0
     - AllowedItems: 
-      parent: {fileID: 0}
       Item:
         Name: 
         ID: -1
         Buffs: []
       Amount: 0
     - AllowedItems: 
-      parent: {fileID: 0}
       Item:
         Name: 
         ID: -1
         Buffs: []
       Amount: 0
     - AllowedItems: 
-      parent: {fileID: 0}
       Item:
         Name: 
         ID: -1
         Buffs: []
       Amount: 0
     - AllowedItems: 
-      parent: {fileID: 0}
       Item:
         Name: 
         ID: -1
         Buffs: []
       Amount: 0
     - AllowedItems: 
-      parent: {fileID: 0}
       Item:
         Name: 
         ID: -1
         Buffs: []
       Amount: 0
     - AllowedItems: 
-      parent: {fileID: 0}
       Item:
         Name: 
         ID: -1
         Buffs: []
       Amount: 0
     - AllowedItems: 
-      parent: {fileID: 0}
       Item:
         Name: 
         ID: -1
         Buffs: []
       Amount: 0
     - AllowedItems: 
-      parent: {fileID: 0}
       Item:
         Name: 
         ID: -1
         Buffs: []
       Amount: 0
     - AllowedItems: 
-      parent: {fileID: 0}
       Item:
         Name: 
         ID: -1
         Buffs: []
       Amount: 0
     - AllowedItems: 
-      parent: {fileID: 0}
       Item:
         Name: 
         ID: -1
         Buffs: []
       Amount: 0
     - AllowedItems: 
-      parent: {fileID: 0}
       Item:
         Name: 
         ID: -1
         Buffs: []
       Amount: 0
     - AllowedItems: 
-      parent: {fileID: 0}
       Item:
         Name: 
         ID: -1

@@ -1410,7 +1410,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mInventory: {fileID: 11400000, guid: ba00dc3819d176e4bab839a290215be2, type: 2}
-  player: {fileID: 2060192305}
   slots:
   - {fileID: 1359185754}
   - {fileID: 1303054103}
@@ -5113,7 +5112,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mInventory: {fileID: 11400000, guid: 860dcdb72ae99c345acb9804be87ce7b, type: 2}
-  player: {fileID: 2060192305}
   inventoryPrefab: {fileID: 7168839146040695934, guid: e23dbf758e3a0c94285fa037e4195e64, type: 3}
   X_START: -118
   Y_START: 135
@@ -6746,6 +6744,7 @@ MonoBehaviour:
   - {fileID: 820536254}
   - {fileID: 382769239}
   m_inventory: {fileID: 11400000, guid: 860dcdb72ae99c345acb9804be87ce7b, type: 2}
+  m_equipment: {fileID: 11400000, guid: ba00dc3819d176e4bab839a290215be2, type: 2}
   engaged: 0
 --- !u!212 &2060192306
 SpriteRenderer:

@@ -5,30 +5,46 @@ using TMPro;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.Events;
+using System;
 
 public abstract class UserInterface : MonoBehaviour
 {
     public InventorySystem mInventory;
-    public PlayerController player;
-
     public Dictionary<GameObject, InventorySlot> slotsOnInterface = new Dictionary<GameObject, InventorySlot>();
     // Start is called before the first frame update
     void Start()
     {
-        for (int i = 0; i < mInventory.Container.Items.Length; i++)
+        for (int i = 0; i < mInventory.GetSlots.Length; i++)
         {
-            mInventory.Container.Items[i].parent = this;
+            mInventory.GetSlots[i].parent = this;
+            mInventory.GetSlots[i].OnAfterUpdate += OnSlotUpdate;
         }
         CreateSlots();
         AddEvent(gameObject, EventTriggerType.PointerEnter, delegate { OnEnterInterface(gameObject); });
         AddEvent(gameObject, EventTriggerType.PointerExit, delegate { OnExitInterface(gameObject); });
     }
 
+    private void OnSlotUpdate(InventorySlot _slot)
+    {
+        if (_slot.Item.ID >= 0)
+        {
+            _slot.slotDisplay.transform.GetChild(0).GetComponentInChildren<Image>().sprite = _slot.ItemObject.iDisplay;
+            _slot.slotDisplay.transform.GetChild(0).GetComponentInChildren<Image>().color = new Color(1, 1, 1, 1);
+            _slot.slotDisplay.transform.GetComponentInChildren<TextMeshProUGUI>().text = _slot.Amount == 1 ? "" : _slot.Amount.ToString();
+        }
+        else
+        {
+            _slot.slotDisplay.transform.GetChild(0).GetComponentInChildren<Image>().sprite = null;
+            _slot.slotDisplay.transform.GetChild(0).GetComponentInChildren<Image>().color = new Color(1, 1, 1, 0);
+            _slot.slotDisplay.transform.GetComponentInChildren<TextMeshProUGUI>().text = "";
+        }
+    }
+
     // Update is called once per frame
-    void Update()
+    /*void Update()
     {
         UpdateSlots();
-    }
+    }*/
 
     public abstract void CreateSlots();
 
@@ -61,18 +77,21 @@ public abstract class UserInterface : MonoBehaviour
     }
     public void OnDragStart(GameObject obj)
     {
-        GameObject mouseObject = new GameObject();
-        RectTransform rt = mouseObject.AddComponent<RectTransform>();
-        rt.sizeDelta = new Vector2(50, 50);
-        mouseObject.transform.SetParent(transform.parent);
+        MouseData.tempItemBeingDragged = CreateTempItem(obj);
+    }
+    public GameObject CreateTempItem(GameObject obj) {
+        GameObject tempItem = null;
 
-        if (slotsOnInterface[obj].Item.ID >= 0)
-        {
-            Image img = mouseObject.AddComponent<Image>();
+        if (slotsOnInterface[obj].Item.ID >= 0) {
+            tempItem = new GameObject();
+            RectTransform rt = tempItem.AddComponent<RectTransform>();
+            rt.sizeDelta = new Vector2(50, 50);
+            tempItem.transform.SetParent(transform.parent);
+            Image img = tempItem.AddComponent<Image>();
             img.sprite = slotsOnInterface[obj].ItemObject.iDisplay;
             img.raycastTarget = false;
         }
-        MouseData.tempItemBeingDragged = mouseObject;
+        return tempItem;
     }
     public void OnDragEnd(GameObject obj)
     {

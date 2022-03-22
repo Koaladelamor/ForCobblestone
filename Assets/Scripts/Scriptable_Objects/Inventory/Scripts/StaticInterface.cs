@@ -12,7 +12,7 @@ public class StaticInterface : UserInterface
     {
         slotsOnInterface = new Dictionary<GameObject, InventorySlot>();
 
-        for (int i = 0; i < mInventory.Container.Items.Length; i++)
+        for (int i = 0; i < mInventory.GetSlots.Length; i++)
         {
             var obj = slots[i];
 
@@ -22,7 +22,8 @@ public class StaticInterface : UserInterface
             AddEvent(obj, EventTriggerType.EndDrag, delegate { OnDragEnd(obj); });
             AddEvent(obj, EventTriggerType.Drag, delegate { OnDrag(obj); });
 
-            slotsOnInterface.Add(obj, mInventory.Container.Items[i]);
+            mInventory.GetSlots[i].slotDisplay = obj;
+            slotsOnInterface.Add(obj, mInventory.GetSlots[i]);
         }
     }
 }

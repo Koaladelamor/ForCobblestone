@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     //public MouseItem mouseItem = new MouseItem();
     public GameObject[] itemTest;
     public InventorySystem m_inventory;
+    public InventorySystem m_equipment;
 
     private GameObject m_gameManager;
     private GameObject m_pointToGo;
@@ -35,10 +36,12 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.M)) {
             m_inventory.Save();
+            m_equipment.Save();
         }
         if (Input.GetKeyDown(KeyCode.N))
         {
             m_inventory.Load();
+            m_equipment.Load();
         }
 
         previousPosition = currentPosition;
@@ -47,11 +50,11 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E)) {
             foreach (GameObject _item in itemTest){
-                if (_item)
-                {
-                    ItemToPick item = _item.GetComponent<ItemToPick>(); 
-                    m_inventory.AddItem(new Item(item.item), 1);
-                    Destroy(item.gameObject);
+                if (_item){
+                    ItemToPick item = _item.GetComponent<ItemToPick>();
+                    if (m_inventory.AddItem(new Item(item.item), 1)){
+                        Destroy(item.gameObject);
+                    }
                 }
             }
 
@@ -82,16 +85,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    /*private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Item")) {
-
-        }
-    }*/
-
     private void OnApplicationQuit()
     {
         m_inventory.Container.Clear();
+        m_equipment.Container.Clear();
     }
 
     public bool PartyIsMoving()
