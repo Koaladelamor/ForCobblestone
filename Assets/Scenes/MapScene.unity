@@ -7049,5 +7049,13 @@ PrefabInstance:
       propertyPath: m_minotaurPrefab
       value: 
       objectReference: {fileID: 5097262280705759062, guid: 36e0bf4b9dae60d4bb01e0185fde19c7, type: 3}
+    - target: {fileID: 5999787021463355123, guid: db78988c13b288e4ba3aaea894b3875a, type: 3}
+      propertyPath: m_equipmentDisplay
+      value: 
+      objectReference: {fileID: 475862454}
+    - target: {fileID: 5999787021463355123, guid: db78988c13b288e4ba3aaea894b3875a, type: 3}
+      propertyPath: m_inventoryDisplay
+      value: 
+      objectReference: {fileID: 1346529889}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: db78988c13b288e4ba3aaea894b3875a, type: 3}

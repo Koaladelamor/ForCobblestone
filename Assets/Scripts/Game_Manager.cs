@@ -6,9 +6,16 @@ using UnityEngine.SceneManagement;
 public enum EnemyType  { MINOTAUR, WOLF, WORM }
 public class Game_Manager : MonoBehaviour
 {
-    static Game_Manager m_gameManager = null;
+    static Game_Manager mInstance;
 
-    private GameObject m_combatManager;
+    static public Game_Manager Instance
+    {
+        get { return mInstance; }
+        private set { }
+    }
+
+    public UserInterface m_inventoryDisplay;
+    public UserInterface m_equipmentDisplay;
 
     public GameObject m_playerPrefab;
 
@@ -37,13 +44,15 @@ public class Game_Manager : MonoBehaviour
     public bool enemyEngaged;
     public bool combatIsOver;
 
+    bool inventoryOnScreen = true;
+
 
     // Start is called before the first frame update
     void Start()
     {
         //Singleton
-        if (m_gameManager == null) { 
-            m_gameManager = this;
+        if (mInstance == null) {
+            mInstance = this;
             DontDestroyOnLoad(this);
         }
         else { 
@@ -66,6 +75,19 @@ public class Game_Manager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if (InputManager.Instance.InventoryButtonPressed && inventoryOnScreen)
+        {
+            m_equipmentDisplay.HideInventory();
+            m_inventoryDisplay.HideInventory();
+            inventoryOnScreen = false;
+        }
+        else if (InputManager.Instance.InventoryButtonPressed && !inventoryOnScreen) 
+        {
+            m_equipmentDisplay.ShowInventory();
+            m_inventoryDisplay.ShowInventory();
+            inventoryOnScreen = true;
+        }
 
         if (enemyEngaged) {
             //Save stats

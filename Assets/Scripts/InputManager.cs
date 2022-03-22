@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
-    enum ACTIONS { UP, DOWN, LEFT, RIGHT, MOVE_PARTY, PAUSE, CAMERA, INVENTORY, MENU, NUMBER_OF_ACTIONS };
+    enum ACTIONS { USE, UP, DOWN, LEFT, RIGHT, MOVE_PARTY, PAUSE, CAMERA, INVENTORY, MENU, NUMBER_OF_ACTIONS };
 
     static InputManager mInstance;
 
@@ -14,6 +14,7 @@ public class InputManager : MonoBehaviour
         private set { }
     }
 
+    KeyCode useButton = KeyCode.E;
     KeyCode upButton = KeyCode.W;
     KeyCode downButton = KeyCode.S;
     KeyCode leftButton = KeyCode.A;
@@ -49,6 +50,10 @@ public class InputManager : MonoBehaviour
             buttonsHold[i] = false;
             buttonsReleased[i] = false;
         }
+
+        if (Input.GetKeyDown(useButton)) { buttonsPressed[(int)ACTIONS.USE] = true; }
+        if (Input.GetKey(useButton)) { buttonsHold[(int)ACTIONS.USE] = true; }
+        if (Input.GetKeyUp(useButton)) { buttonsReleased[(int)ACTIONS.USE] = true; }
 
         if (Input.GetKeyDown(upButton)) { buttonsPressed[(int)ACTIONS.UP] = true; }
         if (Input.GetKey(upButton)) { buttonsHold[(int)ACTIONS.UP] = true; }
@@ -87,6 +92,11 @@ public class InputManager : MonoBehaviour
         if (Input.GetKeyUp(menuButton)) { buttonsReleased[(int)ACTIONS.MENU] = true; }
 
     }
+
+
+    public bool UseButtonPressed { get { return buttonsPressed[(int)ACTIONS.USE]; } }
+    public bool UseButtonHold { get { return buttonsHold[(int)ACTIONS.USE]; } }
+    public bool UseButtonReleased { get { return buttonsReleased[(int)ACTIONS.USE]; } }
 
     public bool UpButtonPressed { get { return buttonsPressed[(int)ACTIONS.UP]; } }
     public bool UpButtonHold { get { return buttonsHold[(int)ACTIONS.UP]; } }

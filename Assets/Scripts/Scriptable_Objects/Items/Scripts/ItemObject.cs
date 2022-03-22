@@ -18,6 +18,7 @@ public abstract class ItemObject : ScriptableObject
         Item newItem = new Item(this);
         return newItem;
     }
+    
 }
 
 

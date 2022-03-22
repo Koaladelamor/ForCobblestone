@@ -40,6 +40,28 @@ public abstract class UserInterface : MonoBehaviour
         }
     }
 
+    public void ShowInventory()
+    {
+        GetComponent<Image>().enabled = true;
+        Image[] imgs = GetComponentsInChildren<Image>();
+        foreach (Image img in imgs)
+        {
+            img.GetComponent<Image>().enabled = true;
+        }
+    }
+    public void HideInventory() 
+    {
+        GetComponent<Image>().enabled = false;
+        for (int i = 0; i < mInventory.GetSlots.Length; i++)
+        {
+            Image[] imgs = GetComponentsInChildren<Image>();
+            foreach (Image img in imgs)
+            {
+                img.GetComponent<Image>().enabled = false;
+            }
+        }
+    }
+
     // Update is called once per frame
     /*void Update()
     {

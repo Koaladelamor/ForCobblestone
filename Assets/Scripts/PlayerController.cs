@@ -44,6 +44,7 @@ public class PlayerController : MonoBehaviour
             m_equipment.Load();
         }
 
+
         previousPosition = currentPosition;
         currentPosition = transform.position;
         FlipSprites();

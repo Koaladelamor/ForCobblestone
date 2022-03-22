@@ -10,37 +10,37 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 740e1528a89284f46bf979891f776f78, type: 3}
-  m_Name: PlayerEquipment
+  m_Name: Grodnar_Equipment
   m_EditorClassIdentifier: 
-  savePath: /equipment.Save
+  savePath: /GrodnarEquipment.Save
   Database: {fileID: 11400000, guid: cdb8a3ceeee4fb545b77a4d489574df9, type: 2}
   Container:
     Slots:
-    - AllowedItems: 
+    - AllowedItems: 03000000
       Item:
         Name: 
         ID: -1
         Buffs: []
       Amount: 0
-    - AllowedItems: 
+    - AllowedItems: 0100000000000000
       Item:
         Name: 
         ID: -1
         Buffs: []
       Amount: 0
-    - AllowedItems: 
+    - AllowedItems: 04000000
       Item:
         Name: 
         ID: -1
         Buffs: []
       Amount: 0
-    - AllowedItems: 
+    - AllowedItems: 00000000
       Item:
         Name: 
         ID: -1
         Buffs: []
       Amount: 0
-    - AllowedItems: 
+    - AllowedItems: 02000000
       Item:
         Name: 
         ID: -1
