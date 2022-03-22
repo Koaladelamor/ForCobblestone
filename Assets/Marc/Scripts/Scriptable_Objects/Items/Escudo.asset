@@ -9,16 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0c2873dbeff7514fa67dadfffefe0b8, type: 3}
-  m_Name: Hacha de hierro
+  m_Script: {fileID: 11500000, guid: 0c31f96cf8be3994185a292c5af1a44e, type: 3}
+  m_Name: Escudo
   m_EditorClassIdentifier: 
   stackable: 0
-  iDisplay: {fileID: -1891232040025806531, guid: bcb2ffbd2b9eadf48a91740acb089c4f, type: 3}
-  iType: 0
+  iDisplay: {fileID: 7937512970604519235, guid: bcb2ffbd2b9eadf48a91740acb089c4f, type: 3}
+  iType: 1
   iDescription: 
   data:
-    Name: 
-    ID: 5
+    Name: Escudo
+    ID: 3
     Buffs:
     - attribute: 0
       value: 0

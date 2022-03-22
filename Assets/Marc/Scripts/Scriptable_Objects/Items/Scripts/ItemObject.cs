@@ -2,16 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ItemType { WEAPON, GEAR, CONSUMABLE, TRADE, LAST_NO_USE };
+public enum ItemType { WEAPON, SHIELD, HELMET, CHEST, BOOTS, CONSUMABLE, TRADE, LAST_NO_USE };
 
 public enum Attribute { STRENGTH, STAMINA, AGILITY };
 public abstract class ItemObject : ScriptableObject
 {
-    public int ID;
+    public bool stackable;
     public Sprite iDisplay;
     public ItemType iType;
-    [TextArea(5, 10)] public string iDescription;
-    public ItemBuff[] Buffs;
+    [TextArea(5, 10)] 
+    public string iDescription;
+    public Item data = new Item();
     public Item CreateItem()
     {
         Item newItem = new Item(this);
@@ -26,16 +27,22 @@ public class Item
 {
 
     public string Name;
-    public int ID;
+    public int ID = -1;
     public ItemBuff[] Buffs;
+
+    public Item() {
+        Name = "";
+        ID = -1;
+    }
+
     public Item(ItemObject _item) {
         Name = _item.name;
-        ID = _item.ID;
-        Buffs = new ItemBuff[_item.Buffs.Length];
+        ID = _item.data.ID;
+        Buffs = new ItemBuff[_item.data.Buffs.Length];
         for (int i = 0; i < Buffs.Length; i++) {
-            Buffs[i] = new ItemBuff(_item.Buffs[i].min, _item.Buffs[i].max)
+            Buffs[i] = new ItemBuff(_item.data.Buffs[i].min, _item.data.Buffs[i].max)
             {
-                attribute = _item.Buffs[i].attribute
+                attribute = _item.data.Buffs[i].attribute
             };
 
         }

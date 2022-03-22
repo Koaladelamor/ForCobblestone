@@ -9,18 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0c2873dbeff7514fa67dadfffefe0b8, type: 3}
-  m_Name: Hacha de hierro
+  m_Script: {fileID: 11500000, guid: 566c4e15d7a11454191d67bf7bf4f89a, type: 3}
+  m_Name: "Poci\xF3n de salud"
   m_EditorClassIdentifier: 
-  stackable: 0
-  iDisplay: {fileID: -1891232040025806531, guid: bcb2ffbd2b9eadf48a91740acb089c4f, type: 3}
-  iType: 0
+  stackable: 1
+  iDisplay: {fileID: -8814914727502190950, guid: bcb2ffbd2b9eadf48a91740acb089c4f, type: 3}
+  iType: 5
   iDescription: 
   data:
-    Name: 
-    ID: 5
-    Buffs:
-    - attribute: 0
-      value: 0
-      min: 1
-      max: 10
+    Name: Pocion de vida
+    ID: 7
+    Buffs: []

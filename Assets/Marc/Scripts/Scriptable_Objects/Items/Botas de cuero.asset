@@ -9,15 +9,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d6aeb6cebc58df4380dd4e4135aa470, type: 3}
+  m_Script: {fileID: 11500000, guid: b562def6800f28645b58a0fa17abb54c, type: 3}
   m_Name: Botas de cuero
   m_EditorClassIdentifier: 
-  ID: 2
+  stackable: 0
   iDisplay: {fileID: -6983620457242294006, guid: bcb2ffbd2b9eadf48a91740acb089c4f, type: 3}
-  iType: 1
+  iType: 4
   iDescription: 
-  Buffs:
-  - attribute: 2
-    value: 0
-    min: 10
-    max: 20
+  data:
+    Name: Botas
+    ID: 0
+    Buffs:
+    - attribute: 2
+      value: 0
+      min: 1
+      max: 10

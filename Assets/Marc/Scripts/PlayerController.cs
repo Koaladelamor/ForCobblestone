@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    //public MouseItem mouseItem = new MouseItem();
     public GameObject[] itemTest;
     public InventorySystem m_inventory;
+
     private GameObject m_gameManager;
     private GameObject m_pointToGo;
     public bool engaged;
@@ -44,7 +46,6 @@ public class PlayerController : MonoBehaviour
         FlipSprites();
 
         if (Input.GetKeyDown(KeyCode.E)) {
-            //ItemToPick item = itemTest[0].GetComponent<ItemToPick>();
             foreach (GameObject _item in itemTest){
                 if (_item)
                 {
@@ -90,7 +91,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        m_inventory.Container.Items.Clear();
+        m_inventory.Container.Clear();
     }
 
     public bool PartyIsMoving()

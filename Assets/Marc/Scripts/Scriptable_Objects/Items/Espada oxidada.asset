@@ -12,12 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0c2873dbeff7514fa67dadfffefe0b8, type: 3}
   m_Name: Espada oxidada
   m_EditorClassIdentifier: 
-  ID: 1
+  stackable: 0
   iDisplay: {fileID: 7316420773922359929, guid: bcb2ffbd2b9eadf48a91740acb089c4f, type: 3}
   iType: 0
   iDescription: 
-  Buffs:
-  - attribute: 0
-    value: 0
-    min: 4
-    max: 8
+  data:
+    Name: Espada
+    ID: 4
+    Buffs:
+    - attribute: 0
+      value: 0
+      min: 1
+      max: 10
