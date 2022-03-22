@@ -12,9 +12,18 @@ public class MapToCombatSound : MonoBehaviour
     public AudioClip buttonSelected;
     public AudioClip buttonPressed;
 
+    private void OnMouseEnter()
+    {
+        SelectedSound();
+    }
 
-    
+    private void OnMouseUp()
+    {
+        MouseUpSound();
+    }
+
     public void SelectedSound() {
+
         buttonSounds.clip = buttonSelected;
         buttonSounds.Play();
     }
