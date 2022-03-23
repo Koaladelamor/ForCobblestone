@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public enum EnemyType  { MINOTAUR, WOLF, WORM }
 public class Game_Manager : MonoBehaviour
@@ -15,7 +16,12 @@ public class Game_Manager : MonoBehaviour
     }
 
     public UserInterface m_inventoryDisplay;
-    public UserInterface m_equipmentDisplay;
+    public UserInterface m_GrodnarEquipmentDisplay;
+    public UserInterface m_LanstarEquipmentDisplay;
+    public UserInterface m_SigfridEquipmentDisplay;
+    public UserInterface m_currentEquipmentInterface;
+
+    public Button[] equipmentButtons;
 
     public GameObject m_playerPrefab;
 
@@ -44,22 +50,26 @@ public class Game_Manager : MonoBehaviour
     public bool enemyEngaged;
     public bool combatIsOver;
 
-    bool inventoryOnScreen = true;
+    bool inventoryOnScreen = false;
 
+    private void Awake()
+    {
+        //Singleton
+        if (mInstance == null)
+        {
+            mInstance = this;
+            DontDestroyOnLoad(this);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        //Singleton
-        if (mInstance == null) {
-            mInstance = this;
-            DontDestroyOnLoad(this);
-        }
-        else { 
-            Destroy(this.gameObject);
-            return;
-        }
-
         m_canvasToCombat = GameObject.FindGameObjectWithTag("CanvasToBattle");
         m_canvasToCombat.SetActive(false);
 
@@ -69,7 +79,11 @@ public class Game_Manager : MonoBehaviour
         RespawnEnemy0();
         RespawnEnemy1();
 
-
+        m_currentEquipmentInterface = m_GrodnarEquipmentDisplay;
+        foreach (Button button in equipmentButtons)
+        {
+            button.gameObject.SetActive(false);
+        }
     }
 
     // Update is called once per frame
@@ -78,13 +92,15 @@ public class Game_Manager : MonoBehaviour
 
         if (InputManager.Instance.InventoryButtonPressed && inventoryOnScreen)
         {
-            m_equipmentDisplay.HideInventory();
-            m_inventoryDisplay.HideInventory();
-            inventoryOnScreen = false;
+            HideInventories();
         }
         else if (InputManager.Instance.InventoryButtonPressed && !inventoryOnScreen) 
         {
-            m_equipmentDisplay.ShowInventory();
+            //m_GrodnarEquipmentDisplay.ShowInventory();
+            //m_LanstarEquipmentDisplay.ShowInventory();
+            //m_SigfridEquipmentDisplay.ShowInventory();
+            ShowButtons();
+            m_currentEquipmentInterface.ShowInventory();
             m_inventoryDisplay.ShowInventory();
             inventoryOnScreen = true;
         }
@@ -122,6 +138,53 @@ public class Game_Manager : MonoBehaviour
 
 
 
+        }
+    }
+
+    public void HideInventories() {
+        HideButtons();
+        m_GrodnarEquipmentDisplay.HideInventory();
+        m_LanstarEquipmentDisplay.HideInventory();
+        m_SigfridEquipmentDisplay.HideInventory();
+        m_inventoryDisplay.HideInventory();
+        inventoryOnScreen = false;
+    }
+
+    public void GrodnarEquipmentDisplay() {
+        if (m_currentEquipmentInterface == m_GrodnarEquipmentDisplay) { return; }
+        m_currentEquipmentInterface.HideInventory();
+        m_currentEquipmentInterface = m_GrodnarEquipmentDisplay;
+        m_currentEquipmentInterface.ShowInventory();
+    }
+
+    public void LanstarEquipmentDisplay()
+    {
+        if (m_currentEquipmentInterface == m_LanstarEquipmentDisplay) { return; }
+        m_currentEquipmentInterface.HideInventory();
+        m_currentEquipmentInterface = m_LanstarEquipmentDisplay;
+        m_currentEquipmentInterface.ShowInventory();
+    }
+
+    public void SigfridEquipmentDisplay()
+    {
+        if (m_currentEquipmentInterface == m_SigfridEquipmentDisplay) { return; }
+        m_currentEquipmentInterface.HideInventory();
+        m_currentEquipmentInterface = m_SigfridEquipmentDisplay;
+        m_currentEquipmentInterface.ShowInventory();
+    }
+
+    public void HideButtons() {
+        foreach (Button button in equipmentButtons)
+        {
+            button.gameObject.SetActive(false);
+        }
+    }
+
+    public void ShowButtons()
+    {
+        foreach (Button button in equipmentButtons)
+        {
+            button.gameObject.SetActive(true);
         }
     }
 
