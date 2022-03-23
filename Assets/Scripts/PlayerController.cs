@@ -6,8 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     //public MouseItem mouseItem = new MouseItem();
     public GameObject[] itemTest;
-    public InventorySystem m_inventory;
-    public InventorySystem m_equipment;
+    public InventoryObject m_inventory;
 
     private GameObject m_gameManager;
     private GameObject m_pointToGo;
@@ -34,16 +33,6 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.M)) {
-            m_inventory.Save();
-            m_equipment.Save();
-        }
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            m_inventory.Load();
-            m_equipment.Load();
-        }
-
 
         previousPosition = currentPosition;
         currentPosition = transform.position;
@@ -84,12 +73,6 @@ public class PlayerController : MonoBehaviour
             engaged = false;
 
         }
-    }
-
-    private void OnApplicationQuit()
-    {
-        m_inventory.Container.Clear();
-        m_equipment.Container.Clear();
     }
 
     public bool PartyIsMoving()

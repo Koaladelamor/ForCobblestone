@@ -9,9 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 740e1528a89284f46bf979891f776f78, type: 3}
+  m_Script: {fileID: 11500000, guid: be8bb00b692958c4da326c78af43920b, type: 3}
   m_Name: Grodnar_Equipment
   m_EditorClassIdentifier: 
+  type: 1
   savePath: /GrodnarEquipment.Save
   Database: {fileID: 11400000, guid: cdb8a3ceeee4fb545b77a4d489574df9, type: 2}
   Container:

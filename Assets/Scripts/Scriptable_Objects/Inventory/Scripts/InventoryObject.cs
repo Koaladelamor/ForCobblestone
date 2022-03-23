@@ -6,8 +6,11 @@ using System.IO;
 using UnityEditor;
 using System.Runtime.Serialization;
 
+public enum InventoryType { MAIN, GRODNAR, LANSTAR, SIGFRID, TRADE, CHEST, LAST_NO_USE};
+
 [CreateAssetMenu(fileName = "New Inventory", menuName = "Inventory System/Inventory")]
-public class InventorySystem : ScriptableObject {
+public class InventoryObject : ScriptableObject {
+    public InventoryType type;
     public string savePath;
     public ItemDB Database;
     public Inventory Container;

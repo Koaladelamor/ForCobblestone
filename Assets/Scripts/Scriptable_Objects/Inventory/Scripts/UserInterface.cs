@@ -9,7 +9,7 @@ using System;
 
 public abstract class UserInterface : MonoBehaviour
 {
-    public InventorySystem mInventory;
+    public InventoryObject mInventory;
     public Dictionary<GameObject, InventorySlot> slotsOnInterface = new Dictionary<GameObject, InventorySlot>();
     // Start is called before the first frame update
     void Start()
@@ -22,7 +22,6 @@ public abstract class UserInterface : MonoBehaviour
         CreateSlots();
         AddEvent(gameObject, EventTriggerType.PointerEnter, delegate { OnEnterInterface(gameObject); });
         AddEvent(gameObject, EventTriggerType.PointerExit, delegate { OnExitInterface(gameObject); });
-        //HideInventory();
 
     }
 
@@ -128,6 +127,9 @@ public abstract class UserInterface : MonoBehaviour
         if (MouseData.slotHoveredOver) {
             InventorySlot mouseHoverSlotData = MouseData.interfaceMouseIsOver.slotsOnInterface[MouseData.slotHoveredOver];
             mInventory.SwapItems(slotsOnInterface[obj], mouseHoverSlotData);
+            /*if (mInventory.type == InventoryType.EQUIPMENT || mouseHoverSlotData.parent.mInventory.type == InventoryType.EQUIPMENT) { 
+                
+            }*/
         }
     }
     public void OnDrag(GameObject obj)

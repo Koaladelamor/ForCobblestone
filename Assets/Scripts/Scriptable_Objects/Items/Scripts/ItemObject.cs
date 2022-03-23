@@ -4,7 +4,6 @@ using UnityEngine;
 
 public enum ItemType { WEAPON, SHIELD, HELMET, CHEST, BOOTS, CONSUMABLE, TRADE, LAST_NO_USE };
 
-public enum Attribute { STRENGTH, STAMINA, AGILITY };
 public abstract class ItemObject : ScriptableObject
 {
     public bool stackable;
@@ -54,7 +53,7 @@ public class Item
 [System.Serializable]
 public class ItemBuff 
 {
-    public Attribute attribute;
+    public Attributes attribute;
     public int value;
     public int min;
     public int max;

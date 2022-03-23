@@ -21,7 +21,18 @@ public class Game_Manager : MonoBehaviour
     public UserInterface m_SigfridEquipmentDisplay;
     public UserInterface m_currentEquipmentInterface;
 
+    public InventoryObject m_inventory;
+
+    public InventoryObject m_GrodnarEquipmentInventory;
+    public InventoryObject m_LanstarEquipmentInventory;
+    public InventoryObject m_SigfridEquipmentInventory;
+
     public Button[] equipmentButtons;
+
+    public List<Stat> GrodnarStats = new List<Stat>();
+    public List<Stat> LanstarStats = new List<Stat>();
+    public List<Stat> SigfridStats = new List<Stat>();
+
 
     public GameObject m_playerPrefab;
 
@@ -80,15 +91,143 @@ public class Game_Manager : MonoBehaviour
         RespawnEnemy1();
 
         m_currentEquipmentInterface = m_GrodnarEquipmentDisplay;
-        foreach (Button button in equipmentButtons)
+
+        SetPlayerStats(GrodnarStats, 25, 40, 5, 1);
+        SetPlayerStats(LanstarStats, 38, 30, 15, 15);
+        SetPlayerStats(SigfridStats, 15, 20, 40, 30);
+
+        for (int i = 0; i < m_GrodnarEquipmentInventory.GetSlots.Length; i++)
         {
-            button.gameObject.SetActive(false);
+            m_GrodnarEquipmentInventory.GetSlots[i].OnBeforeUpdate += OnBeforeSlotUpdate;
+            m_GrodnarEquipmentInventory.GetSlots[i].OnAfterUpdate += OnAfterSlotUpdate;
+            m_LanstarEquipmentInventory.GetSlots[i].OnBeforeUpdate += OnBeforeSlotUpdate;
+            m_LanstarEquipmentInventory.GetSlots[i].OnAfterUpdate += OnAfterSlotUpdate;
+            m_SigfridEquipmentInventory.GetSlots[i].OnBeforeUpdate += OnBeforeSlotUpdate;
+            m_SigfridEquipmentInventory.GetSlots[i].OnAfterUpdate += OnAfterSlotUpdate;
+        }
+
+
+        Invoke("HideInventories", 0.02f);
+    }
+    public void OnBeforeSlotUpdate(InventorySlot _slot)
+    {
+        if(_slot.ItemObject == null) { return; }
+
+        switch (_slot.parent.mInventory.type)
+        {
+            case InventoryType.MAIN:
+                break;
+            case InventoryType.GRODNAR:
+                print(string.Concat("Removed ", _slot.ItemObject, " on ", _slot.parent.mInventory.type));
+                RemoveItemModifier(_slot.Item, GrodnarStats);
+                break;
+            case InventoryType.LANSTAR:
+                print(string.Concat("Removed ", _slot.ItemObject, " on ", _slot.parent.mInventory.type));
+                RemoveItemModifier(_slot.Item, LanstarStats);
+                break;
+            case InventoryType.SIGFRID:
+                print(string.Concat("Removed ", _slot.ItemObject, " on ", _slot.parent.mInventory.type));
+                RemoveItemModifier(_slot.Item, SigfridStats);
+                break;
+            case InventoryType.TRADE:
+                break;
+            case InventoryType.CHEST:
+                break;
+            case InventoryType.LAST_NO_USE:
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void OnAfterSlotUpdate(InventorySlot _slot)
+    {
+        if (_slot.ItemObject == null) { return; }
+
+        switch (_slot.parent.mInventory.type)
+        {
+            case InventoryType.MAIN:
+                break;
+            case InventoryType.GRODNAR:
+                print(string.Concat("Placed ", _slot.ItemObject, " on ", _slot.parent.mInventory.type));
+                AddItemModifier(_slot.Item, GrodnarStats);
+                break;
+            case InventoryType.LANSTAR:
+                print(string.Concat("Placed ", _slot.ItemObject, " on ", _slot.parent.mInventory.type));
+                AddItemModifier(_slot.Item, LanstarStats);
+                break;
+            case InventoryType.SIGFRID:
+                print(string.Concat("Placed ", _slot.ItemObject, " on ", _slot.parent.mInventory.type));
+                AddItemModifier(_slot.Item, SigfridStats);
+                break;
+            case InventoryType.TRADE:
+                break;
+            case InventoryType.CHEST:
+                break;
+            case InventoryType.LAST_NO_USE:
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void AttributeModified(Stat _stat) {
+        Debug.Log(string.Concat(_stat.attribute, " was updated. Value is ", _stat.value));
+    }
+
+    public void ShowStats(List<Stat> playerStats) {
+        for (int i = 0; i < playerStats.Count; i++)
+        {
+            print(string.Concat(playerStats[i].attribute, " ", playerStats[i].value));
+        }
+    }
+    public void AddItemModifier(Item _item, List<Stat> _stat)
+    {
+        for (int i = 0; i < _stat.Count; i++)
+        {
+            for (int j = 0; j < _item.Buffs.Length; j++)
+            {
+                if (_stat[i].attribute == _item.Buffs[j].attribute)
+                {
+                    _stat[i].value += _item.Buffs[j].value;
+                    AttributeModified(_stat[i]);
+                }
+            }
+        }
+    }
+
+    public void RemoveItemModifier(Item _item, List<Stat> _stat)
+    {
+        for (int i = 0; i < _stat.Count; i++)
+        {
+            for (int j = 0; j < _item.Buffs.Length; j++)
+            {
+                if (_stat[i].attribute == _item.Buffs[j].attribute)
+                {
+                    _stat[i].value -= _item.Buffs[j].value;
+                    AttributeModified(_stat[i]);
+                }
+            }
         }
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            m_inventory.Save();
+            m_GrodnarEquipmentInventory.Save();
+            m_LanstarEquipmentInventory.Save();
+            m_SigfridEquipmentInventory.Save();
+        }
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            m_inventory.Load();
+            m_GrodnarEquipmentInventory.Load();
+            m_LanstarEquipmentInventory.Load();
+            m_SigfridEquipmentInventory.Load();
+        }
 
         if (InputManager.Instance.InventoryButtonPressed && inventoryOnScreen)
         {
@@ -100,7 +239,7 @@ public class Game_Manager : MonoBehaviour
             //m_LanstarEquipmentDisplay.ShowInventory();
             //m_SigfridEquipmentDisplay.ShowInventory();
             ShowButtons();
-            m_currentEquipmentInterface.ShowInventory();
+            m_currentEquipmentInterface.gameObject.SetActive(true);
             m_inventoryDisplay.ShowInventory();
             inventoryOnScreen = true;
         }
@@ -141,36 +280,52 @@ public class Game_Manager : MonoBehaviour
         }
     }
 
+    public void SetPlayerStats(List<Stat> statsList, int strenghtInt, int staminaInt, int agilityInt, int intelligenceInt) {
+        statsList.Add(new Stat(Attributes.STRENGHT, strenghtInt));
+        statsList.Add(new Stat(Attributes.STAMINA, staminaInt));
+        statsList.Add(new Stat(Attributes.AGILITY, agilityInt));
+        statsList.Add(new Stat(Attributes.INTELLIGENCE, intelligenceInt));
+    }
+
     public void HideInventories() {
         HideButtons();
-        m_GrodnarEquipmentDisplay.HideInventory();
-        m_LanstarEquipmentDisplay.HideInventory();
-        m_SigfridEquipmentDisplay.HideInventory();
+        m_GrodnarEquipmentDisplay.gameObject.SetActive(false);
+        m_LanstarEquipmentDisplay.gameObject.SetActive(false);
+        m_SigfridEquipmentDisplay.gameObject.SetActive(false);
         m_inventoryDisplay.HideInventory();
         inventoryOnScreen = false;
     }
 
     public void GrodnarEquipmentDisplay() {
-        if (m_currentEquipmentInterface == m_GrodnarEquipmentDisplay) { return; }
-        m_currentEquipmentInterface.HideInventory();
+        if (m_currentEquipmentInterface == m_GrodnarEquipmentDisplay) {
+            m_currentEquipmentInterface.gameObject.SetActive(true);
+            return; 
+        }
+        m_currentEquipmentInterface.gameObject.SetActive(false);
         m_currentEquipmentInterface = m_GrodnarEquipmentDisplay;
-        m_currentEquipmentInterface.ShowInventory();
+        m_currentEquipmentInterface.gameObject.SetActive(true);
     }
 
     public void LanstarEquipmentDisplay()
     {
-        if (m_currentEquipmentInterface == m_LanstarEquipmentDisplay) { return; }
-        m_currentEquipmentInterface.HideInventory();
+        if (m_currentEquipmentInterface == m_LanstarEquipmentDisplay) {
+            m_currentEquipmentInterface.gameObject.SetActive(true);
+            return; 
+        }
+        m_currentEquipmentInterface.gameObject.SetActive(false);
         m_currentEquipmentInterface = m_LanstarEquipmentDisplay;
-        m_currentEquipmentInterface.ShowInventory();
+        m_currentEquipmentInterface.gameObject.SetActive(true);
     }
 
     public void SigfridEquipmentDisplay()
     {
-        if (m_currentEquipmentInterface == m_SigfridEquipmentDisplay) { return; }
-        m_currentEquipmentInterface.HideInventory();
+        if (m_currentEquipmentInterface == m_SigfridEquipmentDisplay) {
+            m_currentEquipmentInterface.gameObject.SetActive(true);
+            return;
+        }
+        m_currentEquipmentInterface.gameObject.SetActive(false);
         m_currentEquipmentInterface = m_SigfridEquipmentDisplay;
-        m_currentEquipmentInterface.ShowInventory();
+        m_currentEquipmentInterface.gameObject.SetActive(true);
     }
 
     public void HideButtons() {
@@ -187,7 +342,13 @@ public class Game_Manager : MonoBehaviour
             button.gameObject.SetActive(true);
         }
     }
-
+    private void OnApplicationQuit()
+    {
+        m_inventory.Clear();
+        m_GrodnarEquipmentInventory.Clear();
+        m_LanstarEquipmentInventory.Clear();
+        m_SigfridEquipmentInventory.Clear();
+    }
     void SetupPlayer() {
         m_player = GameObject.FindGameObjectWithTag("PlayerMap");
         m_pointToGo = GameObject.FindGameObjectWithTag("PointToGo");
