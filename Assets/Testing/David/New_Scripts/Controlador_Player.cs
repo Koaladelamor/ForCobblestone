@@ -26,9 +26,9 @@ public class Controlador_Player : MonoBehaviour
         {
             Debug.Log("entra");
             engaged = true;
-            m_gameManager.GetComponent<Game_Manager>().enemyEngaged = true;
+            m_gameManager.GetComponent<GameManager>().enemyEngaged = true;
 
-            m_gameManager.GetComponent<Game_Manager>().enemyOnCombat = other.gameObject;
+            m_gameManager.GetComponent<GameManager>().enemyOnCombat = other.gameObject;
 
 
         }

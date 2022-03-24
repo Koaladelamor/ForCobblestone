@@ -14,7 +14,7 @@ public class MapToCombat : MonoBehaviour
 
     private void Update()
     {
-        if (gameManager.GetComponent<Game_Manager>().enemyEngaged == true) {
+        if (gameManager.GetComponent<GameManager>().enemyEngaged == true) {
             this.gameObject.SetActive(true);
 
         }

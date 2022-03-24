@@ -5,7 +5,8 @@ using UnityEngine.UI;
 
 public class StatsScreen : MonoBehaviour
 {
-
+    public Text healthValue;
+    public Text damageValue;
     public Text strengthValue;
     public Text staminaValue;
     public Text agilityValue;
@@ -14,7 +15,7 @@ public class StatsScreen : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Invoke("DisplayGrodnarStats", 0.2f);
+        Invoke("DisplayGrodnarStats", 1f);
     }
 
     // Update is called once per frame
@@ -42,22 +43,32 @@ public class StatsScreen : MonoBehaviour
     }
 
     public void DisplayGrodnarStats() {
-        DisplayStats(Game_Manager.Instance.GetGrodnarStats());
+        DisplayStats(GameStats.Instance.GetGrodnarStats());
     }
     public void DisplayLanstarStats()
     {
-        DisplayStats(Game_Manager.Instance.GetLanstarStats());
+        DisplayStats(GameStats.Instance.GetLanstarStats());
     }
     public void DisplaySigfridStats()
     {
-        DisplayStats(Game_Manager.Instance.GetSigfridStats());
+        DisplayStats(GameStats.Instance.GetSigfridStats());
     }
 
     public void DisplayStats(List<Stat> characterStat) {
+        if (characterStat == null) {
+            Debug.Log("ERROR Cannot display stats.");
+            return;
+        }
         for (int i = 0; i < characterStat.Count; i++)
         {
             switch (characterStat[i].attribute)
             {
+                case Attributes.HEALTH:
+                    UpdateText(healthValue, characterStat[i]);
+                    break;
+                case Attributes.BASE_DAMAGE:
+                    UpdateText(damageValue, characterStat[i]);
+                    break;
                 case Attributes.STRENGHT:
                     UpdateText(strengthValue, characterStat[i]);
                     break;
@@ -79,6 +90,10 @@ public class StatsScreen : MonoBehaviour
     }
 
     public void UpdateText(Text _text, Stat _stat) {
+        if (_text == null) {
+            Debug.Log(string.Concat("ERROR Failed to update ", _stat.attribute));
+            return; 
+        }
         _text.text = _stat.value.ToString();
     }
 }

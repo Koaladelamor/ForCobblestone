@@ -18,7 +18,7 @@ public class EnemyDetect : MonoBehaviour
         {
             print("entra");
             Destroy(this.gameObject);
-            other.GetComponent<GameManager>().AddWildWarrior(WarriorsManager.GetWarriorById(enemyid,  enemylevel));
+            other.GetComponent<Game_manager>().AddWildWarrior(WarriorsManager.GetWarriorById(enemyid,  enemylevel));
             
         }
     }

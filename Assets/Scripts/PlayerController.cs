@@ -57,9 +57,9 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.CompareTag("EnemyMap")) {
             //Debug.Log("entra");
             engaged = true;
-            m_gameManager.GetComponent<Game_Manager>().enemyEngaged = true;
+            m_gameManager.GetComponent<GameManager>().enemyEngaged = true;
 
-            m_gameManager.GetComponent<Game_Manager>().enemyOnCombat = other.gameObject;
+            m_gameManager.GetComponent<GameManager>().enemyOnCombat = other.gameObject;
 
             other.gameObject.GetComponent<Collider2D>().enabled = false;
             m_pointToGo.transform.position = transform.position;
