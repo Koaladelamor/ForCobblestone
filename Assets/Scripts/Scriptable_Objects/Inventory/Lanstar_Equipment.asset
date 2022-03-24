@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be8bb00b692958c4da326c78af43920b, type: 3}
   m_Name: Lanstar_Equipment
   m_EditorClassIdentifier: 
-  type: 1
+  type: 2
   savePath: /LanstarEquipment.Save
   Database: {fileID: 11400000, guid: cdb8a3ceeee4fb545b77a4d489574df9, type: 2}
   Container:

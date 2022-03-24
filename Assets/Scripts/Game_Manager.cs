@@ -21,6 +21,8 @@ public class Game_Manager : MonoBehaviour
     public UserInterface m_SigfridEquipmentDisplay;
     public UserInterface m_currentEquipmentInterface;
 
+    public StatsScreen m_statsScreen;
+
     public InventoryObject m_inventory;
 
     public InventoryObject m_GrodnarEquipmentInventory;
@@ -29,9 +31,9 @@ public class Game_Manager : MonoBehaviour
 
     public Button[] equipmentButtons;
 
-    public List<Stat> GrodnarStats = new List<Stat>();
-    public List<Stat> LanstarStats = new List<Stat>();
-    public List<Stat> SigfridStats = new List<Stat>();
+    public readonly List<Stat> GrodnarStats = new List<Stat>();
+    public readonly List<Stat> LanstarStats = new List<Stat>();
+    public readonly List<Stat> SigfridStats = new List<Stat>();
 
 
     public GameObject m_playerPrefab;
@@ -120,14 +122,17 @@ public class Game_Manager : MonoBehaviour
             case InventoryType.GRODNAR:
                 print(string.Concat("Removed ", _slot.ItemObject, " on ", _slot.parent.mInventory.type));
                 RemoveItemModifier(_slot.Item, GrodnarStats);
+                m_statsScreen.DisplayGrodnarStats();
                 break;
             case InventoryType.LANSTAR:
                 print(string.Concat("Removed ", _slot.ItemObject, " on ", _slot.parent.mInventory.type));
                 RemoveItemModifier(_slot.Item, LanstarStats);
+                m_statsScreen.DisplayLanstarStats();
                 break;
             case InventoryType.SIGFRID:
                 print(string.Concat("Removed ", _slot.ItemObject, " on ", _slot.parent.mInventory.type));
                 RemoveItemModifier(_slot.Item, SigfridStats);
+                m_statsScreen.DisplaySigfridStats();
                 break;
             case InventoryType.TRADE:
                 break;
@@ -151,14 +156,17 @@ public class Game_Manager : MonoBehaviour
             case InventoryType.GRODNAR:
                 print(string.Concat("Placed ", _slot.ItemObject, " on ", _slot.parent.mInventory.type));
                 AddItemModifier(_slot.Item, GrodnarStats);
+                m_statsScreen.DisplayGrodnarStats();
                 break;
             case InventoryType.LANSTAR:
                 print(string.Concat("Placed ", _slot.ItemObject, " on ", _slot.parent.mInventory.type));
                 AddItemModifier(_slot.Item, LanstarStats);
+                m_statsScreen.DisplayLanstarStats();
                 break;
             case InventoryType.SIGFRID:
                 print(string.Concat("Placed ", _slot.ItemObject, " on ", _slot.parent.mInventory.type));
                 AddItemModifier(_slot.Item, SigfridStats);
+                m_statsScreen.DisplaySigfridStats();
                 break;
             case InventoryType.TRADE:
                 break;
@@ -241,6 +249,7 @@ public class Game_Manager : MonoBehaviour
             ShowButtons();
             m_currentEquipmentInterface.gameObject.SetActive(true);
             m_inventoryDisplay.ShowInventory();
+            m_statsScreen.ShowDisplay();
             inventoryOnScreen = true;
         }
 
@@ -280,6 +289,9 @@ public class Game_Manager : MonoBehaviour
         }
     }
 
+    public List<Stat> GetGrodnarStats() { return GrodnarStats; }
+    public List<Stat> GetLanstarStats() { return LanstarStats; }
+    public List<Stat> GetSigfridStats() { return SigfridStats; }
     public void SetPlayerStats(List<Stat> statsList, int strenghtInt, int staminaInt, int agilityInt, int intelligenceInt) {
         statsList.Add(new Stat(Attributes.STRENGHT, strenghtInt));
         statsList.Add(new Stat(Attributes.STAMINA, staminaInt));
@@ -293,6 +305,7 @@ public class Game_Manager : MonoBehaviour
         m_LanstarEquipmentDisplay.gameObject.SetActive(false);
         m_SigfridEquipmentDisplay.gameObject.SetActive(false);
         m_inventoryDisplay.HideInventory();
+        m_statsScreen.HideDisplay();
         inventoryOnScreen = false;
     }
 
