@@ -6,6 +6,7 @@ public class PatrolAI : MonoBehaviour
 {
     public float speed;
     public GameObject[] patrolPoints;
+    public GameObject patrolPointPrefab;
     private int currentPatrolPoint;
 
     private bool patrolling;
@@ -77,11 +78,19 @@ public class PatrolAI : MonoBehaviour
                 currentPatrolPoint++;
             }
 
-            if (transform.position == patrolPoints[3].transform.position)
+            if (transform.position == patrolPoints[patrolPoints.Length-1].transform.position)
             {
                 currentPatrolPoint = 0;
             }
         }
+    }
+
+    public GameObject InstantiatePatrolPoint(float offset_x, float offset_y) {
+
+        GameObject patrolPoint = Instantiate(patrolPointPrefab, new Vector3(transform.position.x + offset_x, transform.position.y + offset_y, 0), transform.rotation);
+
+
+        return patrolPoint;
     }
 
     public void flipSprites()

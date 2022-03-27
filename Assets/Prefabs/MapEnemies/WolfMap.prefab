@@ -164,8 +164,10 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  patrolPointPrefab: {fileID: 1731476954000689979, guid: d27241846049c484da7a1c6e77599018, type: 3}
   totalEnemies: 0
   enemyID: 0
+  enemyType: 0
 --- !u!61 &1473380702115108817
 BoxCollider2D:
   m_ObjectHideFlags: 0

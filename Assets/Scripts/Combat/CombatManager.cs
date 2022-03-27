@@ -30,7 +30,11 @@ public class CombatManager : MonoBehaviour
         m_canvasToMap = GameObject.FindGameObjectWithTag("CanvasToMap");
         m_canvasToMap.SetActive(false);
 
-        if (m_gameManager.GetComponent<GameManager>().enemyOnCombatType == EnemyType.MINOTAUR) {
+        m_enemies[0] = Instantiate(m_minotaurPrefab, transform.position, Quaternion.identity);
+        m_enemies[1] = Instantiate(m_minotaurPrefab, transform.position, Quaternion.identity);
+        m_enemies[2] = Instantiate(m_minotaurPrefab, transform.position, Quaternion.identity);
+
+        /*if (m_gameManager.GetComponent<GameManager>().enemyOnCombatType == EnemyType.MINOTAUR) {
             m_enemies[0] = Instantiate(m_minotaurPrefab, transform.position, Quaternion.identity);
             m_enemies[1] = Instantiate(m_minotaurPrefab, transform.position, Quaternion.identity);
             m_enemies[2] = Instantiate(m_minotaurPrefab, transform.position, Quaternion.identity);
@@ -40,7 +44,7 @@ public class CombatManager : MonoBehaviour
             m_enemies[0] = Instantiate(m_wolfPrefab, transform.position, Quaternion.identity);
             m_enemies[1] = Instantiate(m_wolfPrefab, transform.position, Quaternion.identity);
             m_enemies[2] = Instantiate(m_wolfPrefab, transform.position, Quaternion.identity);
-        }
+        }*/
 
 
         int enemies = m_enemies.Length;

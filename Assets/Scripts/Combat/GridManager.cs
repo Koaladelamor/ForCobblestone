@@ -126,7 +126,7 @@ public class GridManager : MonoBehaviour
         return false;
     }
 
-    public void startingTiles_LightsOn()
+    public void StartingTiles_LightsOn()
     {
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 2; j++)
@@ -136,7 +136,7 @@ public class GridManager : MonoBehaviour
         }
     }
 
-    public void startingTiles_LightsOff()
+    public void StartingTiles_LightsOff()
     {
         for (int i = 0; i < 6; i++)
         {

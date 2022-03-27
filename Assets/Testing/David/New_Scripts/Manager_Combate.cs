@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Manager_Combate : MonoBehaviour
 {
-    static Manager_Combate m_instance = null;
 
     public GameObject[] m_players;
     public GameObject[] m_enemies;

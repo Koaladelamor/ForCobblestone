@@ -21,6 +21,8 @@ TagManager:
   - Sleeping
   - CanvasPause
   - Item
+  - EventSystem
+  - PatrolPoint
   layers:
   - Default
   - TransparentFX

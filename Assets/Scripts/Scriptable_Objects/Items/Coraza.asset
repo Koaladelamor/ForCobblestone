@@ -20,11 +20,15 @@ MonoBehaviour:
     Name: Coraza
     ID: 2
     Buffs:
-    - attribute: 0
+    - attribute: 2
       value: 0
       min: 1
       max: 10
-    - attribute: 1
+    - attribute: 3
+      value: 0
+      min: 1
+      max: 10
+    - attribute: 4
       value: 0
       min: 1
       max: 10

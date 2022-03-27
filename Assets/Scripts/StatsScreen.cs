@@ -11,11 +11,13 @@ public class StatsScreen : MonoBehaviour
     public Text staminaValue;
     public Text agilityValue;
     public Text intelligenceValue;
+    Button[] statButtons;
 
     // Start is called before the first frame update
     void Start()
     {
-        Invoke("DisplayGrodnarStats", 1f);
+        Invoke("DisplayGrodnarStats", 0.2f);
+        statButtons = GetComponentsInChildren<Button>();
     }
 
     // Update is called once per frame
@@ -23,6 +25,22 @@ public class StatsScreen : MonoBehaviour
     {
         
     }*/
+
+    public void DisableStatButtons() {
+
+        for (int i = 0; i < statButtons.Length; i++)
+        {
+            statButtons[i].gameObject.SetActive(false);
+        }
+    }
+
+    public void EnableStatButtons()
+    {
+        for (int i = 0; i < statButtons.Length; i++)
+        {
+            statButtons[i].gameObject.SetActive(true);
+        }
+    }
 
     public void HideDisplay() {
         GetComponent<Image>().enabled = false;
@@ -96,4 +114,6 @@ public class StatsScreen : MonoBehaviour
         }
         _text.text = _stat.value.ToString();
     }
+
+
 }

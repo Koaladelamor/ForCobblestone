@@ -145,7 +145,7 @@ public class PawnController : MonoBehaviour
 
             transform.position = new Vector3(screenCoordinate.x, screenCoordinate.y, transform.position.z);
 
-            GridManager.Instance.startingTiles_LightsOn();
+            GridManager.Instance.StartingTiles_LightsOn();
         }
     }
 
@@ -154,8 +154,7 @@ public class PawnController : MonoBehaviour
         if (isDragged)
         {
 
-            GridManager.Instance.startingTiles_LightsOff();
-
+            GridManager.Instance.StartingTiles_LightsOff();
             isDragged = false;
             Vector2 tilePosition = GridManager.Instance.ScreenToTilePosition(Input.mousePosition);
 
