@@ -31,25 +31,20 @@ public class GameManager : MonoBehaviour
 
     public Button[] equipmentButtons;
 
-    public GameObject m_playerPrefab;
-
     public GameObject m_minotaurPrefab;
     public GameObject m_wolfPrefab;
 
     private GameObject m_player;
     private GameObject m_pointToGo;
 
-    private GameObject m_canvasToCombat;
+    public GameObject m_canvasToCombat;
 
-    Vector3 playerPosition;
-
+    //Vector3 playerPosition;
 
     public GameObject enemyOnCombat;
     public EnemyType enemyOnCombatType;
 
     private Vector3[] enemyRespawnPositions = new Vector3[2];
-    Vector3 enemy1_respawnPosition = new Vector3(-237f, 50f, 0f);
-    Vector3 enemy2_respawnPosition = new Vector3(370f, -100f, 0f);
     public int enemyIndex;
     public int totalEnemies;
     public bool[] enemyIsAlive;
@@ -59,8 +54,6 @@ public class GameManager : MonoBehaviour
     public bool combatIsOver;
 
     bool inventoryOnScreen = false;
-
-    public GameObject eventSystemMap;
     
     private void Awake()
     {
@@ -83,7 +76,6 @@ public class GameManager : MonoBehaviour
         enemyRespawnPositions[0] = new Vector3(-237f, 50f, 0f);
         enemyRespawnPositions[1] = new Vector3(370f, -100f, 0f);
         
-        m_canvasToCombat = GameObject.FindGameObjectWithTag("CanvasToBattle");
         m_canvasToCombat.SetActive(false);
 
         m_player = GameObject.FindGameObjectWithTag("PlayerMap");
@@ -166,7 +158,6 @@ public class GameManager : MonoBehaviour
             enemyEngaged = false;
 
             //Save stats
-            playerPosition = m_player.transform.position;
 
             //Enemy info
             enemyIndex = enemyOnCombat.GetComponent<PatrolAI>().enemyID;
@@ -373,12 +364,6 @@ public class GameManager : MonoBehaviour
         m_LanstarEquipmentInventory.Clear();
         m_SigfridEquipmentInventory.Clear();
     }
-    void SetupPlayer() {
-        m_player = GameObject.FindGameObjectWithTag("PlayerMap");
-        m_pointToGo = GameObject.FindGameObjectWithTag("PointToGo");
-        m_player.transform.position = playerPosition;
-        m_pointToGo.transform.position = playerPosition;
-    }
 
     GameObject RespawnEnemy(GameObject type, Vector3 enemySpawnPos, int ID) {
         
@@ -413,7 +398,6 @@ public class GameManager : MonoBehaviour
     }
 
     public void LoadCombatScene() {
-        
         SceneManager.LoadSceneAsync("CombatScene", LoadSceneMode.Additive);
         //SetActiveScene("CombatScene");
     }
@@ -421,30 +405,15 @@ public class GameManager : MonoBehaviour
     public void LoadMapScene()
     {
         SceneManager.SetActiveScene(SceneManager.GetSceneByName("MapScene"));
-        SceneManager.UnloadSceneAsync(SceneManager.GetSceneByName("CombatScene"));
 
-        GameObject[] objs;
-        objs = SceneManager.GetActiveScene().GetRootGameObjects();
-        foreach (GameObject obj in objs)
-        {
-            obj.SetActive(true);
-        }
-
-        DisableCanvas();
-        HideInventories();
-        GameObject canvasHostal = GameObject.FindGameObjectWithTag("CanvasHostal");
+        //HideInventories();
+        /*GameObject canvasHostal = GameObject.FindGameObjectWithTag("CanvasHostal");
         canvasHostal.SetActive(false);
         GameObject canvasPause = GameObject.FindGameObjectWithTag("CanvasPause");
-        canvasPause.SetActive(false);
+        canvasPause.SetActive(false);*/
     }
 
     public void SetActiveScene(string scene) {
-        GameObject[] objs;
-        objs = SceneManager.GetActiveScene().GetRootGameObjects();
-        foreach (GameObject obj in objs)
-        {
-            obj.SetActive(false);
-        }
         SceneManager.SetActiveScene(SceneManager.GetSceneByName(scene));
     }
 
@@ -452,6 +421,8 @@ public class GameManager : MonoBehaviour
         Debug.Log("OnSceneLoad: "+scene.name);
         Debug.Log(mode);
         SetActiveScene(scene.name);
+        DisableCanvas();
+
     }
 
     public void DisableCanvas() {

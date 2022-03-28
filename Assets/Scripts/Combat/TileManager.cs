@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,16 +8,31 @@ public class TileManager : MonoBehaviour
     [SerializeField] GameObject _highlight;
     public bool playerDraggableOnTile;
     bool isEmpty;
+    public int column;
+    public int file;
 
     private void Start()
     {
         //playerDraggableOnTile = false;
         isEmpty = true;
+        GetTileIndex();
     }
 
-    public Vector3 getTileTransform() {
-        Vector3 position = this.transform.position;
-        return position;
+
+    public Vector2 GetTilePosition()
+    {
+        Vector2 tilePos = new Vector2();
+        tilePos.x = this.transform.position.x;
+        tilePos.y = this.transform.position.y;
+        return tilePos;
+    }
+
+    public void GetTileIndex()
+    {
+        string objName = this.gameObject.name;
+        string[] splitName = objName.Split('-');
+        column = Int32.Parse(splitName[0]);
+        file = Int32.Parse(splitName[1]);
     }
 
     public bool AddPawn(GameObject p_pawn)
@@ -41,11 +57,11 @@ public class TileManager : MonoBehaviour
         get { return isEmpty; }
     }
 
-    public void enableHighlight() {
+    public void EnableHighlight() {
         _highlight.SetActive(true);
     }
 
-    public void disableHighlight()
+    public void DisableHighlight()
     {
         _highlight.SetActive(false);
     }
