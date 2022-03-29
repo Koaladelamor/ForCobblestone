@@ -8,7 +8,6 @@ public class EnemyPawn : PawnController
     //bool draggable = false;
     protected override void Attack()
     {
-        //attack
         if (m_isAlive && m_pawnToAttack.m_isAlive)
         {
             damage = Random.Range(0, 16);
@@ -19,7 +18,7 @@ public class EnemyPawn : PawnController
             if (m_pawnToAttack.current_hp < 1)
             {
 
-                Invoke("killPawn", 0.4f);
+                Invoke("KillPawn", 0.4f);
 
                 m_pawnToAttack.gameObject.GetComponent<PawnController>().m_isAlive = false;
                 Vector2 pawnPosition = GridManager.Instance.ScreenToTilePosition(Camera.main.WorldToScreenPoint(m_pawnToAttack.transform.position));
@@ -30,13 +29,14 @@ public class EnemyPawn : PawnController
             m_state = PAWN_STATUS.IDLE;
             //m_isMyTurn = false;
             m_myTurnIsDone = true;
-
+            combatManager.GetComponent<CombatManager>().SetTurnDone(true);
         }
         else
         {
             m_state = PAWN_STATUS.IDLE;
             //m_isMyTurn = false;
             m_myTurnIsDone = true;
+            combatManager.GetComponent<CombatManager>().SetTurnDone(true);
         }
 
         readyToAttack = true;
@@ -71,12 +71,11 @@ public class EnemyPawn : PawnController
 
             for (int j = 0; j < combatManager.GetComponent<CombatManager>().m_players.Length; j++)
             {
-
-                Vector2 playerPosition = combatManager.GetComponent<CombatManager>().m_players[j].transform.position;
-
-                if (positionToCheck == GridManager.Instance.ScreenToTilePosition(Camera.main.WorldToScreenPoint(playerPosition)))
+                if (combatManager.GetComponent<CombatManager>().m_players[j].GetComponent<PawnController>().m_isAlive)
                 {
-                    if (combatManager.GetComponent<CombatManager>().m_players[j].GetComponent<PawnController>().m_isAlive)
+                    Vector2 playerPosition = combatManager.GetComponent<CombatManager>().m_players[j].transform.position;
+
+                    if (positionToCheck == GridManager.Instance.ScreenToTilePosition(Camera.main.WorldToScreenPoint(playerPosition)))
                     {
                         m_pawnToAttack = combatManager.GetComponent<CombatManager>().m_players[j].GetComponent<PawnController>();
                         return true;
@@ -89,7 +88,7 @@ public class EnemyPawn : PawnController
 
     public override void SpawnDamageText()
     {
-        DamagePopUp damageText = combatManager.GetComponent<DamagePopUp>().Create(m_pawnToAttack.transform.position, damage);
+        combatManager.GetComponent<DamagePopUp>().Create(m_pawnToAttack.transform.position, damage);
     }
 
     public override void EndAttackAnimation()

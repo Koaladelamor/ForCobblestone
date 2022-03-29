@@ -37,6 +37,7 @@ public class GameManager : MonoBehaviour
 
     public Button[] equipmentButtons;
     public Button confirmLootButton;
+    public Button confirmTradeButton;
 
     public GameObject m_minotaurPrefab;
     public GameObject m_wolfPrefab;
@@ -51,11 +52,17 @@ public class GameManager : MonoBehaviour
     public bool enemyEngaged;
     private bool combatIsOver;
 
+    public GameObject m_canvasTavern;
     public GameObject m_canvasToCombat;
     public GameObject m_canvasPause;
     private bool gameIsPaused;
 
     public TextMeshProUGUI coinsAmount;
+    public TextMeshProUGUI balanceAmount;
+    private int tradeBalance;
+    private bool addingItems;
+
+    public GameObject levelUpWarning;
 
     private void Awake()
     {
@@ -76,7 +83,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         combatIsOver = false;
-        enemyRespawnPositions[0] = new Vector3(-237f, 50f, 0f);
+        enemyRespawnPositions[0] = new Vector3(-100f, -80f, 0f);
         enemyRespawnPositions[1] = new Vector3(370f, -100f, 0f);
         
         //m_canvasToCombat.SetActive(false);
@@ -102,11 +109,38 @@ public class GameManager : MonoBehaviour
             m_SigfridEquipmentInventory.GetSlots[i].OnAfterUpdate += OnAfterSlotUpdate;
         }
 
-        for (int i = 0; i < 20; i++)
+        for (int i = 0; i < m_inventory.GetSlots.Length; i++)
         {
-            m_TavernTradeInventory.AddItem(m_TavernTradeInventory.GenerateRandomItem(), 1);
+            m_inventory.GetSlots[i].OnBeforeUpdate += OnBeforeSlotUpdate;
+            m_inventory.GetSlots[i].OnAfterUpdate += OnAfterSlotUpdate;
+
         }
 
+        for (int i = 0; i < m_TavernTradeInventory.GetSlots.Length; i++)
+        {
+            m_TavernTradeInventory.GetSlots[i].OnBeforeUpdate += OnBeforeSlotUpdate;
+            m_TavernTradeInventory.GetSlots[i].OnAfterUpdate += OnAfterSlotUpdate;
+
+        }
+
+        for (int i = 0; i < m_CombatLootInventory.GetSlots.Length; i++)
+        {
+            m_CombatLootInventory.GetSlots[i].OnBeforeUpdate += OnBeforeSlotUpdate;
+            m_CombatLootInventory.GetSlots[i].OnAfterUpdate += OnAfterSlotUpdate;
+
+        }
+
+        addingItems = true;
+        for (int i = 0; i < 20; i++)
+        {
+            m_TavernTradeInventory.AddItem(m_TavernTradeInventory.GenerateRandomItem(), 1, InventoryType.TRADE);
+        }
+
+        addingItems = false;
+
+        confirmTradeButton.gameObject.SetActive(false);
+        tradeBalance = 0;
+        m_TavernTradeDisplay.HideInventory();
         m_canvasPause.SetActive(false);
         gameIsPaused = false;
         Invoke("HideInventories", 0.02f);       
@@ -117,9 +151,6 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*if (Input.GetKeyDown(KeyCode.L)) {
-            DisplayLoot();
-        }*/
         if (InputManager.Instance.PauseButtonPressed && !gameIsPaused)
         {
             PauseGame();
@@ -141,7 +172,7 @@ public class GameManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.G))
         {
-            GameStats.Instance.AddCoins(200);
+            GameStats.Instance.AddCoins(2000);
             UpdateCoinsAmount();
         }
 
@@ -153,6 +184,11 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.H))
         {
             GameStats.Instance.AddXpToLanstar(600f);
+        }
+
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            GameStats.Instance.AddXpToSigfrid(600f);
         }
 
 
@@ -175,6 +211,7 @@ public class GameManager : MonoBehaviour
         if (InputManager.Instance.InventoryButtonPressed && inventoryOnScreen)
         {
             HideInventories();
+
         }
         else if (InputManager.Instance.InventoryButtonPressed && !inventoryOnScreen)
         {
@@ -199,9 +236,11 @@ public class GameManager : MonoBehaviour
         if (combatIsOver)
         {
             combatIsOver = false;
-            GenerateRandomLoot();
+            GenerateRandomLoot((int)Random.Range(1, 20));
             GameStats.Instance.AddCoins(500);
-            
+            GameStats.Instance.AddXpToGrodnar(800f);
+            GameStats.Instance.AddXpToLanstar(800f);
+            GameStats.Instance.AddXpToSigfrid(800f);
 
             LoadMapScene();
             NormalSpeed();
@@ -219,23 +258,30 @@ public class GameManager : MonoBehaviour
         switch (_slot.parent.mInventory.type)
         {
             case InventoryType.MAIN:
+                _slot.Item.PreviousHolder = _slot.parent.mInventory.type;
+                print(string.Concat("Removed ", _slot.ItemObject, " on ", _slot.parent.mInventory.type));
                 break;
             case InventoryType.GRODNAR:
+                _slot.Item.PreviousHolder = _slot.parent.mInventory.type;
                 print(string.Concat("Removed ", _slot.ItemObject, " on ", _slot.parent.mInventory.type));
                 RemoveItemModifier(_slot.Item, GameStats.Instance.Grodnar._stats);
                 m_statsScreen.DisplayGrodnarStats();
                 break;
             case InventoryType.LANSTAR:
+                _slot.Item.PreviousHolder = _slot.parent.mInventory.type;
                 print(string.Concat("Removed ", _slot.ItemObject, " on ", _slot.parent.mInventory.type));
                 RemoveItemModifier(_slot.Item, GameStats.Instance.Lanstar._stats);
                 m_statsScreen.DisplayLanstarStats();
                 break;
             case InventoryType.SIGFRID:
+                _slot.Item.PreviousHolder = _slot.parent.mInventory.type;
                 print(string.Concat("Removed ", _slot.ItemObject, " on ", _slot.parent.mInventory.type));
                 RemoveItemModifier(_slot.Item, GameStats.Instance.Sigfrid._stats);
                 m_statsScreen.DisplaySigfridStats();
                 break;
             case InventoryType.TRADE:
+                _slot.Item.PreviousHolder = _slot.parent.mInventory.type;
+                print(string.Concat("Removed ", _slot.ItemObject, " on ", _slot.parent.mInventory.type));
                 break;
             case InventoryType.CHEST:
                 break;
@@ -253,23 +299,40 @@ public class GameManager : MonoBehaviour
         switch (_slot.parent.mInventory.type)
         {
             case InventoryType.MAIN:
+                if (!addingItems && _slot.Item.PreviousHolder == InventoryType.TRADE)
+                {
+                    tradeBalance -= _slot.ItemObject.Value;
+                    UpdateBalanceAmount();
+                }
+                print(string.Concat("Placed ", _slot.ItemObject, " on ", _slot.parent.mInventory.type));
+                _slot.Item.Holder = InventoryType.MAIN;
                 break;
             case InventoryType.GRODNAR:
                 print(string.Concat("Placed ", _slot.ItemObject, " on ", _slot.parent.mInventory.type));
                 AddItemModifier(_slot.Item, GameStats.Instance.Grodnar._stats);
                 m_statsScreen.DisplayGrodnarStats();
+                _slot.Item.Holder = InventoryType.GRODNAR;
                 break;
             case InventoryType.LANSTAR:
                 print(string.Concat("Placed ", _slot.ItemObject, " on ", _slot.parent.mInventory.type));
                 AddItemModifier(_slot.Item, GameStats.Instance.Lanstar._stats);
                 m_statsScreen.DisplayLanstarStats();
+                _slot.Item.Holder = InventoryType.LANSTAR;
                 break;
             case InventoryType.SIGFRID:
                 print(string.Concat("Placed ", _slot.ItemObject, " on ", _slot.parent.mInventory.type));
                 AddItemModifier(_slot.Item, GameStats.Instance.Sigfrid._stats);
                 m_statsScreen.DisplaySigfridStats();
+                _slot.Item.Holder = InventoryType.SIGFRID;
                 break;
             case InventoryType.TRADE:
+                if (!addingItems && _slot.Item.PreviousHolder == InventoryType.MAIN)
+                {
+                    tradeBalance += _slot.ItemObject.Value;
+                    UpdateBalanceAmount();
+                }
+                print(string.Concat("Placed ", _slot.ItemObject, " on ", _slot.parent.mInventory.type));
+                _slot.Item.Holder = InventoryType.TRADE;
                 break;
             case InventoryType.CHEST:
                 break;
@@ -334,6 +397,11 @@ public class GameManager : MonoBehaviour
         m_statsScreen.DisableStatButtons();
         m_statsScreen.HideDisplay();
         inventoryOnScreen = false;
+
+        if (GameStats.Instance.GetGrodnar()._attribute_points == 0 && GameStats.Instance.GetLanstar()._attribute_points == 0 && GameStats.Instance.GetSigfrid()._attribute_points == 0)
+        {
+            SetLvlUpWarning(false);
+        }
     }
 
     public void ShowInventories() {
@@ -535,12 +603,16 @@ public class GameManager : MonoBehaviour
         coinsAmount.text = GameStats.Instance.GetCoins().ToString();
     }
 
-    public void GenerateRandomLoot() {
-        m_CombatLootInventory.AddItem(m_CombatLootInventory.GenerateRandomItem(), 1);
-        m_CombatLootInventory.AddItem(m_CombatLootInventory.GenerateRandomItem(), 1);
-        m_CombatLootInventory.AddItem(m_CombatLootInventory.GenerateRandomItem(), 1);
-        m_CombatLootInventory.AddItem(m_CombatLootInventory.GenerateRandomItem(), 1);
-        m_CombatLootInventory.AddItem(m_CombatLootInventory.GenerateRandomItem(), 1);
+    public void UpdateBalanceAmount()
+    {
+        balanceAmount.text = tradeBalance.ToString();
+    }
+
+    public void GenerateRandomLoot(int itemsToAdd) {
+        for (int i = 0; i < itemsToAdd; i++)
+        {
+            m_CombatLootInventory.AddItem(m_CombatLootInventory.GenerateRandomItem(), 1, InventoryType.LOOT);
+        }
     }
 
     public void DisplayLoot() {
@@ -556,6 +628,31 @@ public class GameManager : MonoBehaviour
         confirmLootButton.gameObject.SetActive(false);
     }
 
+    public void ConfirmTrade() {
+        GameStats.Instance.AddCoins(tradeBalance);
+        tradeBalance = 0;
+        UpdateBalanceAmount();
+        UpdateCoinsAmount();
+        m_inventoryDisplay.HideInventory();
+        m_TavernTradeDisplay.HideInventory();
+    }
+
+    public void TradingModeON() {
+        tradeBalance = 0;
+        m_inventoryDisplay.ShowInventory();
+        m_TavernTradeDisplay.ShowInventory();
+        confirmTradeButton.gameObject.SetActive(true);
+        m_canvasTavern.SetActive(false);
+    }
+
+    public void TradingModeOFF()
+    {
+        m_inventoryDisplay.HideInventory();
+        m_TavernTradeDisplay.HideInventory();
+        confirmTradeButton.gameObject.SetActive(false);
+        m_canvasTavern.SetActive(true);
+    }
+
     public bool GetCombatIsOver() { return combatIsOver; }
 
     public void SetCombatIsOver(bool isCombatOver) { combatIsOver = isCombatOver; }
@@ -563,4 +660,8 @@ public class GameManager : MonoBehaviour
     public void SetEnemyOnCombat(GameObject enemy) { enemyOnCombat = enemy; }
 
     public GameObject GetEnemyOnCombat() { return enemyOnCombat; }
+
+    public void SetAddingItemsBool(bool _addingItems) { addingItems = _addingItems; }
+
+    public void SetLvlUpWarning(bool lvlUp) { levelUpWarning.SetActive(lvlUp); }
 }

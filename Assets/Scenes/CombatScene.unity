@@ -242,6 +242,18 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 995340851640159573, guid: fa0df2bb7fa524b42a8f3662c70d4e34, type: 3}
+      propertyPath: m_Name
+      value: LootButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 995340851643976657, guid: fa0df2bb7fa524b42a8f3662c70d4e34, type: 3}
+      propertyPath: m_Text
+      value: Loot
+      objectReference: {fileID: 0}
+    - target: {fileID: 995340851643976659, guid: fa0df2bb7fa524b42a8f3662c70d4e34, type: 3}
+      propertyPath: m_Name
+      value: Loot
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fa0df2bb7fa524b42a8f3662c70d4e34, type: 3}
 --- !u!1 &115699079
@@ -1553,6 +1565,7 @@ MonoBehaviour:
   m_wolfPrefab: {fileID: 7296185999618991103, guid: 525bc9a18018a7f42a4a8a9e25ffb6ae, type: 3}
   m_canvasToMap: {fileID: 253444218}
   startCombat: 0
+  turnDone: 0
 --- !u!4 &1292432836
 Transform:
   m_ObjectHideFlags: 0

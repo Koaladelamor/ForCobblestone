@@ -19,5 +19,7 @@ MonoBehaviour:
   Value: 30
   data:
     Name: Cuero
-    ID: 9
+    ID: 4
     Buffs: []
+    Holder: 7
+    PreviousHolder: 7

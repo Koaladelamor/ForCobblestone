@@ -50,6 +50,13 @@ public abstract class UserInterface : MonoBehaviour
         {
             img.GetComponent<Image>().enabled = true;
         }
+
+        TextMeshProUGUI[] texts = GetComponentsInChildren<TextMeshProUGUI>();
+        if (texts == null) { return; }
+        foreach (TextMeshProUGUI text in texts)
+        {
+            text.GetComponent<TextMeshProUGUI>().enabled = true;
+        }
     }
     public void HideInventory() 
     {
@@ -62,6 +69,13 @@ public abstract class UserInterface : MonoBehaviour
             {
                 img.GetComponent<Image>().enabled = false;
             }
+        }
+
+        TextMeshProUGUI[] texts = GetComponentsInChildren<TextMeshProUGUI>();
+        if (texts == null) { return; }
+        foreach (TextMeshProUGUI text in texts)
+        {
+            text.GetComponent<TextMeshProUGUI>().enabled = false;
         }
     }
 
@@ -128,10 +142,7 @@ public abstract class UserInterface : MonoBehaviour
         }
         if (MouseData.slotHoveredOver) {
             InventorySlot mouseHoverSlotData = MouseData.interfaceMouseIsOver.slotsOnInterface[MouseData.slotHoveredOver];
-            mInventory.SwapItems(slotsOnInterface[obj], mouseHoverSlotData);
-            /*if (mInventory.type == InventoryType.EQUIPMENT || mouseHoverSlotData.parent.mInventory.type == InventoryType.EQUIPMENT) { 
-                
-            }*/
+            mInventory.SwapItems(mouseHoverSlotData, slotsOnInterface[obj]);
         }
     }
     public void OnDrag(GameObject obj)
@@ -161,37 +172,6 @@ public abstract class UserInterface : MonoBehaviour
         MouseData.interfaceMouseIsOver = null;
     }
 
-
-    /*public void CreateDisplay()
-    {
-        for (int i = 0; i < mInventory.Container.Items.Count; i++) {
-            InventorySlot slot = mInventory.Container.Items[i];
-
-            GameObject obj = Instantiate(inventoryPrefab, Vector3.zero, transform.rotation, transform);
-            obj.transform.GetChild(0).GetComponentInChildren<Image>().sprite = mInventory.Database.GetItem[slot.Item.ID].iDisplay;
-            obj.GetComponent<RectTransform>().localPosition = GetPosition(i);
-            obj.GetComponentInChildren<TextMeshProUGUI>().text = slot.Amount.ToString();
-        }
-    }*/
-    /*public void UpdateDisplay()
-    {
-        for (int i = 0; i < mInventory.Container.Items.Count; i++)
-        {
-            InventorySlot slot = mInventory.Container.Items[i];
-
-            if (itemsDisplayed.ContainsKey(slot))
-            {
-                itemsDisplayed[slot].GetComponentInChildren<TextMeshProUGUI>().text = slot.Amount.ToString();
-            }
-            else {
-                GameObject obj = Instantiate(inventoryPrefab, Vector3.zero, transform.rotation, transform);
-                obj.transform.GetChild(0).GetComponentInChildren<Image>().sprite = mInventory.Database.GetItem[slot.Item.ID].iDisplay;
-                obj.GetComponent<RectTransform>().localPosition = GetPosition(i);
-                obj.GetComponentInChildren<TextMeshProUGUI>().text = slot.Amount.ToString();
-                itemsDisplayed.Add(slot, obj);
-            }
-        }
-    }*/
 }
 
 public static class MouseData

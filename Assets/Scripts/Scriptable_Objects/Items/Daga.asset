@@ -19,7 +19,7 @@ MonoBehaviour:
   Value: 60
   data:
     Name: Daga
-    ID: 10
+    ID: 5
     Buffs:
     - attribute: 4
       value: 0
@@ -29,3 +29,5 @@ MonoBehaviour:
       value: 0
       min: 1
       max: 4
+    Holder: 7
+    PreviousHolder: 7

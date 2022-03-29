@@ -19,5 +19,7 @@ MonoBehaviour:
   Value: 15
   data:
     Name: Cuerda
-    ID: 8
+    ID: 3
     Buffs: []
+    Holder: 7
+    PreviousHolder: 7

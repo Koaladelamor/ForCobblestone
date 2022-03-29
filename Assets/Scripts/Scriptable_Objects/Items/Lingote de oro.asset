@@ -19,5 +19,7 @@ MonoBehaviour:
   Value: 1000
   data:
     Name: Lingote de oro
-    ID: 6
+    ID: 9
     Buffs: []
+    Holder: 7
+    PreviousHolder: 7

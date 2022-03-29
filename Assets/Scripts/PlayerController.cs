@@ -39,15 +39,16 @@ public class PlayerController : MonoBehaviour
         FlipSprites();
 
         if (Input.GetKeyDown(KeyCode.E)) {
+            GameManager.Instance.SetAddingItemsBool(true);
             foreach (GameObject _item in itemTest){
                 if (_item){
                     ItemToPick item = _item.GetComponent<ItemToPick>();
-                    if (m_inventory.AddItem(new Item(item.item), 1)){
+                    if (m_inventory.AddItem(new Item(item.item), 1, InventoryType.MAIN)){
                         Destroy(item.gameObject);
                     }
                 }
             }
-
+            GameManager.Instance.SetAddingItemsBool(false);
         }
 
     }

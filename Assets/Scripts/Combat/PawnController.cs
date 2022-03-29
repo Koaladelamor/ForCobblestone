@@ -80,7 +80,6 @@ public class PawnController : MonoBehaviour
         m_directions[2] = new Vector3(-tileSize, 0, 0);
         m_directions[3] = new Vector3(0, tileSize, 0);
 
-
     }
     protected void Update()
     {
@@ -104,7 +103,7 @@ public class PawnController : MonoBehaviour
                 break;
 
             case PAWN_STATUS.IDLE:
-                if (m_isMyTurn && enemyIsClose && m_pawnToAttack.m_isAlive)
+                if (m_isMyTurn && enemyIsClose)
                 {
                     m_state = PAWN_STATUS.ATTACK;
                 }
@@ -114,20 +113,15 @@ public class PawnController : MonoBehaviour
                     m_state = PAWN_STATUS.SEARCH;
                 }
 
-                else if (m_isMyTurn && enemyIsClose && !m_pawnToAttack.m_isAlive) {
-                    m_state = PAWN_STATUS.SEARCH;
-                }
                 break;
 
             case PAWN_STATUS.ATTACK:
-                if (enemyIsClose)
+                if (readyToAttack)
                 {
-                    if (readyToAttack)
-                    {
-                        Invoke("Attack", 1.2f);
-                        readyToAttack = false;
-                    }
+                    Invoke("Attack", 1.2f);
+                    readyToAttack = false;
                 }
+                
                 else m_state = PAWN_STATUS.IDLE;
 
                 break;
@@ -213,7 +207,7 @@ public class PawnController : MonoBehaviour
     protected virtual void Search()
     {
 
-        if ((transform.position - m_positionToGo.transform.position).magnitude == 1)
+        if ((transform.position - m_positionToGo.transform.position).magnitude == 40)
         {
             m_currentStep = 0;
             if (EnemyIsClose())
@@ -225,6 +219,7 @@ public class PawnController : MonoBehaviour
             m_state = PAWN_STATUS.IDLE;
             //m_isMyTurn = false;
             m_myTurnIsDone = true;
+            combatManager.GetComponent<CombatManager>().SetTurnDone(true);
             return;
         }
         
@@ -270,6 +265,7 @@ public class PawnController : MonoBehaviour
             m_state = PAWN_STATUS.IDLE;
             //m_isMyTurn = false;
             m_myTurnIsDone = true;
+            combatManager.GetComponent<CombatManager>().SetTurnDone(true);
         }
     }
 
@@ -278,8 +274,8 @@ public class PawnController : MonoBehaviour
         if (m_isAlive && m_pawnToAttack.m_isAlive)
         {
             //Damage & Anim
-            damage = Random.Range(2, 10);
             animator.SetBool("playerAttack", true);
+            damage = Random.Range(2, 10);
             m_pawnToAttack.current_hp -= damage;
 
             //Enemy Death
@@ -297,12 +293,14 @@ public class PawnController : MonoBehaviour
             m_state = PAWN_STATUS.IDLE;
             //m_isMyTurn = false;
             m_myTurnIsDone = true;
+            combatManager.GetComponent<CombatManager>().SetTurnDone(true);
 
         }
         else {
             m_state = PAWN_STATUS.IDLE;
             //m_isMyTurn = false;
             m_myTurnIsDone = true;
+            combatManager.GetComponent<CombatManager>().SetTurnDone(true);
         }
 
         readyToAttack = true;
@@ -330,13 +328,8 @@ public class PawnController : MonoBehaviour
 
                         if (positionToCheck == GridManager.Instance.ScreenToTilePosition(Camera.main.WorldToScreenPoint(enemyPosition)))
                         {
-                            if (combatManager.GetComponent<CombatManager>().m_enemies[j].GetComponent<PawnController>().m_isAlive)
-                            {
-                                m_pawnToAttack = combatManager.GetComponent<CombatManager>().m_enemies[j].GetComponent<PawnController>();
-                                return true;
-                            }
-                            else return false;
-
+                            m_pawnToAttack = combatManager.GetComponent<CombatManager>().m_enemies[j].GetComponent<PawnController>();
+                            return true;
                         }
                     }
                 }
