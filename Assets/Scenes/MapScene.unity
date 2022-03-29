@@ -7951,7 +7951,7 @@ RectTransform:
   - {fileID: 1919268012}
   - {fileID: 1249539358}
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -9780,8 +9780,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1627059417}
-  - component: {fileID: 1627059419}
   - component: {fileID: 1627059418}
+  - component: {fileID: 1627059419}
   m_Layer: 5
   m_Name: Food
   m_TagString: Untagged
@@ -9820,6 +9820,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1627059419
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1627059416}
+  m_CullTransparentMesh: 1
 --- !u!1001 &1679140874
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9830,7 +9856,7 @@ PrefabInstance:
     - target: {fileID: 7106954032706879348, guid: 33a05dc838a91064aa93f2509ecb7806, type: 3}
       propertyPath: m_audioClip
       value: 
-      objectReference: {fileID: 8300000, guid: 7d0dbf8c246964c4383777ae58a9c0aa, type: 3}
+      objectReference: {fileID: 8300000, guid: 1d3554ae33d087c49b23075aaca92566, type: 3}
     - target: {fileID: 7362155464798415427, guid: 33a05dc838a91064aa93f2509ecb7806, type: 3}
       propertyPath: m_RootOrder
       value: 14
