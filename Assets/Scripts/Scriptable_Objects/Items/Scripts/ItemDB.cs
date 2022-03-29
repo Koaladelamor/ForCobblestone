@@ -19,6 +19,11 @@ public class ItemDB : ScriptableObject, ISerializationCallbackReceiver
         }
     }
 
+    public int GetRandomID() {
+        int ID = Random.Range(0, ItemObjects.Length);
+        return ID;
+    }
+
     public void OnAfterDeserialize()
     {
         UpdateID();

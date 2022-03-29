@@ -7,6 +7,6 @@ public class HelmetObj : ItemObject
 {
     public void Awake()
     {
-        iType = ItemType.HELMET;
+        Type = ItemType.HELMET;
     }
 }

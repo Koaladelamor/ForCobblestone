@@ -7,6 +7,6 @@ public class TradeObj : ItemObject
 {
     public void Awake()
     {
-        iType = ItemType.TRADE;
+        Type = ItemType.TRADE;
     }
 }

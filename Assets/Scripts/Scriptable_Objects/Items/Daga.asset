@@ -10,21 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f0c2873dbeff7514fa67dadfffefe0b8, type: 3}
-  m_Name: Hacha de hierro
+  m_Name: Daga
   m_EditorClassIdentifier: 
-  stackable: 0
-  iDisplay: {fileID: -1891232040025806531, guid: bcb2ffbd2b9eadf48a91740acb089c4f, type: 3}
-  iType: 0
-  iDescription: 
+  Stackable: 0
+  Display: {fileID: -8141582014307310441, guid: bcb2ffbd2b9eadf48a91740acb089c4f, type: 3}
+  Type: 0
+  Description: 
+  Value: 60
   data:
-    Name: 
-    ID: 5
+    Name: Daga
+    ID: 10
     Buffs:
-    - attribute: 2
+    - attribute: 4
       value: 0
       min: 1
       max: 10
     - attribute: 1
       value: 0
       min: 1
-      max: 8
+      max: 4

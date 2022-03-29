@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 256b2ac0d30b95343b2664ab23d039d8, type: 3}
   m_Name: Coraza
   m_EditorClassIdentifier: 
-  stackable: 0
-  iDisplay: {fileID: 5863559567839246878, guid: bcb2ffbd2b9eadf48a91740acb089c4f, type: 3}
-  iType: 3
-  iDescription: 
+  Stackable: 0
+  Display: {fileID: 7334363015296689561, guid: bcb2ffbd2b9eadf48a91740acb089c4f, type: 3}
+  Type: 3
+  Description: 
+  Value: 75
   data:
     Name: Coraza
     ID: 2

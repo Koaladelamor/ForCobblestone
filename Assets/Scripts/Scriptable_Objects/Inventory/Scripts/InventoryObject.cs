@@ -6,7 +6,7 @@ using System.IO;
 using UnityEditor;
 using System.Runtime.Serialization;
 
-public enum InventoryType { MAIN, GRODNAR, LANSTAR, SIGFRID, TRADE, CHEST, LAST_NO_USE};
+public enum InventoryType { MAIN, GRODNAR, LANSTAR, SIGFRID, LOOT, TRADE, CHEST, LAST_NO_USE};
 
 [CreateAssetMenu(fileName = "New Inventory", menuName = "Inventory System/Inventory")]
 public class InventoryObject : ScriptableObject {
@@ -19,13 +19,20 @@ public class InventoryObject : ScriptableObject {
     public bool AddItem(Item _item, int _amount) {
         if(EmptySlotCount <= 0) { return false; }
         InventorySlot slot = FindItemOnInventory(_item);
-        if (!Database.ItemObjects[_item.ID].stackable || slot == null) {
+        if (!Database.ItemObjects[_item.ID].Stackable || slot == null) {
             SetEmptySlot(_item, _amount);
             return true;
         }
         slot.AddAmount(_amount);
         return true;
     }
+
+    public Item GenerateRandomItem() {
+        int randomID = Database.GetRandomID();
+        Item item = new Item(Database.ItemObjects[randomID]);
+        return item;
+    }
+
     public int EmptySlotCount 
     {
         get {
@@ -169,7 +176,7 @@ public class InventorySlot
             return true;
         for (int i = 0; i < AllowedItems.Length; i++)
         {
-            if (_itemObject.iType == AllowedItems[i])
+            if (_itemObject.Type == AllowedItems[i])
                 return true;
         }
         return false;

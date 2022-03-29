@@ -7,6 +7,6 @@ public class BootsObj : ItemObject
 {
     public void Awake()
     {
-        iType = ItemType.BOOTS;
+        Type = ItemType.BOOTS;
     }
 }

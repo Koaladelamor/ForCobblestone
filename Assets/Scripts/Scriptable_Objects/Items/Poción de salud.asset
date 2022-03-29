@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 566c4e15d7a11454191d67bf7bf4f89a, type: 3}
   m_Name: "Poci\xF3n de salud"
   m_EditorClassIdentifier: 
-  stackable: 1
-  iDisplay: {fileID: -8814914727502190950, guid: bcb2ffbd2b9eadf48a91740acb089c4f, type: 3}
-  iType: 5
-  iDescription: 
+  Stackable: 1
+  Display: {fileID: -8814914727502190950, guid: bcb2ffbd2b9eadf48a91740acb089c4f, type: 3}
+  Type: 5
+  Description: 
+  Value: 10
   data:
     Name: Pocion de vida
     ID: 7

@@ -6,7 +6,7 @@ public class ChestObj : ItemObject
 {
     public void Awake()
     {
-        iType = ItemType.CHEST;
+        Type = ItemType.CHEST;
     }
 
 }

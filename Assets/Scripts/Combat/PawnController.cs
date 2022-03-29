@@ -286,7 +286,7 @@ public class PawnController : MonoBehaviour
             if (m_pawnToAttack.current_hp < 1)
             {
 
-                Invoke("killPawn", 0.4f);
+                Invoke("KillPawn", 0.4f);
 
                 m_pawnToAttack.gameObject.GetComponent<PawnController>().m_isAlive = false;
                 Vector2 pawnPosition = GridManager.Instance.ScreenToTilePosition(Camera.main.WorldToScreenPoint(m_pawnToAttack.transform.position));
@@ -345,14 +345,8 @@ public class PawnController : MonoBehaviour
         return false;
     }
 
-    public void EndAttackAnimation() {
-        if (CompareTag("Player"))
-        {
-            animator.SetBool("playerAttack", false);
-        }
-        else if (CompareTag("Enemy")) {
-            animator.SetBool("isAttacking", false);
-        }
+    public virtual void EndAttackAnimation() {
+        animator.SetBool("playerAttack", false);        
     }
 
     public virtual void SpawnDamageText() {

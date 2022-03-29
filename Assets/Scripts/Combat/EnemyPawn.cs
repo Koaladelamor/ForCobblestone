@@ -91,4 +91,9 @@ public class EnemyPawn : PawnController
     {
         DamagePopUp damageText = combatManager.GetComponent<DamagePopUp>().Create(m_pawnToAttack.transform.position, damage);
     }
+
+    public override void EndAttackAnimation()
+    {
+        animator.SetBool("isAttacking", false);
+    }
 }

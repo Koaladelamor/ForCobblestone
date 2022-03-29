@@ -6,7 +6,7 @@ public class WeaponObj : ItemObject
 {
     public void Awake()
     {
-        iType = ItemType.WEAPON;
+        Type = ItemType.WEAPON;
     }
 
 }

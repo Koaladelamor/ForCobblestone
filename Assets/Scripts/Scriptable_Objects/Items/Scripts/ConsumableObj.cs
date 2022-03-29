@@ -7,6 +7,6 @@ public class ConsumableObj : ItemObject
 {
     public void Awake()
     {
-        iType = ItemType.CONSUMABLE;
+        Type = ItemType.CONSUMABLE;
     }
 }

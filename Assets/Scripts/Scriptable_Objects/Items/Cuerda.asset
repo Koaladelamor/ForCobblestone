@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5c6fbfa52d3a07c4496f2bfa3b9e6b03, type: 3}
-  m_Name: Lingote de oro
+  m_Name: Cuerda
   m_EditorClassIdentifier: 
   Stackable: 1
-  Display: {fileID: 598366762555297539, guid: bcb2ffbd2b9eadf48a91740acb089c4f, type: 3}
+  Display: {fileID: -2943935920629327064, guid: bcb2ffbd2b9eadf48a91740acb089c4f, type: 3}
   Type: 6
   Description: 
-  Value: 1000
+  Value: 15
   data:
-    Name: Lingote de oro
-    ID: 6
+    Name: Cuerda
+    ID: 8
     Buffs: []

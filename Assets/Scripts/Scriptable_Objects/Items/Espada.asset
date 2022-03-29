@@ -10,12 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f0c2873dbeff7514fa67dadfffefe0b8, type: 3}
-  m_Name: Espada oxidada
+  m_Name: Espada
   m_EditorClassIdentifier: 
-  stackable: 0
-  iDisplay: {fileID: 7316420773922359929, guid: bcb2ffbd2b9eadf48a91740acb089c4f, type: 3}
-  iType: 0
-  iDescription: 
+  Stackable: 0
+  Display: {fileID: 5278002651299279695, guid: bcb2ffbd2b9eadf48a91740acb089c4f, type: 3}
+  Type: 0
+  Description: 
+  Value: 100
   data:
     Name: Espada
     ID: 4

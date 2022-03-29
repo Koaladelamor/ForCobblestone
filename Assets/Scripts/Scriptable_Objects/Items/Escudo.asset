@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c31f96cf8be3994185a292c5af1a44e, type: 3}
   m_Name: Escudo
   m_EditorClassIdentifier: 
-  stackable: 0
-  iDisplay: {fileID: 7937512970604519235, guid: bcb2ffbd2b9eadf48a91740acb089c4f, type: 3}
-  iType: 1
-  iDescription: 
+  Stackable: 0
+  Display: {fileID: -158361939860852098, guid: bcb2ffbd2b9eadf48a91740acb089c4f, type: 3}
+  Type: 1
+  Description: 
+  Value: 40
   data:
     Name: Escudo
     ID: 3

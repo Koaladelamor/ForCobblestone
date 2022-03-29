@@ -9,23 +9,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6312bab94443b9543a577115f3e8b27a, type: 3}
-  m_Name: Casco
+  m_Script: {fileID: 11500000, guid: f0c2873dbeff7514fa67dadfffefe0b8, type: 3}
+  m_Name: Hacha
   m_EditorClassIdentifier: 
   Stackable: 0
-  Display: {fileID: 1508077579116638498, guid: bcb2ffbd2b9eadf48a91740acb089c4f, type: 3}
-  Type: 2
+  Display: {fileID: 3119125792963976515, guid: bcb2ffbd2b9eadf48a91740acb089c4f, type: 3}
+  Type: 0
   Description: 
-  Value: 45
+  Value: 120
   data:
-    Name: Casco
-    ID: 1
+    Name: 
+    ID: 5
     Buffs:
     - attribute: 2
       value: 0
       min: 1
       max: 10
-    - attribute: 3
+    - attribute: 1
       value: 0
       min: 1
-      max: 10
+      max: 8
