@@ -20,7 +20,7 @@ public class PawnController : MonoBehaviour
     protected Transform m_positionToGo;
 
     public PAWN_STATUS m_state;
-    protected Vector3[] m_directions = { Vector3.right, Vector3.down, Vector3.left, Vector3.up };
+    protected Vector3[] m_directions = { new Vector3(40f, 0, 0), new Vector3(0, -40f, 0), new Vector3(-40f, 0, 0), new Vector3(0, 40f, 0) };
 
     public int current_hp;
     protected int max_hp;
@@ -36,6 +36,7 @@ public class PawnController : MonoBehaviour
 
     public int m_turnOrder;
     public bool m_isMyTurn;
+    public bool m_myTurnIsDone;
 
     protected bool readyToAttack;
 
@@ -73,6 +74,13 @@ public class PawnController : MonoBehaviour
         m_previousPosition = m_position;
 
         combatManager = GameObject.FindGameObjectWithTag("CombatManager");
+        float tileSize = 40;
+        m_directions[0] = new Vector3(tileSize, 0f, 0f);
+        m_directions[1] = new Vector3(0, -tileSize, 0);
+        m_directions[2] = new Vector3(-tileSize, 0, 0);
+        m_directions[3] = new Vector3(0, tileSize, 0);
+
+
     }
     protected void Update()
     {
@@ -107,8 +115,7 @@ public class PawnController : MonoBehaviour
                 }
 
                 else if (m_isMyTurn && enemyIsClose && !m_pawnToAttack.m_isAlive) {
-                    m_isMyTurn = false;
-                    //combatManager.GetComponent<CombatManager>().turnDone = true;
+                    m_state = PAWN_STATUS.SEARCH;
                 }
                 break;
 
@@ -204,7 +211,8 @@ public class PawnController : MonoBehaviour
     }
 
     protected virtual void Search()
-    {      
+    {
+
         if ((transform.position - m_positionToGo.transform.position).magnitude == 1)
         {
             m_currentStep = 0;
@@ -215,7 +223,8 @@ public class PawnController : MonoBehaviour
             }
 
             m_state = PAWN_STATUS.IDLE;
-            m_isMyTurn = false;
+            //m_isMyTurn = false;
+            m_myTurnIsDone = true;
             return;
         }
         
@@ -259,7 +268,8 @@ public class PawnController : MonoBehaviour
                 return;
             }
             m_state = PAWN_STATUS.IDLE;
-            m_isMyTurn = false;
+            //m_isMyTurn = false;
+            m_myTurnIsDone = true;
         }
     }
 
@@ -285,12 +295,14 @@ public class PawnController : MonoBehaviour
             }
 
             m_state = PAWN_STATUS.IDLE;
-            m_isMyTurn = false;
+            //m_isMyTurn = false;
+            m_myTurnIsDone = true;
 
         }
         else {
             m_state = PAWN_STATUS.IDLE;
-            m_isMyTurn = false;
+            //m_isMyTurn = false;
+            m_myTurnIsDone = true;
         }
 
         readyToAttack = true;
@@ -343,25 +355,38 @@ public class PawnController : MonoBehaviour
         }
     }
 
-    public void spawnDamageText() {
+    public virtual void SpawnDamageText() {
         DamagePopUp damageText = combatManager.GetComponent<DamagePopUp>().Create(m_pawnToAttack.transform.position, damage);
-        if (CompareTag("Player"))
-        {
-            damageText.gameObject.GetComponent<TextMeshPro>().color = new Color(0, 255, 0);
-        }
+        damageText.gameObject.GetComponent<TextMeshPro>().color = new Color(0, 255, 0);
     }
 
-    public void checkIfEnemyIsAlive() {
+    public void CheckIfEnemyIsAlive() {
         if (m_pawnToAttack.current_hp < 1)
         {
             m_pawnToAttack.gameObject.GetComponent<SpriteRenderer>().enabled = false;
         }
     }
 
-    public void killPawn()
+    public void KillPawn()
     {
         m_pawnToAttack.gameObject.GetComponent<SpriteRenderer>().enabled = false; 
     }
+
+    public void SetTurn(bool turn) { m_isMyTurn = turn; }
+
+    public void SetTurnOn() { 
+        m_isMyTurn = true;
+        m_myTurnIsDone = false;
+    }
+
+    public void SetTurnOff()
+    {
+        m_isMyTurn = false;
+        m_myTurnIsDone = true;
+    }
+
+    public bool GetTurn() { return m_isMyTurn; }
+    public bool GetTurnDone() { return m_myTurnIsDone; }
 
 
 }

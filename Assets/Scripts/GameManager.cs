@@ -31,25 +31,17 @@ public class GameManager : MonoBehaviour
 
     public Button[] equipmentButtons;
 
-    public GameObject m_playerPrefab;
-
     public GameObject m_minotaurPrefab;
     public GameObject m_wolfPrefab;
 
-    private GameObject m_player;
-    private GameObject m_pointToGo;
+    public GameObject m_canvasToCombat;
 
-    private GameObject m_canvasToCombat;
-
-    Vector3 playerPosition;
-
+    //Vector3 playerPosition;
 
     public GameObject enemyOnCombat;
     public EnemyType enemyOnCombatType;
 
     private Vector3[] enemyRespawnPositions = new Vector3[2];
-    Vector3 enemy1_respawnPosition = new Vector3(-237f, 50f, 0f);
-    Vector3 enemy2_respawnPosition = new Vector3(370f, -100f, 0f);
     public int enemyIndex;
     public int totalEnemies;
     public bool[] enemyIsAlive;
@@ -59,8 +51,6 @@ public class GameManager : MonoBehaviour
     public bool combatIsOver;
 
     bool inventoryOnScreen = false;
-
-    public GameObject eventSystemMap;
     
     private void Awake()
     {
@@ -83,10 +73,8 @@ public class GameManager : MonoBehaviour
         enemyRespawnPositions[0] = new Vector3(-237f, 50f, 0f);
         enemyRespawnPositions[1] = new Vector3(370f, -100f, 0f);
         
-        m_canvasToCombat = GameObject.FindGameObjectWithTag("CanvasToBattle");
-        m_canvasToCombat.SetActive(false);
+        //m_canvasToCombat.SetActive(false);
 
-        m_player = GameObject.FindGameObjectWithTag("PlayerMap");
         enemyEngaged = false;
 
         enemies[0] = RespawnEnemy(m_minotaurPrefab, enemyRespawnPositions[0], 0);
@@ -109,12 +97,22 @@ public class GameManager : MonoBehaviour
 
         Invoke("HideInventories", 0.02f);
         m_statsScreen.DisableStatButtons();
+        DisableCombatCanvas(); 
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            Time.timeScale = 2;
+        }
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            Time.timeScale = 1;
+        }
+
         if (Input.GetKeyDown(KeyCode.J))
         {
             GameStats.Instance.AddXpToGrodnar(600f);
@@ -166,14 +164,13 @@ public class GameManager : MonoBehaviour
             enemyEngaged = false;
 
             //Save stats
-            playerPosition = m_player.transform.position;
 
             //Enemy info
             enemyIndex = enemyOnCombat.GetComponent<PatrolAI>().enemyID;
             totalEnemies = enemyOnCombat.GetComponent<PatrolAI>().totalEnemies;
             enemyOnCombatType = enemyOnCombat.GetComponent<PatrolAI>().enemyType;
 
-            m_canvasToCombat.SetActive(true);
+            EnableCombatCanvas();
         }
 
 
@@ -373,12 +370,6 @@ public class GameManager : MonoBehaviour
         m_LanstarEquipmentInventory.Clear();
         m_SigfridEquipmentInventory.Clear();
     }
-    void SetupPlayer() {
-        m_player = GameObject.FindGameObjectWithTag("PlayerMap");
-        m_pointToGo = GameObject.FindGameObjectWithTag("PointToGo");
-        m_player.transform.position = playerPosition;
-        m_pointToGo.transform.position = playerPosition;
-    }
 
     GameObject RespawnEnemy(GameObject type, Vector3 enemySpawnPos, int ID) {
         
@@ -413,38 +404,36 @@ public class GameManager : MonoBehaviour
     }
 
     public void LoadCombatScene() {
-        
+        GameObject[] gameObjectsOnScene;
+        gameObjectsOnScene = SceneManager.GetActiveScene().GetRootGameObjects();
+        foreach (GameObject obj in gameObjectsOnScene)
+        {
+            obj.SetActive(false);
+        }
         SceneManager.LoadSceneAsync("CombatScene", LoadSceneMode.Additive);
-        //SetActiveScene("CombatScene");
     }
 
     public void LoadMapScene()
     {
-        SceneManager.SetActiveScene(SceneManager.GetSceneByName("MapScene"));
-        SceneManager.UnloadSceneAsync(SceneManager.GetSceneByName("CombatScene"));
-
-        GameObject[] objs;
-        objs = SceneManager.GetActiveScene().GetRootGameObjects();
-        foreach (GameObject obj in objs)
+        GameObject[] gameObjectsOnScene;
+        gameObjectsOnScene = SceneManager.GetSceneByName("MapScene").GetRootGameObjects();
+        foreach (GameObject obj in gameObjectsOnScene)
         {
             obj.SetActive(true);
         }
+        SceneManager.UnloadSceneAsync(SceneManager.GetSceneByName("CombatScene"));
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName("MapScene"));
 
-        DisableCanvas();
         HideInventories();
+        DisableCombatCanvas();
         GameObject canvasHostal = GameObject.FindGameObjectWithTag("CanvasHostal");
         canvasHostal.SetActive(false);
         GameObject canvasPause = GameObject.FindGameObjectWithTag("CanvasPause");
         canvasPause.SetActive(false);
+
     }
 
     public void SetActiveScene(string scene) {
-        GameObject[] objs;
-        objs = SceneManager.GetActiveScene().GetRootGameObjects();
-        foreach (GameObject obj in objs)
-        {
-            obj.SetActive(false);
-        }
         SceneManager.SetActiveScene(SceneManager.GetSceneByName(scene));
     }
 
@@ -454,9 +443,13 @@ public class GameManager : MonoBehaviour
         SetActiveScene(scene.name);
     }
 
-    public void DisableCanvas() {
-        m_canvasToCombat = GameObject.FindGameObjectWithTag("CanvasToBattle");
+    public void DisableCombatCanvas() {
         m_canvasToCombat.SetActive(false);
+    }
+
+    public void EnableCombatCanvas()
+    {
+        m_canvasToCombat.SetActive(true);
     }
 
     public UserInterface GetCurrentEquipmentInterface() { return m_currentEquipmentInterface; }

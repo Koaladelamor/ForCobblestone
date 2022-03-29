@@ -11,6 +11,7 @@ public class GridManager : MonoBehaviour
     static GridManager m_instance = null;
     public GameObject[,] m_tiles;
     public GameObject m_tile;
+    public Vector3[] m_directions;
 
     bool blackTilePainted;
     float m_tileSize;
@@ -22,6 +23,10 @@ public class GridManager : MonoBehaviour
         if (m_instance == null) { m_instance = this; }
         else { Destroy(this.gameObject); }
 
+    }
+
+    private void Start()
+    {
         m_tiles = new GameObject[MAX_FILAS, MAX_COLUMNAS];
 
         //Inicializar tabla de posiciones
@@ -32,11 +37,12 @@ public class GridManager : MonoBehaviour
                 //Celdas[i, j] = new GameObject();
 
                 m_tiles[i, j] = Instantiate(m_tile);
-                m_tiles[i, j].transform.position = new Vector3(m_initialPosition.position.x + j, m_initialPosition.position.y - i, m_initialPosition.position.z);
+                m_tiles[i, j].transform.position = new Vector3(m_initialPosition.position.x + j * 40, m_initialPosition.position.y - i * 40, m_initialPosition.position.z);
                 m_tiles[i, j].transform.parent = this.transform;
                 m_tiles[i, j].name = i + "-" + j;
 
                 m_tiles[i, j].transform.parent = null;
+                m_tiles[i, j].GetComponent<TileManager>().TakePawn();
 
                 //Tile color
                 if (!blackTilePainted)
@@ -56,6 +62,16 @@ public class GridManager : MonoBehaviour
                 m_tiles[i, j].GetComponent<TileManager>().playerDraggableOnTile = true;
             }
         }
+
+        m_tileSize = (m_tiles[0, 0].transform.position - m_tiles[0, 1].transform.position).magnitude;
+    }
+
+    public Vector3[] GetDirections() {
+        m_directions[0] = new Vector3(m_tileSize, 0f, 0f);
+        m_directions[1] = new Vector3(0, -m_tileSize, 0);
+        m_directions[2] = new Vector3(-m_tileSize, 0, 0);
+        m_directions[3] = new Vector3(0, m_tileSize, 0);
+        return m_directions;
     }
 
     static public GridManager Instance
@@ -95,8 +111,6 @@ public class GridManager : MonoBehaviour
         float tileX;
         float tileY;
 
-        m_tileSize = (m_tiles[0, 0].transform.position - m_tiles[0, 1].transform.position).magnitude;
-
         Vector2 leftTopBoardPosition = new Vector2(m_initialPosition.position.x - m_tileSize / 2, m_initialPosition.position.y + m_tileSize / 2);
 
         p_mousePosition = Camera.main.ScreenToWorldPoint(p_mousePosition);
@@ -117,6 +131,7 @@ public class GridManager : MonoBehaviour
         }
     }
 
+
     public bool IsTileEmpty(Vector2 p_tilePosition)
     {
         if (p_tilePosition.x >= 0 && p_tilePosition.x < MAX_COLUMNAS && p_tilePosition.y >= 0 && p_tilePosition.y < MAX_FILAS)
@@ -131,7 +146,7 @@ public class GridManager : MonoBehaviour
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 2; j++)
             {
-                m_tiles[i, j].GetComponentInChildren<TileManager>().enableHighlight();
+                m_tiles[i, j].GetComponent<TileManager>().EnableHighlight();
             }
         }
     }
@@ -142,8 +157,10 @@ public class GridManager : MonoBehaviour
         {
             for (int j = 0; j < 2; j++)
             {
-                m_tiles[i, j].GetComponentInChildren<TileManager>().disableHighlight();
+                m_tiles[i, j].GetComponentInChildren<TileManager>().DisableHighlight();
             }
         }
     }
+
+    public float GetTileSize() { return m_tileSize; }
 }

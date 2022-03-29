@@ -72,3 +72,12 @@ TagManager:
   - name: Top
     uniqueID: 2088475263
     locked: 0
+  - name: Combat Scenario
+    uniqueID: 3033610409
+    locked: 0
+  - name: Combat Grid
+    uniqueID: 364454151
+    locked: 0
+  - name: Combat Pawns
+    uniqueID: 2822374805
+    locked: 0

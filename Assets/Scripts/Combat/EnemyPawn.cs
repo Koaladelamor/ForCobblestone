@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class EnemyPawn : PawnController
 {
-
+    //bool draggable = false;
     protected override void Attack()
     {
         //attack
@@ -27,13 +28,15 @@ public class EnemyPawn : PawnController
             }
 
             m_state = PAWN_STATUS.IDLE;
-            m_isMyTurn = false;
+            //m_isMyTurn = false;
+            m_myTurnIsDone = true;
 
         }
         else
         {
             m_state = PAWN_STATUS.IDLE;
-            m_isMyTurn = false;
+            //m_isMyTurn = false;
+            m_myTurnIsDone = true;
         }
 
         readyToAttack = true;
@@ -82,5 +85,10 @@ public class EnemyPawn : PawnController
             }
         }
         return false;
+    }
+
+    public override void SpawnDamageText()
+    {
+        DamagePopUp damageText = combatManager.GetComponent<DamagePopUp>().Create(m_pawnToAttack.transform.position, damage);
     }
 }
