@@ -71,7 +71,7 @@ public class CombatManager : MonoBehaviour
     {
         if (EnemiesDefeated())
         {
-            Invoke("setCanvasActive", 1f);
+            Invoke("SetCanvasActive", 1f);
         }
 
         if (startCombat) {
