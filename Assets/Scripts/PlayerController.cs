@@ -59,7 +59,7 @@ public class PlayerController : MonoBehaviour
             engaged = true;
             m_gameManager.GetComponent<GameManager>().enemyEngaged = true;
 
-            m_gameManager.GetComponent<GameManager>().enemyOnCombat = other.gameObject;
+            GameManager.Instance.SetEnemyOnCombat(other.gameObject);
 
             other.gameObject.GetComponent<Collider2D>().enabled = false;
             m_pointToGo.transform.position = transform.position;

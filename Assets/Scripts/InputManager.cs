@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
-    enum ACTIONS { USE, UP, DOWN, LEFT, RIGHT, MOVE_PARTY, PAUSE, CAMERA, INVENTORY, MENU, NUMBER_OF_ACTIONS };
+    enum ACTIONS { USE, UP, DOWN, LEFT, RIGHT, MOVE_PARTY, PAUSE, NORMAL, FAST, CAMERA, INVENTORY, MENU, NUMBER_OF_ACTIONS };
 
     static InputManager mInstance;
 
@@ -22,6 +22,9 @@ public class InputManager : MonoBehaviour
     int rightClick = 1;
     KeyCode cameraButton = KeyCode.V;
     KeyCode pauseButton = KeyCode.Space;
+    KeyCode pauseButton2 = KeyCode.Alpha1;
+    KeyCode x1SpeedButton = KeyCode.Alpha2;
+    KeyCode x2SpeedButton = KeyCode.Alpha3;
     KeyCode inventoryButton = KeyCode.I;
     KeyCode menuButton = KeyCode.Escape;
 
@@ -79,9 +82,17 @@ public class InputManager : MonoBehaviour
         if (Input.GetKey(cameraButton)) { buttonsHold[(int)ACTIONS.CAMERA] = true; }
         if (Input.GetKeyUp(cameraButton)) { buttonsReleased[(int)ACTIONS.CAMERA] = true; }
 
-        if (Input.GetKeyDown(pauseButton)) { buttonsPressed[(int)ACTIONS.PAUSE] = true; }
-        if (Input.GetKey(pauseButton)) { buttonsHold[(int)ACTIONS.PAUSE] = true; }
-        if (Input.GetKeyUp(pauseButton)) { buttonsReleased[(int)ACTIONS.PAUSE] = true; }
+        if (Input.GetKeyDown(pauseButton) || Input.GetKeyDown(pauseButton2)) { buttonsPressed[(int)ACTIONS.PAUSE] = true; }
+        if (Input.GetKey(pauseButton) || Input.GetKeyDown(pauseButton2)) { buttonsHold[(int)ACTIONS.PAUSE] = true; }
+        if (Input.GetKeyUp(pauseButton) || Input.GetKeyDown(pauseButton2)) { buttonsReleased[(int)ACTIONS.PAUSE] = true; }
+
+        if (Input.GetKeyDown(x1SpeedButton)) { buttonsPressed[(int)ACTIONS.NORMAL] = true; }
+        if (Input.GetKey(x1SpeedButton)) { buttonsHold[(int)ACTIONS.NORMAL] = true; }
+        if (Input.GetKeyUp(x1SpeedButton)) { buttonsReleased[(int)ACTIONS.NORMAL] = true; }
+
+        if (Input.GetKeyDown(x2SpeedButton)) { buttonsPressed[(int)ACTIONS.FAST] = true; }
+        if (Input.GetKey(x2SpeedButton)) { buttonsHold[(int)ACTIONS.FAST] = true; }
+        if (Input.GetKeyUp(x2SpeedButton)) { buttonsReleased[(int)ACTIONS.FAST] = true; }
 
         if (Input.GetKeyDown(inventoryButton)) { buttonsPressed[(int)ACTIONS.INVENTORY] = true; }
         if (Input.GetKey(inventoryButton)) { buttonsHold[(int)ACTIONS.INVENTORY] = true; }
@@ -125,6 +136,14 @@ public class InputManager : MonoBehaviour
     public bool PauseButtonPressed { get { return buttonsPressed[(int)ACTIONS.PAUSE]; } }
     public bool PauseButtonHold { get { return buttonsHold[(int)ACTIONS.PAUSE]; } }
     public bool PauseButtonReleased { get { return buttonsReleased[(int)ACTIONS.PAUSE]; } }
+
+    public bool NormalSpeedButtonPressed { get { return buttonsPressed[(int)ACTIONS.NORMAL]; } }
+    public bool NormalSpeedButtonHold { get { return buttonsHold[(int)ACTIONS.NORMAL]; } }
+    public bool NormalSpeedButtonReleased { get { return buttonsReleased[(int)ACTIONS.NORMAL]; } }
+
+    public bool FastSpeedButtonPressed { get { return buttonsPressed[(int)ACTIONS.FAST]; } }
+    public bool FastSpeedButtonHold { get { return buttonsHold[(int)ACTIONS.FAST]; } }
+    public bool FastSpeedButtonReleased { get { return buttonsReleased[(int)ACTIONS.FAST]; } }
 
     public bool InventoryButtonPressed { get { return buttonsPressed[(int)ACTIONS.INVENTORY]; } }
     public bool InventoryButtonHold { get { return buttonsHold[(int)ACTIONS.INVENTORY]; } }

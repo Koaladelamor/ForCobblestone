@@ -41,7 +41,7 @@ public class PatrolAI : MonoBehaviour
 
         if (patrolling)
         {
-            flipSprites();
+            FlipSprites();
         }
 
     }
@@ -93,7 +93,7 @@ public class PatrolAI : MonoBehaviour
         return patrolPoint;
     }
 
-    public void flipSprites()
+    public void FlipSprites()
     {
         if (currentPosition.x > previousPosition.x)
         {

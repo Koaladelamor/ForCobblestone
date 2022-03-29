@@ -7,6 +7,6 @@ public class ShieldObj : ItemObject
 {
     public void Awake()
     {
-        iType = ItemType.SHIELD;
+        Type = ItemType.SHIELD;
     }
 }

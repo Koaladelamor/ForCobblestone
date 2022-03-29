@@ -7,8 +7,6 @@ public class CombatManager : MonoBehaviour
     public GameObject[] m_players;
     public GameObject[] m_enemies;
 
-    private GameObject m_gameManager;
-
     public GameObject m_minotaurPrefab;
     public GameObject m_wolfPrefab;
 
@@ -24,7 +22,6 @@ public class CombatManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        m_gameManager = GameObject.FindGameObjectWithTag("GameManager");
 
         m_canvasToMap.SetActive(false);
 
@@ -58,10 +55,6 @@ public class CombatManager : MonoBehaviour
         GridManager.Instance.AssignPawnToTile(m_enemies[0], EnemySpawnTile1);
         GridManager.Instance.AssignPawnToTile(m_enemies[1], EnemySpawnTile2);
         GridManager.Instance.AssignPawnToTile(m_enemies[2], EnemySpawnTile3);
-
-        /*GridManager.Instance.TakePawnFromTile(EnemySpawnTile1);
-        GridManager.Instance.TakePawnFromTile(EnemySpawnTile2);
-        GridManager.Instance.TakePawnFromTile(EnemySpawnTile3);*/
 
         turn = 0;
     }
@@ -178,7 +171,7 @@ public class CombatManager : MonoBehaviour
     }
 
     public void CombatIsOver() {
-        m_gameManager.GetComponent<GameManager>().combatIsOver = true;
+        GameManager.Instance.SetCombatIsOver(true);
     }
 
     public void SetCanvasActive() {
@@ -187,5 +180,19 @@ public class CombatManager : MonoBehaviour
 
     public void SetBoolCombatToTrue() {
         startCombat = true;
+    }
+
+    public void SetSpeedx2() {
+        Time.timeScale = 2;
+    }
+
+    public void SetSpeedx1()
+    {
+        Time.timeScale = 1;
+    }
+
+    public void Pause()
+    {
+        Time.timeScale = 0;
     }
 }

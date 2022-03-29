@@ -6,11 +6,12 @@ public enum ItemType { WEAPON, SHIELD, HELMET, CHEST, BOOTS, CONSUMABLE, TRADE, 
 
 public abstract class ItemObject : ScriptableObject
 {
-    public bool stackable;
-    public Sprite iDisplay;
-    public ItemType iType;
+    public bool Stackable;
+    public Sprite Display;
+    public ItemType Type;
     [TextArea(5, 10)] 
-    public string iDescription;
+    public string Description;
+    public int Value;
     public Item data = new Item();
     public Item CreateItem()
     {

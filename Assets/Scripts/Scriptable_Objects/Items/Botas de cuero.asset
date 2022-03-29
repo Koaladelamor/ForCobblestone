@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b562def6800f28645b58a0fa17abb54c, type: 3}
   m_Name: Botas de cuero
   m_EditorClassIdentifier: 
-  stackable: 0
-  iDisplay: {fileID: -6983620457242294006, guid: bcb2ffbd2b9eadf48a91740acb089c4f, type: 3}
-  iType: 4
-  iDescription: 
+  Stackable: 0
+  Display: {fileID: 8136320507434427749, guid: bcb2ffbd2b9eadf48a91740acb089c4f, type: 3}
+  Type: 4
+  Description: 
+  Value: 20
   data:
     Name: Botas
     ID: 0

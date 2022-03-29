@@ -19,6 +19,8 @@ public class GameStats : MonoBehaviour
     public Stadistics Lanstar;
     public Stadistics Sigfrid;
 
+    private int coins;
+
     static GameStats mInstance;
 
     static public GameStats Instance
@@ -44,6 +46,8 @@ public class GameStats : MonoBehaviour
         Grodnar = InitStats("Grodnar", 150, 5, 10, 18, 2, 1);
         Lanstar = InitStats("Lanstar", 100, 20, 16, 10, 10, 5);
         Sigfrid = InitStats("Sigfrid", 80, 15, 12, 5, 20, 15);
+
+        coins = 0;
     }
 
     public Stadistics GetGrodnar() { return Grodnar; }
@@ -203,6 +207,14 @@ public class GameStats : MonoBehaviour
         }
         return false;
     }
+
+    public int GetCoins() { return coins; }
+
+    public void SetCoins(int newAmount) { coins = newAmount; }
+
+    public void AddCoins(int coinsToAdd) { coins += coinsToAdd; }
+
+    public void SubtractCoins(int coinsToSubtract) { coins -= coinsToSubtract; }
 
 
 }

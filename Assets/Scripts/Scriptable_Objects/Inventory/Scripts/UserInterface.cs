@@ -29,7 +29,7 @@ public abstract class UserInterface : MonoBehaviour
     {
         if (_slot.Item.ID >= 0)
         {
-            _slot.slotDisplay.transform.GetChild(0).GetComponentInChildren<Image>().sprite = _slot.ItemObject.iDisplay;
+            _slot.slotDisplay.transform.GetChild(0).GetComponentInChildren<Image>().sprite = _slot.ItemObject.Display;
             _slot.slotDisplay.transform.GetChild(0).GetComponentInChildren<Image>().color = new Color(1, 1, 1, 1);
             _slot.slotDisplay.transform.GetComponentInChildren<TextMeshProUGUI>().text = _slot.Amount == 1 ? "" : _slot.Amount.ToString();
         }
@@ -79,7 +79,7 @@ public abstract class UserInterface : MonoBehaviour
         {
             if (_slot.Value.Item.ID >= 0)
             {
-                _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().sprite = _slot.Value.ItemObject.iDisplay;
+                _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().sprite = _slot.Value.ItemObject.Display;
                 _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().color = new Color(1, 1, 1, 1);
                 _slot.Key.transform.GetComponentInChildren<TextMeshProUGUI>().text = _slot.Value.Amount == 1 ? "" : _slot.Value.Amount.ToString();
             }
@@ -113,7 +113,7 @@ public abstract class UserInterface : MonoBehaviour
             rt.sizeDelta = new Vector2(50, 50);
             tempItem.transform.SetParent(transform.parent);
             Image img = tempItem.AddComponent<Image>();
-            img.sprite = slotsOnInterface[obj].ItemObject.iDisplay;
+            img.sprite = slotsOnInterface[obj].ItemObject.Display;
             img.raycastTarget = false;
         }
         return tempItem;
