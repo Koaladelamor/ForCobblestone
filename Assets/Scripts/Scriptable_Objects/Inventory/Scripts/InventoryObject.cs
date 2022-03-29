@@ -27,6 +27,21 @@ public class InventoryObject : ScriptableObject {
         return true;
     }
 
+    public bool AddItem(Item _item, int _amount, InventoryType _invType)
+    {
+        if (EmptySlotCount <= 0) { return false; }
+        InventorySlot slot = FindItemOnInventory(_item);
+        _item.PreviousHolder = _invType;
+        _item.Holder = _invType;
+        if (!Database.ItemObjects[_item.ID].Stackable || slot == null)
+        {
+            SetEmptySlot(_item, _amount);
+            return true;
+        }
+        slot.AddAmount(_amount);
+        return true;
+    }
+
     public Item GenerateRandomItem() {
         int randomID = Database.GetRandomID();
         Item item = new Item(Database.ItemObjects[randomID]);

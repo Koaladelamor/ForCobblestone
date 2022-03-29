@@ -19,7 +19,7 @@ MonoBehaviour:
   Value: 200
   data:
     Name: Arma contundente
-    ID: 11
+    ID: 10
     Buffs:
     - attribute: 1
       value: 0
@@ -29,3 +29,5 @@ MonoBehaviour:
       value: 0
       min: 1
       max: 20
+    Holder: 7
+    PreviousHolder: 7

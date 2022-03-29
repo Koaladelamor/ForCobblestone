@@ -19,5 +19,7 @@ MonoBehaviour:
   Value: 10
   data:
     Name: Pocion de vida
-    ID: 7
+    ID: 11
     Buffs: []
+    Holder: 7
+    PreviousHolder: 7

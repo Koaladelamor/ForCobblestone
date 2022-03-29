@@ -19,7 +19,7 @@ MonoBehaviour:
   Value: 120
   data:
     Name: 
-    ID: 5
+    ID: 8
     Buffs:
     - attribute: 2
       value: 0
@@ -29,3 +29,5 @@ MonoBehaviour:
       value: 0
       min: 1
       max: 8
+    Holder: 7
+    PreviousHolder: 7

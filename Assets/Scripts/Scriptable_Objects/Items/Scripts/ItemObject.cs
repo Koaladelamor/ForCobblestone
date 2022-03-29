@@ -30,10 +30,14 @@ public class Item
     public string Name;
     public int ID = -1;
     public ItemBuff[] Buffs;
+    public InventoryType Holder;
+    public InventoryType PreviousHolder;
 
     public Item() {
         Name = "";
         ID = -1;
+        Holder = InventoryType.LAST_NO_USE;
+        PreviousHolder = InventoryType.LAST_NO_USE;
     }
 
     public Item(ItemObject _item) {
@@ -47,6 +51,8 @@ public class Item
             };
 
         }
+        Holder = InventoryType.LAST_NO_USE;
+        PreviousHolder = InventoryType.LAST_NO_USE;
     }
 
 }

@@ -19,6 +19,9 @@ public class CombatManager : MonoBehaviour
     int turn;
     public bool startCombat;
 
+    public bool turnDone = false;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -79,10 +82,11 @@ public class CombatManager : MonoBehaviour
                     {
                         m_players[0].GetComponent<PawnController>().SetTurnOn();
                     }
-                    if (m_players[0].GetComponent<PawnController>().GetTurnDone())
+                    if (turnDone)
                     {
                         m_players[0].GetComponent<PawnController>().SetTurn(false);
                         turn++;
+                        turnDone = false;
                     }
                     break;
 
@@ -91,10 +95,11 @@ public class CombatManager : MonoBehaviour
                     {
                         m_enemies[0].GetComponent<PawnController>().SetTurnOn();
                     }
-                    if (m_enemies[0].GetComponent<PawnController>().GetTurnDone())
+                    if (turnDone)
                     {
                         m_enemies[0].GetComponent<PawnController>().SetTurn(false);
                         turn++;
+                        turnDone = false;
                     }
                     break;
 
@@ -103,10 +108,11 @@ public class CombatManager : MonoBehaviour
                     {
                         m_players[1].GetComponent<PawnController>().SetTurnOn();
                     }
-                    if (m_players[1].GetComponent<PawnController>().GetTurnDone())
+                    if (turnDone)
                     {
                         m_players[1].GetComponent<PawnController>().SetTurn(false);
                         turn++;
+                        turnDone = false;
                     }
                     break;
 
@@ -115,10 +121,11 @@ public class CombatManager : MonoBehaviour
                     {
                         m_enemies[1].GetComponent<PawnController>().SetTurnOn();
                     }
-                    if (m_enemies[1].GetComponent<PawnController>().GetTurnDone())
+                    if (turnDone)
                     {
                         m_enemies[1].GetComponent<PawnController>().SetTurn(false);
                         turn++;
+                        turnDone = false;
                     }
                     break;
 
@@ -127,10 +134,11 @@ public class CombatManager : MonoBehaviour
                     {
                         m_players[2].GetComponent<PawnController>().SetTurnOn();
                     }
-                    if (m_players[2].GetComponent<PawnController>().GetTurnDone())
+                    if (turnDone)
                     {
                         m_players[2].GetComponent<PawnController>().SetTurn(false);
                         turn++;
+                        turnDone = false;
                     }
                     break;
 
@@ -139,10 +147,11 @@ public class CombatManager : MonoBehaviour
                     {
                         m_enemies[2].GetComponent<PawnController>().SetTurnOn();
                     }
-                    if (m_enemies[2].GetComponent<PawnController>().GetTurnDone())
+                    if (turnDone)
                     {
                         m_enemies[2].GetComponent<PawnController>().SetTurn(false);
                         turn++;
+                        turnDone = false;
                     }
                     break;
 
@@ -195,4 +204,6 @@ public class CombatManager : MonoBehaviour
     {
         Time.timeScale = 0;
     }
+
+    public void SetTurnDone(bool done) { turnDone = done; }
 }
