@@ -6,6 +6,8 @@ using UnityEditor;
 
 public class Menu : MonoBehaviour
 {
+
+    public GameObject canvasSettings;
     public void loadNewGame() {
         SceneManager.LoadScene("MapScene", LoadSceneMode.Single);
     }
@@ -13,4 +15,8 @@ public class Menu : MonoBehaviour
     public void exitPlayMode() {
         //EditorApplication.ExitPlaymode();
     }
+
+    public void EnableCanvasSettings() { canvasSettings.SetActive(true); }
+
+    public void DisableCanvasSettings() { canvasSettings.SetActive(false); }
 }
