@@ -64,6 +64,9 @@ public class GameManager : MonoBehaviour
 
     public GameObject levelUpWarning;
 
+    public GameObject canvasMenu;
+    public bool isMenuOnScreen;
+
     private void Awake()
     {
         //Singleton
@@ -168,7 +171,16 @@ public class GameManager : MonoBehaviour
             FastSpeed();
         }
 
-
+        if (InputManager.Instance.MenuButtonPressed && isMenuOnScreen)
+        {
+            canvasMenu.SetActive(false);
+            isMenuOnScreen = false;
+        }
+        else if (InputManager.Instance.MenuButtonPressed && !isMenuOnScreen)
+        {
+            canvasMenu.SetActive(true);
+            isMenuOnScreen = true;
+        }
 
         if (Input.GetKeyDown(KeyCode.G))
         {
