@@ -266,6 +266,7 @@ public class GameManager : MonoBehaviour
     public void OnBeforeSlotUpdate(InventorySlot _slot)
     {
         if (_slot.ItemObject == null) { return; }
+        if (this == null) { return; }
 
         switch (_slot.parent.mInventory.type)
         {
@@ -307,6 +308,7 @@ public class GameManager : MonoBehaviour
     public void OnAfterSlotUpdate(InventorySlot _slot)
     {
         if (_slot.ItemObject == null) { return; }
+        if (this == null) { return; }
 
         switch (_slot.parent.mInventory.type)
         {
@@ -647,6 +649,7 @@ public class GameManager : MonoBehaviour
         UpdateCoinsAmount();
         m_inventoryDisplay.HideInventory();
         m_TavernTradeDisplay.HideInventory();
+        confirmTradeButton.gameObject.SetActive(false);
     }
 
     public void TradingModeON() {
