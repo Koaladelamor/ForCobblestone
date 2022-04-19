@@ -85,6 +85,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if(this == null) { return; }
         combatIsOver = false;
         enemyRespawnPositions[0] = new Vector3(-100f, -80f, 0f);
         enemyRespawnPositions[1] = new Vector3(370f, -100f, 0f);
@@ -308,7 +309,9 @@ public class GameManager : MonoBehaviour
     public void OnAfterSlotUpdate(InventorySlot _slot)
     {
         if (_slot.ItemObject == null) { return; }
-        if (this == null) { return; }
+        if (this == null) { 
+            return; 
+        }
 
         switch (_slot.parent.mInventory.type)
         {
@@ -650,6 +653,7 @@ public class GameManager : MonoBehaviour
         m_inventoryDisplay.HideInventory();
         m_TavernTradeDisplay.HideInventory();
         confirmTradeButton.gameObject.SetActive(false);
+        Time.timeScale = 1;
     }
 
     public void TradingModeON() {
@@ -666,6 +670,7 @@ public class GameManager : MonoBehaviour
         m_TavernTradeDisplay.HideInventory();
         confirmTradeButton.gameObject.SetActive(false);
         m_canvasTavern.SetActive(true);
+        Time.timeScale = 1;
     }
 
     public bool GetCombatIsOver() { return combatIsOver; }

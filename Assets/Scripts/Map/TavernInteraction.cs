@@ -27,14 +27,14 @@ public class TavernInteraction : MonoBehaviour
         if (collision.gameObject.CompareTag("PlayerMap"))
         {
             m_canvasHostal.SetActive(true);
-
+            Time.timeScale = 0;
         }
 
     }
 
     public void closeTavernCanvas() {
         m_canvasHostal.SetActive(false);
-
+        Time.timeScale = 1;
     }
 
 }
