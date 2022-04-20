@@ -501,11 +501,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 139882271}
-  - component: {fileID: 139882269}
   - component: {fileID: 139882270}
   - component: {fileID: 139882268}
   - component: {fileID: 139882267}
   - component: {fileID: 139882272}
+  - component: {fileID: 139882269}
   m_Layer: 0
   m_Name: AI_Player2
   m_TagString: Player
@@ -559,15 +559,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 139882266}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47c53191544458c4f8371fb98480737c, type: 3}
+  m_Script: {fileID: 11500000, guid: a2ec3891f341138488fefed8531958ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_state: 0
-  current_hp: 0
-  m_isAlive: 1
-  m_turnOrder: 3
-  m_isMyTurn: 0
-  m_myTurnIsDone: 0
+  m_type: 1
   animator: {fileID: 139882272}
 --- !u!212 &139882270
 SpriteRenderer:
@@ -1243,8 +1238,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 829266879}
-  - component: {fileID: 829266880}
   - component: {fileID: 829266878}
+  - component: {fileID: 829266880}
   - component: {fileID: 829266885}
   - component: {fileID: 829266884}
   - component: {fileID: 829266881}
@@ -1329,16 +1324,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 829266877}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47c53191544458c4f8371fb98480737c, type: 3}
+  m_Script: {fileID: 11500000, guid: a2ec3891f341138488fefed8531958ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_state: 0
-  current_hp: 0
-  m_isAlive: 1
-  m_turnOrder: 1
-  m_isMyTurn: 0
-  m_myTurnIsDone: 0
-  animator: {fileID: 829266881}
+  m_type: 1
+  animator: {fileID: 139882272}
 --- !u!95 &829266881
 Animator:
   serializedVersion: 3
@@ -1503,8 +1493,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45b4a60078296624285984dc73bb021d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MAX_FILAS: 6
-  MAX_COLUMNAS: 8
+  MAX_FILAS: 4
+  MAX_COLUMNAS: 5
   m_initialPosition: {fileID: 1335560374}
   m_tile: {fileID: 5405940655249670595, guid: a3945c42935380d43afca8e9e353a5b4, type: 3}
   m_directions: []
@@ -1617,7 +1607,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1335560373}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -100, y: 100, z: 0}
+  m_LocalPosition: {x: -54, y: 51, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1234224349}
@@ -1765,11 +1755,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1620034591}
-  - component: {fileID: 1620034594}
   - component: {fileID: 1620034595}
   - component: {fileID: 1620034593}
   - component: {fileID: 1620034592}
   - component: {fileID: 1620034596}
+  - component: {fileID: 1620034594}
   m_Layer: 0
   m_Name: AI_Player3
   m_TagString: Player
@@ -1837,16 +1827,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1620034590}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47c53191544458c4f8371fb98480737c, type: 3}
+  m_Script: {fileID: 11500000, guid: a2ec3891f341138488fefed8531958ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_state: 0
-  current_hp: 0
-  m_isAlive: 1
-  m_turnOrder: 5
-  m_isMyTurn: 0
-  m_myTurnIsDone: 0
-  animator: {fileID: 1620034596}
+  m_type: 1
+  animator: {fileID: 139882272}
 --- !u!212 &1620034595
 SpriteRenderer:
   m_ObjectHideFlags: 0

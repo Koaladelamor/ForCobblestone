@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public enum PAWN_STATUS { IDLE, SEARCH, ATTACK }
+
 
 public class PawnController : MonoBehaviour
 {
+    public enum PAWN_STATUS { IDLE, SEARCH, ATTACK }
+
     protected bool draggable;
     protected bool isDragged;
 

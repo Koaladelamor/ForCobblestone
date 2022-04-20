@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class GridManager : MonoBehaviour
 {
-    [SerializeField] int MAX_FILAS = 5;
-    [SerializeField] int MAX_COLUMNAS = 10;
+    [SerializeField] int MAX_FILAS;
+    [SerializeField] int MAX_COLUMNAS;
 
     [SerializeField] Transform m_initialPosition;
     static GridManager m_instance = null;
@@ -34,8 +34,6 @@ public class GridManager : MonoBehaviour
         {
             for (int j = 0; j < MAX_COLUMNAS; j++)
             {
-                //Celdas[i, j] = new GameObject();
-
                 m_tiles[i, j] = Instantiate(m_tile);
                 m_tiles[i, j].transform.position = new Vector3(m_initialPosition.position.x + j * 40, m_initialPosition.position.y - i * 40, m_initialPosition.position.z);
                 m_tiles[i, j].transform.parent = this.transform;
@@ -52,10 +50,10 @@ public class GridManager : MonoBehaviour
                 }
                 blackTilePainted = !blackTilePainted;
             }
-            blackTilePainted = !blackTilePainted;
+            //blackTilePainted = !blackTilePainted;
         }
 
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < 4; i++)
         {
             for (int j = 0; j < 2; j++)
             {
@@ -64,14 +62,6 @@ public class GridManager : MonoBehaviour
         }
 
         m_tileSize = (m_tiles[0, 0].transform.position - m_tiles[0, 1].transform.position).magnitude;
-    }
-
-    public Vector3[] GetDirections() {
-        m_directions[0] = new Vector3(m_tileSize, 0f, 0f);
-        m_directions[1] = new Vector3(0, -m_tileSize, 0);
-        m_directions[2] = new Vector3(-m_tileSize, 0, 0);
-        m_directions[3] = new Vector3(0, m_tileSize, 0);
-        return m_directions;
     }
 
     static public GridManager Instance
@@ -143,7 +133,7 @@ public class GridManager : MonoBehaviour
 
     public void StartingTiles_LightsOn()
     {
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 2; j++)
             {
                 m_tiles[i, j].GetComponent<TileManager>().EnableHighlight();
@@ -153,7 +143,7 @@ public class GridManager : MonoBehaviour
 
     public void StartingTiles_LightsOff()
     {
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < 4; i++)
         {
             for (int j = 0; j < 2; j++)
             {

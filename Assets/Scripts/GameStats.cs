@@ -49,7 +49,7 @@ public class GameStats : MonoBehaviour
 
         coins = 0;
     }
-
+    
     public Stadistics GetGrodnar() { return Grodnar; }
     public Stadistics GetLanstar() { return Lanstar; }
     public Stadistics GetSigfrid() { return Sigfrid; }

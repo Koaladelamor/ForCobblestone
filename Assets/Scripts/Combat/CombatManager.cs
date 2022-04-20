@@ -12,9 +12,9 @@ public class CombatManager : MonoBehaviour
 
     public GameObject m_canvasToMap;
 
-    Vector2 EnemySpawnTile1 = new Vector2(7, 1);
-    Vector2 EnemySpawnTile2 = new Vector2(7, 3);
-    Vector2 EnemySpawnTile3 = new Vector2(7, 4);
+    Vector2 EnemySpawnTile1 = new Vector2(3, 0);
+    Vector2 EnemySpawnTile2 = new Vector2(3, 2);
+    Vector2 EnemySpawnTile3 = new Vector2(3, 3);
 
     int turn;
     public bool startCombat;
@@ -28,31 +28,18 @@ public class CombatManager : MonoBehaviour
 
         m_canvasToMap.SetActive(false);
 
-        m_enemies[0] = Instantiate(m_minotaurPrefab, transform.position, Quaternion.identity);
-        m_enemies[1] = Instantiate(m_minotaurPrefab, transform.position, Quaternion.identity);
-        m_enemies[2] = Instantiate(m_minotaurPrefab, transform.position, Quaternion.identity);
+        m_enemies[0] = Instantiate(m_minotaurPrefab, transform.position, transform.rotation);
+        m_enemies[1] = Instantiate(m_minotaurPrefab, transform.position, transform.rotation);
+        m_enemies[2] = Instantiate(m_minotaurPrefab, transform.position, transform.rotation);
 
-        /*if (m_gameManager.GetComponent<GameManager>().enemyOnCombatType == EnemyType.MINOTAUR) {
-            m_enemies[0] = Instantiate(m_minotaurPrefab, transform.position, Quaternion.identity);
-            m_enemies[1] = Instantiate(m_minotaurPrefab, transform.position, Quaternion.identity);
-            m_enemies[2] = Instantiate(m_minotaurPrefab, transform.position, Quaternion.identity);
-        } 
-        
-        else if (m_gameManager.GetComponent<GameManager>().enemyOnCombatType == EnemyType.WOLF) {
-            m_enemies[0] = Instantiate(m_wolfPrefab, transform.position, Quaternion.identity);
-            m_enemies[1] = Instantiate(m_wolfPrefab, transform.position, Quaternion.identity);
-            m_enemies[2] = Instantiate(m_wolfPrefab, transform.position, Quaternion.identity);
-        }*/
-
-
-        for (int i = 0; i < m_enemies.Length; i++)
+        /*for (int i = 0; i < m_enemies.Length; i++)
         {
             m_enemies[i].GetComponent<PawnController>().m_isAlive = true;
             m_enemies[i].GetComponent<PawnController>().SetTurnOff();
-        }
-        m_enemies[0].GetComponent<PawnController>().m_turnOrder = 2;
+        }*/
+        /*m_enemies[0].GetComponent<PawnController>().m_turnOrder = 2;
         m_enemies[1].GetComponent<PawnController>().m_turnOrder = 4;
-        m_enemies[2].GetComponent<PawnController>().m_turnOrder = 6;
+        m_enemies[2].GetComponent<PawnController>().m_turnOrder = 6;*/
 
 
         GridManager.Instance.AssignPawnToTile(m_enemies[0], EnemySpawnTile1);
@@ -65,10 +52,10 @@ public class CombatManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (EnemiesDefeated())
+        /*if (EnemiesDefeated())
         {
             Invoke("SetCanvasActive", 1f);
-        }
+        }*/
 
         if (startCombat) {
 
