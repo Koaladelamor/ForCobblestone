@@ -8,9 +8,11 @@ public class TileManager : MonoBehaviour
     [SerializeField] GameObject _highlight;
     public bool playerDraggableOnTile;
     bool isEmpty;
+    private PawnController pawnOnTile;
 
     private void Start()
     {
+        pawnOnTile = null;
         isEmpty = true;
     }
 
@@ -27,17 +29,28 @@ public class TileManager : MonoBehaviour
     {
         if ((p_pawn.CompareTag("Player") || p_pawn.CompareTag("Enemy")) && isEmpty)
         {
-            p_pawn.GetComponent<NewPawnController>().SetPosition(new Vector3(transform.position.x, transform.position.y, transform.position.z - 1));
+            p_pawn.GetComponent<PawnController>().SetPosition(new Vector3(transform.position.x, transform.position.y, transform.position.z - 1));
             isEmpty = false;
+            pawnOnTile = p_pawn.GetComponent<PawnController>();
+            p_pawn.GetComponent<PawnController>().SetCurrentTile(this);
             return true;
         }
-        Debug.Log("ERROR");
+        Debug.Log("ERROR ADDING PAWN TO TILE");
         return false;
     }
 
     public void TakePawn()
     {
+        pawnOnTile = null;
         isEmpty = true;
+    }
+
+    public PawnController GetPawn() {
+        if (pawnOnTile != null) {
+            return pawnOnTile;
+        }
+        Debug.Log("PAWN ON TILE NULL");
+        return null;
     }
 
     public bool IsTileEmpty

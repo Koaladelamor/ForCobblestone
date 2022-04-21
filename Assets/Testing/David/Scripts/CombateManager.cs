@@ -64,11 +64,11 @@ public class CombateManager : MonoBehaviour
             {
                 if (!turnChanged)
                 {
-                    m_players[0].GetComponent<PawnController>().m_isMyTurn = true;
+                    m_players[0].GetComponent<OldPawnController>().m_isMyTurn = true;
                     turnChanged = !turnChanged;
                 }
 
-                if (m_players[0].GetComponent<PawnController>().m_isMyTurn == false)
+                if (m_players[0].GetComponent<OldPawnController>().m_isMyTurn == false)
                 {
                     turn++;
                     turnChanged = !turnChanged;
@@ -79,11 +79,11 @@ public class CombateManager : MonoBehaviour
             {
                 if (!turnChanged)
                 {
-                    m_enemies[0].GetComponent<PawnController>().m_isMyTurn = true;
+                    m_enemies[0].GetComponent<OldPawnController>().m_isMyTurn = true;
                     turnChanged = !turnChanged;
                 }
 
-                if (m_enemies[0].GetComponent<PawnController>().m_isMyTurn == false)
+                if (m_enemies[0].GetComponent<OldPawnController>().m_isMyTurn == false)
                 {
                     turn++;
                     turnChanged = !turnChanged;
@@ -95,11 +95,11 @@ public class CombateManager : MonoBehaviour
             {
                 if (!turnChanged)
                 {
-                    m_players[1].GetComponent<PawnController>().m_isMyTurn = true;
+                    m_players[1].GetComponent<OldPawnController>().m_isMyTurn = true;
                     turnChanged = !turnChanged;
                 }
 
-                if (m_players[1].GetComponent<PawnController>().m_isMyTurn == false)
+                if (m_players[1].GetComponent<OldPawnController>().m_isMyTurn == false)
                 {
                     turn++;
                     turnChanged = !turnChanged;
@@ -111,11 +111,11 @@ public class CombateManager : MonoBehaviour
             {
                 if (!turnChanged)
                 {
-                    m_enemies[1].GetComponent<PawnController>().m_isMyTurn = true;
+                    m_enemies[1].GetComponent<OldPawnController>().m_isMyTurn = true;
                     turnChanged = !turnChanged;
                 }
 
-                if (m_enemies[1].GetComponent<PawnController>().m_isMyTurn == false)
+                if (m_enemies[1].GetComponent<OldPawnController>().m_isMyTurn == false)
                 {
                     turn++;
                     turnChanged = !turnChanged;
@@ -126,11 +126,11 @@ public class CombateManager : MonoBehaviour
             {
                 if (!turnChanged)
                 {
-                    m_players[2].GetComponent<PawnController>().m_isMyTurn = true;
+                    m_players[2].GetComponent<OldPawnController>().m_isMyTurn = true;
                     turnChanged = !turnChanged;
                 }
 
-                if (m_players[2].GetComponent<PawnController>().m_isMyTurn == false)
+                if (m_players[2].GetComponent<OldPawnController>().m_isMyTurn == false)
                 {
                     turn++;
                     turnChanged = !turnChanged;
@@ -142,11 +142,11 @@ public class CombateManager : MonoBehaviour
             {
                 if (!turnChanged)
                 {
-                    m_enemies[2].GetComponent<PawnController>().m_isMyTurn = true;
+                    m_enemies[2].GetComponent<OldPawnController>().m_isMyTurn = true;
                     turnChanged = !turnChanged;
                 }
 
-                if (m_enemies[2].GetComponent<PawnController>().m_isMyTurn == false)
+                if (m_enemies[2].GetComponent<OldPawnController>().m_isMyTurn == false)
                 {
                     turn++;
                     turnChanged = !turnChanged;

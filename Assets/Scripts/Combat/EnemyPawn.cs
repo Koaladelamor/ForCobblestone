@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class EnemyPawn : PawnController
+public class EnemyPawn : OldPawnController
 {
     //bool draggable = false;
     protected override void Attack()
@@ -20,7 +20,7 @@ public class EnemyPawn : PawnController
 
                 Invoke("KillPawn", 0.4f);
 
-                m_pawnToAttack.gameObject.GetComponent<PawnController>().m_isAlive = false;
+                m_pawnToAttack.gameObject.GetComponent<OldPawnController>().m_isAlive = false;
                 Vector2 pawnPosition = GridManager.Instance.ScreenToTilePosition(Camera.main.WorldToScreenPoint(m_pawnToAttack.transform.position));
                 GridManager.Instance.TakePawnFromTile(pawnPosition);
                 
@@ -49,7 +49,7 @@ public class EnemyPawn : PawnController
 
         for (int i = 0; i < combatManager.GetComponent<CombatManager>().m_players.Length; i++)
         {
-            if (combatManager.GetComponent<CombatManager>().m_players[i].GetComponent<PawnController>().m_isAlive)
+            if (combatManager.GetComponent<CombatManager>().m_players[i].GetComponent<OldPawnController>().m_isAlive)
             {
                 distance = (transform.position - combatManager.GetComponent<CombatManager>().m_players[i].transform.position).magnitude;
 
@@ -71,13 +71,13 @@ public class EnemyPawn : PawnController
 
             for (int j = 0; j < combatManager.GetComponent<CombatManager>().m_players.Length; j++)
             {
-                if (combatManager.GetComponent<CombatManager>().m_players[j].GetComponent<PawnController>().m_isAlive)
+                if (combatManager.GetComponent<CombatManager>().m_players[j].GetComponent<OldPawnController>().m_isAlive)
                 {
                     Vector2 playerPosition = combatManager.GetComponent<CombatManager>().m_players[j].transform.position;
 
                     if (positionToCheck == GridManager.Instance.ScreenToTilePosition(Camera.main.WorldToScreenPoint(playerPosition)))
                     {
-                        m_pawnToAttack = combatManager.GetComponent<CombatManager>().m_players[j].GetComponent<PawnController>();
+                        m_pawnToAttack = combatManager.GetComponent<CombatManager>().m_players[j].GetComponent<OldPawnController>();
                         return true;
                     }
                 }
