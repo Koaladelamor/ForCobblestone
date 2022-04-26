@@ -11,6 +11,21 @@ public class Audio_Manager : MonoBehaviour
 
     [SerializeField] private AudioClip selectSound;
     [SerializeField] private AudioClip pressedSound;
+    [SerializeField] private AudioClip bagCloseSound;
+    [SerializeField] private AudioClip bagOpenSound;
+    [SerializeField] private AudioClip arrowHitFlesh;
+    [SerializeField] private AudioClip beOnYourGuard;
+    [SerializeField] private AudioClip birdSound;
+    [SerializeField] private AudioClip chestOpeningSound;
+    [SerializeField] private AudioClip coinDroppedSound;
+    [SerializeField] private AudioClip dramaticBirdsSound;
+    [SerializeField] private AudioClip owlSound;
+    [SerializeField] private AudioClip wolfHowlSound;
+    [SerializeField] private AudioClip swordHitFleshSound;
+    [SerializeField] private AudioClip swordHitObjectSound;
+    [SerializeField] private AudioClip swordHitMetalSound;
+
+
 
     [SerializeField] private AudioClip enemyHurt;
     [SerializeField] private AudioClip playerHurt;
@@ -21,10 +36,12 @@ public class Audio_Manager : MonoBehaviour
 
     //Hacer enum de audio sources
 
-    public enum AudioEffects { NONE, SELECT, PRESSED, ENEMYHURT, PLAYERHURT, LIFESOUND };
+    public enum AudioEffects { NONE, SELECT, PRESSED, LIFESOUND };
+
+    public enum InstantAudios { NONE, ENEMYHURT, PLAYERHURT, BAGCLOSE, BAGOPEN, ARROWFLESH, ONGUARD, BIRD, CHESTOPEN, COIN, DRAMATICBIRD, OWL, WOLFHOWL, SWORDFLESH,SWORDOBJECT, SWORDMETAL };
 
     //*****************************************
-    public void PlayEffect(AudioEffects effect) {
+    public void PlayOnce(AudioEffects effect) {
 
         effectsSounds.Stop();
 
@@ -38,14 +55,8 @@ public class Audio_Manager : MonoBehaviour
             case AudioEffects.PRESSED:
                 effectsSounds.clip = pressedSound;
                 break;
-            case AudioEffects.ENEMYHURT:
-                effectsSounds.clip = enemyHurt;
-                break;
-            case AudioEffects.PLAYERHURT:
-                effectsSounds.clip = playerHurt;
-                break;
             case AudioEffects.LIFESOUND:
-                effectsSounds.clip = lifeSound;
+                effectsSounds.clip = bagCloseSound;
                 break;
             default:
                 break;
@@ -55,14 +66,72 @@ public class Audio_Manager : MonoBehaviour
 
     }
 
+    public void PlayInstant(InstantAudios effect) 
+    {
+
+        switch (effect)
+        {
+            case InstantAudios.NONE:
+                break;
+            case InstantAudios.ENEMYHURT:
+                effectsSounds.PlayOneShot(enemyHurt);
+                break;
+            case InstantAudios.PLAYERHURT:
+                effectsSounds.PlayOneShot(playerHurt);
+                break;
+            case InstantAudios.BAGCLOSE:
+                effectsSounds.PlayOneShot(bagCloseSound);
+                break;
+            case InstantAudios.BAGOPEN:
+                effectsSounds.PlayOneShot(bagOpenSound);
+                break;
+            case InstantAudios.ARROWFLESH:
+                effectsSounds.PlayOneShot(arrowHitFlesh);
+                break;
+            case InstantAudios.ONGUARD:
+                effectsSounds.PlayOneShot(beOnYourGuard);
+                break;
+            case InstantAudios.BIRD:
+                effectsSounds.PlayOneShot(birdSound);
+                break;
+            case InstantAudios.CHESTOPEN:
+                effectsSounds.PlayOneShot(chestOpeningSound);
+                break;
+            case InstantAudios.COIN:
+                effectsSounds.PlayOneShot(coinDroppedSound);
+                break;
+            case InstantAudios.DRAMATICBIRD:
+                effectsSounds.PlayOneShot(dramaticBirdsSound);
+                break;
+            case InstantAudios.OWL:
+                effectsSounds.PlayOneShot(owlSound);
+                break;
+            case InstantAudios.WOLFHOWL:
+                effectsSounds.PlayOneShot(wolfHowlSound);
+                break;
+            case InstantAudios.SWORDFLESH:
+                effectsSounds.PlayOneShot(swordHitFleshSound);
+                break;
+            case InstantAudios.SWORDOBJECT:
+                effectsSounds.PlayOneShot(swordHitObjectSound);
+                break;
+            case InstantAudios.SWORDMETAL:
+                effectsSounds.PlayOneShot(swordHitMetalSound);
+                break;
+            default:
+                break;
+        }
+
+    }
+
     public void PlaySelect(BaseEventData data)
     {
-        PlayEffect(AudioEffects.SELECT);
+        PlayOnce(AudioEffects.SELECT);
     }
 
     public void PlayPressed(BaseEventData data) 
     {
-        PlayEffect(AudioEffects.PRESSED);
+        PlayOnce(AudioEffects.PRESSED);
     }
 
 

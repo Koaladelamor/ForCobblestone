@@ -11425,6 +11425,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: AudioManager
       objectReference: {fileID: 0}
+    - target: {fileID: 8553900687735693568, guid: 33a05dc838a91064aa93f2509ecb7806, type: 3}
+      propertyPath: owlSound
+      value: 
+      objectReference: {fileID: 8300000, guid: f06a6671cd1f6b94c8d3e0c1f9d9eb29, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 33a05dc838a91064aa93f2509ecb7806, type: 3}
 --- !u!114 &1679140875 stripped
@@ -14585,6 +14589,10 @@ PrefabInstance:
       propertyPath: m_inventory
       value: 
       objectReference: {fileID: 11400000, guid: 860dcdb72ae99c345acb9804be87ce7b, type: 2}
+    - target: {fileID: 5999787021463355123, guid: db78988c13b288e4ba3aaea894b3875a, type: 3}
+      propertyPath: audioManager
+      value: 
+      objectReference: {fileID: 1679140875}
     - target: {fileID: 5999787021463355123, guid: db78988c13b288e4ba3aaea894b3875a, type: 3}
       propertyPath: m_wolfPrefab
       value: 

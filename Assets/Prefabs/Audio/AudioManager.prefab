@@ -137,6 +137,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7362155464798415427}
   - component: {fileID: 8553900687735693568}
+  - component: {fileID: 7930205016058839706}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -176,9 +177,34 @@ MonoBehaviour:
   BackgroungMusic: {fileID: 7106954032706879348}
   selectSound: {fileID: 8300000, guid: 37bfc4a7131518148b5e2eabc380a687, type: 3}
   pressedSound: {fileID: 8300000, guid: d2f249372cd06da44b034139b22efa90, type: 3}
+  bagCloseSound: {fileID: 8300000, guid: a63be71182811224a905458c8a4611c9, type: 3}
+  bagOpenSound: {fileID: 8300000, guid: 605c568bc539a50419d1e1df71464180, type: 3}
+  arrowHitFlesh: {fileID: 8300000, guid: ca6211b4ff14c6c43aaa50e73f1d6a99, type: 3}
+  beOnYourGuard: {fileID: 8300000, guid: 9589d611aa7652c4080295a2b51340ab, type: 3}
+  birdSound: {fileID: 8300000, guid: b99f7c4258225e54fb6c194499e87a82, type: 3}
+  chestOpeningSound: {fileID: 8300000, guid: 0c41b12d4d1f89f4a8414de36740d24c, type: 3}
+  coinDroppedSound: {fileID: 8300000, guid: 50c5337e2486ec84c9fcfad02d44409a, type: 3}
+  dramaticBirdsSound: {fileID: 8300000, guid: f60bd6a0f70a7f144a7b437ec727e816, type: 3}
+  owlSound: {fileID: 8300000, guid: f06a6671cd1f6b94c8d3e0c1f9d9eb29, type: 3}
+  wolfHowlSound: {fileID: 8300000, guid: fbfe975c6029ca6499026bcaa11106ad, type: 3}
+  swordHitFleshSound: {fileID: 8300000, guid: 2cbf25b7a164f7b4c9920610629b3305, type: 3}
+  swordHitObjectSound: {fileID: 8300000, guid: f2286487aa27cda4c85cf0495b11a450, type: 3}
+  swordHitMetalSound: {fileID: 8300000, guid: 21e86a1a77ece3349a958659ae8aee75, type: 3}
   enemyHurt: {fileID: 8300000, guid: bc236d3a6013e0d4aab7d14ed7f2fb60, type: 3}
   playerHurt: {fileID: 8300000, guid: c87d9c894bf1c15439dd98728334080a, type: 3}
   lifeSound: {fileID: 8300000, guid: 4140a61bedbba264eaf01685b6e51760, type: 3}
+--- !u!114 &7930205016058839706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7362155464798415428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4385d84072cc1d148ae891b0cd719f17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9183874573171717934
 GameObject:
   m_ObjectHideFlags: 0
