@@ -37,6 +37,7 @@ public class PawnController : MonoBehaviour
     protected bool myTurn;
     protected bool myTurnIsDone;
 
+    protected bool diagonalChecked;
     protected bool straighMovement;
     protected bool positionReached;
     protected float speed;
@@ -53,6 +54,7 @@ public class PawnController : MonoBehaviour
         attackPerformed = false;
         attackEnded = false;
         speed = 50f;
+        diagonalChecked = false;
         straighMovement = true;
         positionReached = false;
         tileToMove = null;
@@ -145,16 +147,20 @@ public class PawnController : MonoBehaviour
                     {
                         transform.position = m_positionToGo.position;
                         positionReached = true;
+                        diagonalChecked = false;
                         Debug.Log("POSITION REACHED");
                         m_state = PAWN_STATUS.ATTACK;
                         break;
                     }
-                    //mirar eje Y en la ultima casilla de movimiento y hacer diagonal o no
-                    if (transform.position.y == m_positionToGo.position.y)
+
+                    if (transform.position.y != m_positionToGo.position.y && OnNextToLastTile(transform.position, m_positionToGo.position) && !diagonalChecked)
                     {
+                        straighMovement = false;
+                        diagonalChecked = true;
+                    }
+                    else if (!diagonalChecked) {
                         straighMovement = true;
                     }
-                    else straighMovement = false;
 
                     if (straighMovement)
                     {
@@ -184,6 +190,17 @@ public class PawnController : MonoBehaviour
             }
         }
 
+    }
+
+    protected virtual bool OnNextToLastTile(Vector3 currentPosition, Vector3 positionToGo) {
+        Vector3 nextToLastTileIndex = GridManager.Instance.ScreenToTilePosition(Camera.main.WorldToScreenPoint(positionToGo));
+        nextToLastTileIndex += Vector3.left;
+        Vector3 nextToLastPosition = GridManager.Instance.GetTile(nextToLastTileIndex).transform.position;
+
+        if (currentPosition.x >= nextToLastPosition.x) {
+            return true;
+        }
+        return false;
     }
     protected void OnMouseDown()
     {
