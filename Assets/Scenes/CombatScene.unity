@@ -1328,7 +1328,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_type: 1
-  animator: {fileID: 139882272}
+  animator: {fileID: 829266881}
 --- !u!95 &829266881
 Animator:
   serializedVersion: 3
@@ -1547,10 +1547,6 @@ MonoBehaviour:
   - {fileID: 829266877}
   - {fileID: 139882266}
   - {fileID: 1620034590}
-  m_enemies:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   m_minotaurPrefab: {fileID: 7720593678191878125, guid: 201c675320bc6964f9751b4300e5218a, type: 3}
   m_wolfPrefab: {fileID: 7296185999618991103, guid: 525bc9a18018a7f42a4a8a9e25ffb6ae, type: 3}
   m_canvasToMap: {fileID: 253444218}
@@ -1831,7 +1827,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_type: 1
-  animator: {fileID: 139882272}
+  animator: {fileID: 1620034596}
 --- !u!212 &1620034595
 SpriteRenderer:
   m_ObjectHideFlags: 0

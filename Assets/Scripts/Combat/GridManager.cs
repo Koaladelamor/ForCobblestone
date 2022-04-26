@@ -13,7 +13,7 @@ public class GridManager : MonoBehaviour
     public GameObject m_tile;
     public Vector3[] m_directions;
 
-    bool blackTilePainted;
+    bool transparentTilePainted;
     float m_tileSize;
 
 
@@ -43,12 +43,37 @@ public class GridManager : MonoBehaviour
                 m_tiles[i, j].GetComponent<TileManager>().TakePawn();
 
                 //Tile color
-                if (!blackTilePainted)
+                if (j < 2) {
+                    //Blue
+                    m_tiles[i, j].GetComponent<SpriteRenderer>().color = new Color(0, 0.3f, 1, 0.3f);
+                    if (!transparentTilePainted)
+                    {
+                        //+Transparent
+                        m_tiles[i, j].GetComponent<SpriteRenderer>().color = new Color(0, 0.3f, 1, 0.2f);
+                    }
+                }
+                else if (j > 2)
+                {
+                    //Red
+                    m_tiles[i, j].GetComponent<SpriteRenderer>().color = new Color(1, 0, 0, 0.3f);
+                    if (!transparentTilePainted)
+                    {
+                        //+Transparent
+                        m_tiles[i, j].GetComponent<SpriteRenderer>().color = new Color(1, 0, 0, 0.2f);
+                    }
+                }
+                else if (j == 2)
                 {
                     //Black
-                    m_tiles[i, j].GetComponent<SpriteRenderer>().color = new Vector4((float)0.5, (float)0.5, (float)0.5, (float)0.5f);
+                    m_tiles[i, j].GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 0.5f);
+                    if (!transparentTilePainted)
+                    {
+                        //+Transparent
+                        m_tiles[i, j].GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 0.3f);
+                    }
                 }
-                blackTilePainted = !blackTilePainted;
+
+                transparentTilePainted = !transparentTilePainted;
             }
             //blackTilePainted = !blackTilePainted;
         }

@@ -7,7 +7,7 @@ public class TileManager : MonoBehaviour
 {
     [SerializeField] GameObject _highlight;
     public bool playerDraggableOnTile;
-    bool isEmpty;
+    private bool isEmpty;
     private PawnController pawnOnTile;
 
     private void Start()
@@ -30,9 +30,9 @@ public class TileManager : MonoBehaviour
         if ((p_pawn.CompareTag("Player") || p_pawn.CompareTag("Enemy")) && isEmpty)
         {
             p_pawn.GetComponent<PawnController>().SetPosition(new Vector3(transform.position.x, transform.position.y, transform.position.z - 1));
-            isEmpty = false;
-            pawnOnTile = p_pawn.GetComponent<PawnController>();
             p_pawn.GetComponent<PawnController>().SetCurrentTile(this);
+            pawnOnTile = p_pawn.GetComponent<PawnController>();
+            isEmpty = false;
             return true;
         }
         Debug.Log("ERROR ADDING PAWN TO TILE");

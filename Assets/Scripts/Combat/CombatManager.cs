@@ -5,7 +5,7 @@ using UnityEngine;
 public class CombatManager : MonoBehaviour
 {
     public GameObject[] m_players;
-    public GameObject[] m_enemies;
+    private GameObject[] m_enemies;
 
     public GameObject m_minotaurPrefab;
     public GameObject m_wolfPrefab;
@@ -16,42 +16,49 @@ public class CombatManager : MonoBehaviour
     Vector2 EnemySpawnTile2 = new Vector2(3, 2);
     Vector2 EnemySpawnTile3 = new Vector2(3, 3);
 
-    //int turn;
+    int turn;
     public bool startCombat;
     private bool turnSet;
     public bool turnDone;
+
+    private void Awake()
+    {
+        turnSet = false;
+        m_enemies = new GameObject[3];
+    }
 
 
     // Start is called before the first frame update
     void Start()
     {
-        turnSet = false;
+
         m_canvasToMap.SetActive(false);
 
         m_enemies[0] = Instantiate(m_minotaurPrefab, transform.position, transform.rotation);
         m_enemies[1] = Instantiate(m_minotaurPrefab, transform.position, transform.rotation);
         m_enemies[2] = Instantiate(m_minotaurPrefab, transform.position, transform.rotation);
 
+
+        Invoke("AssignEnemies", 0.2f);
+
+
+
+
         /*for (int i = 0; i < m_enemies.Length; i++)
-        {
-            m_enemies[i].GetComponent<PawnController>().m_isAlive = true;
-            m_enemies[i].GetComponent<PawnController>().SetTurnOff();
-        }*/
+{
+    m_enemies[i].GetComponent<PawnController>().m_isAlive = true;
+    m_enemies[i].GetComponent<PawnController>().SetTurnOff();
+}*/
         /*m_enemies[0].GetComponent<PawnController>().m_turnOrder = 2;
         m_enemies[1].GetComponent<PawnController>().m_turnOrder = 4;
         m_enemies[2].GetComponent<PawnController>().m_turnOrder = 6;*/
-
-
-        GridManager.Instance.AssignPawnToTile(m_enemies[0], EnemySpawnTile1);
-        GridManager.Instance.AssignPawnToTile(m_enemies[1], EnemySpawnTile2);
-        GridManager.Instance.AssignPawnToTile(m_enemies[2], EnemySpawnTile3);
-
-        //turn = 0;
+        turn = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
+        
         /*if (EnemiesDefeated())
         {
             Invoke("SetCanvasActive", 1f);
@@ -59,98 +66,63 @@ public class CombatManager : MonoBehaviour
 
         if (startCombat) {
 
-            if (!turnSet) {
-                m_players[0].GetComponent<PawnController>().SetTurnOn();
-                turnSet = true;
-            }
-
-            /*switch (turn)
+            switch (turn)
             {
                 default:
                     break;
 
                 case 0:
-                    if (!m_players[0].GetComponent<OldPawnController>().GetTurn())
+                    if (!turnSet)
                     {
-                        m_players[0].GetComponent<OldPawnController>().SetTurnOn();
-                    }
-                    if (turnDone)
-                    {
-                        m_players[0].GetComponent<OldPawnController>().SetTurn(false);
-                        turn++;
-                        turnDone = false;
+                        m_players[0].GetComponent<PawnController>().SetTurnOn();
+                        turnSet = true;
                     }
                     break;
 
                 case 1:
-                    if (!m_enemies[0].GetComponent<OldPawnController>().GetTurn())
+                    if (!turnSet)
                     {
-                        m_enemies[0].GetComponent<OldPawnController>().SetTurnOn();
-                    }
-                    if (turnDone)
-                    {
-                        m_enemies[0].GetComponent<OldPawnController>().SetTurn(false);
-                        turn++;
-                        turnDone = false;
+                        m_players[1].GetComponent<PawnController>().SetTurnOn();
+                        turnSet = true;
                     }
                     break;
 
                 case 2:
-                    if (!m_players[1].GetComponent<OldPawnController>().GetTurn())
+                    if (!turnSet)
                     {
-                        m_players[1].GetComponent<OldPawnController>().SetTurnOn();
-                    }
-                    if (turnDone)
-                    {
-                        m_players[1].GetComponent<OldPawnController>().SetTurn(false);
-                        turn++;
-                        turnDone = false;
+                        m_players[2].GetComponent<PawnController>().SetTurnOn();
+                        turnSet = true;
                     }
                     break;
 
                 case 3:
-                    if (!m_enemies[1].GetComponent<OldPawnController>().GetTurn())
+                    if (!turnSet)
                     {
-                        m_enemies[1].GetComponent<OldPawnController>().SetTurnOn();
-                    }
-                    if (turnDone)
-                    {
-                        m_enemies[1].GetComponent<OldPawnController>().SetTurn(false);
-                        turn++;
-                        turnDone = false;
+                        m_enemies[1].GetComponent<PawnController>().SetTurnOn();
+                        turnSet = true;
                     }
                     break;
 
                 case 4:
-                    if (!m_players[2].GetComponent<OldPawnController>().GetTurn())
+                    if (!turnSet)
                     {
-                        m_players[2].GetComponent<OldPawnController>().SetTurnOn();
-                    }
-                    if (turnDone)
-                    {
-                        m_players[2].GetComponent<OldPawnController>().SetTurn(false);
-                        turn++;
-                        turnDone = false;
+                        m_players[2].GetComponent<PawnController>().SetTurnOn();
+                        turnSet = true;
                     }
                     break;
 
                 case 5:
-                    if (!m_enemies[2].GetComponent<OldPawnController>().GetTurn())
+                    if (!turnSet)
                     {
-                        m_enemies[2].GetComponent<OldPawnController>().SetTurnOn();
-                    }
-                    if (turnDone)
-                    {
-                        m_enemies[2].GetComponent<OldPawnController>().SetTurn(false);
-                        turn++;
-                        turnDone = false;
+                        m_enemies[2].GetComponent<PawnController>().SetTurnOn();
+                        turnSet = true;
                     }
                     break;
 
                 case 6:
                     turn = 0;
                     break;
-            }*/
+            }
         }
     }
 
@@ -169,6 +141,12 @@ public class CombatManager : MonoBehaviour
         }
 
         return false;
+    }
+
+    public void AssignEnemies() {
+        GridManager.Instance.AssignPawnToTile(m_enemies[0], EnemySpawnTile1);
+        GridManager.Instance.AssignPawnToTile(m_enemies[1], EnemySpawnTile2);
+        GridManager.Instance.AssignPawnToTile(m_enemies[2], EnemySpawnTile3);
     }
 
     public void CombatIsOver() {
@@ -198,4 +176,9 @@ public class CombatManager : MonoBehaviour
     }
 
     public void SetTurnDone(bool done) { turnDone = done; }
+
+    public void NextTurn() {
+        turn++;
+        turnSet = false;
+    }
 }

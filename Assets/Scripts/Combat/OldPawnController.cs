@@ -87,9 +87,9 @@ public class OldPawnController : MonoBehaviour
     {
         timer += Time.deltaTime;
 
-        ClosestPawn();
+        //ClosestPawn();
 
-        bool enemyIsClose = EnemyIsClose();
+        //bool enemyIsClose = EnemyIsClose();
 
         switch (m_state)
         {
@@ -104,7 +104,7 @@ public class OldPawnController : MonoBehaviour
 
                 break;
 
-            case PAWN_STATUS.IDLE:
+            /*case PAWN_STATUS.IDLE:
                 if (m_isMyTurn && enemyIsClose)
                 {
                     m_state = PAWN_STATUS.ATTACK;
@@ -116,7 +116,7 @@ public class OldPawnController : MonoBehaviour
                 }
 
                 break;
-
+            */
             case PAWN_STATUS.ATTACK:
                 if (readyToAttack)
                 {
@@ -186,7 +186,7 @@ public class OldPawnController : MonoBehaviour
         }
     }
 
-    protected virtual void ClosestPawn() {
+    /*protected virtual void ClosestPawn() {
 
         float distance;
         float closestDistance = 999999999;
@@ -204,7 +204,7 @@ public class OldPawnController : MonoBehaviour
                 }
             }
         }
-    }
+    }*/
 
     protected virtual void Search()
     {
@@ -212,11 +212,11 @@ public class OldPawnController : MonoBehaviour
         if ((transform.position - m_positionToGo.transform.position).magnitude == 40)
         {
             m_currentStep = 0;
-            if (EnemyIsClose())
+            /*if (EnemyIsClose())
             {
                 m_state = PAWN_STATUS.ATTACK;
                 return;
-            }
+            }*/
 
             m_state = PAWN_STATUS.IDLE;
             //m_isMyTurn = false;
@@ -259,7 +259,7 @@ public class OldPawnController : MonoBehaviour
         if (m_currentStep >= m_maxSteps)
         {
             m_currentStep = 0;
-            if (EnemyIsClose())
+            /*if (EnemyIsClose())
             {
                 m_state = PAWN_STATUS.ATTACK;
                 return;
@@ -267,7 +267,7 @@ public class OldPawnController : MonoBehaviour
             m_state = PAWN_STATUS.IDLE;
             //m_isMyTurn = false;
             m_myTurnIsDone = true;
-            combatManager.GetComponent<CombatManager>().SetTurnDone(true);
+            combatManager.GetComponent<CombatManager>().SetTurnDone(true);*/
         }
     }
 
@@ -315,7 +315,7 @@ public class OldPawnController : MonoBehaviour
     }
 
 
-    public virtual bool EnemyIsClose() {
+    /*public virtual bool EnemyIsClose() {
         for (int i = 0; i < m_directions.Length; i++)
         {
             Vector2 positionToCheck = GridManager.Instance.ScreenToTilePosition(Camera.main.WorldToScreenPoint(transform.position + m_directions[i]));
@@ -338,7 +338,7 @@ public class OldPawnController : MonoBehaviour
             }
         }
         return false;
-    }
+    }*/
 
     public virtual void EndAttackAnimation() {
         animator.SetBool("playerAttack", false);        
