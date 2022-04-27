@@ -184,7 +184,6 @@ public class PawnController : MonoBehaviour
                         attackPerformed = true;
                         damage = Random.Range(min_damage, max_damage + 1);
                         m_pawnToAttack.TakeDamage(damage);
-                        animator.SetBool("playerAttack", true);
                     }
                     else {
                         attackCurrentTimer += Time.deltaTime;

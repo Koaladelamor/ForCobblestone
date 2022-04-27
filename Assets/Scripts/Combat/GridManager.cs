@@ -99,7 +99,7 @@ public class GridManager : MonoBehaviour
     {
         TileManager currentTile = m_tiles[(int)p_tilePosition.y, (int)p_tilePosition.x].GetComponent<TileManager>();
 
-        //Debug.Log(p_tilePosition.x + " | " + p_tilePosition.y);
+        Debug.Log(p_tilePosition.x + " | " + p_tilePosition.y);
 
         return currentTile.AddPawn(p_pawn);
 
