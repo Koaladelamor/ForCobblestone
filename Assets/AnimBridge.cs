@@ -14,6 +14,6 @@ public class AnimBridge : MonoBehaviour
 
     public void EndAnimation()
     {
-        pawnc.EndAttackAnimation();
+        //pawnc.EndAttackAnimation();
     }
 }

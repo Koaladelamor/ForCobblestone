@@ -33,7 +33,7 @@ public class PawnController : MonoBehaviour
     protected CombatManager combatManager;
     protected TileManager tileToMove;
 
-    public Animator animator;
+    public GFXController gfxController;
 
     protected bool myTurn;
 
@@ -104,7 +104,7 @@ public class PawnController : MonoBehaviour
                 case PAWN_STATUS.ATTACK:
                     if (!attackPerformed)
                     {
-                        animator.SetBool("playerAttack", true);
+                        gfxController.Attack();
                         attackPerformed = true;
                     }
                     else {
@@ -457,9 +457,5 @@ public class PawnController : MonoBehaviour
     public bool GetTurn() { return myTurn; }
 
 
-    public virtual void EndAttackAnimation()
-    {
-        animator.SetBool("playerAttack", false);
-    }
 
 }

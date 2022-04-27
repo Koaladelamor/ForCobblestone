@@ -45,7 +45,7 @@ public class EnemyPawn : PawnController
                 case PAWN_STATUS.ATTACK:
                     if (!attackPerformed)
                     {
-                        animator.SetBool("isAttacking", true);
+                        gfxController.Attack();
                         attackPerformed = true;
                     }
                     else
@@ -317,8 +317,5 @@ public class EnemyPawn : PawnController
         combatManager.GetComponent<DamagePopUp>().Create(m_pawnToAttack.transform.position, damage);
     }
 
-    public override void EndAttackAnimation()
-    {
-        animator.SetBool("isAttacking", false);
-    }
+   
 }
