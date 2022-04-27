@@ -84,7 +84,10 @@ public class StatsScreen : MonoBehaviour
                 case Attributes.HEALTH:
                     UpdateText(healthValue, characterStat[i]);
                     break;
-                case Attributes.BASE_DAMAGE:
+                case Attributes.MIN_DAMAGE:
+                    UpdateText(damageValue, characterStat[i]);
+                    break;
+                case Attributes.MAX_DAMAGE:
                     UpdateText(damageValue, characterStat[i]);
                     break;
                 case Attributes.STRENGHT:
