@@ -26,7 +26,12 @@ public class PawnController : MonoBehaviour
     protected PAWN_STATUS m_state;
     public PAWN_TYPE m_type;
 
+    protected int MAX_HP;
+    protected int cur_hp;
+    protected int min_damage;
+    protected int max_damage;
     protected int damage;
+    protected int agility;
 
     protected PawnController m_pawnToAttack;
     protected TileManager m_currentTile;
@@ -68,19 +73,90 @@ public class PawnController : MonoBehaviour
         combatManager = GameObject.FindGameObjectWithTag("CombatManager").GetComponent<CombatManager>();
     }
 
-    protected void Start()
+    protected virtual void Start()
     {
         switch (character)
         {
             case CHARACTER.GRODNAR:
-                //damage = GameStats.Instance.GetGrodnarStats().Find()
+                List<Stat> GrodnarStats = GameStats.Instance.GetGrodnarStats();
+                for (int g = 0; g < GrodnarStats.Count; g++)
+                {
+                    if (GrodnarStats[g].attribute == Attributes.MIN_DAMAGE) {
+                        min_damage = GrodnarStats[g].value;
+                    }
+                    else if (GrodnarStats[g].attribute == Attributes.MAX_DAMAGE)
+                    {
+                        max_damage = GrodnarStats[g].value;
+                    }
+                    else if (GrodnarStats[g].attribute == Attributes.MAX_HEALTH)
+                    {
+                        MAX_HP = GrodnarStats[g].value;
+                    }
+                    else if (GrodnarStats[g].attribute == Attributes.CURR_HEALTH)
+                    {
+                        cur_hp = GrodnarStats[g].value;
+                    }
+                    else if (GrodnarStats[g].attribute == Attributes.AGILITY)
+                    {
+                        agility = GrodnarStats[g].value;
+                    }
+                }
                 break;
+
             case CHARACTER.LANSTAR:
+                List<Stat> LanstarStats = GameStats.Instance.GetLanstarStats();
+                for (int g = 0; g < LanstarStats.Count; g++)
+                {
+                    if (LanstarStats[g].attribute == Attributes.MIN_DAMAGE)
+                    {
+                        min_damage = LanstarStats[g].value;
+                    }
+                    else if (LanstarStats[g].attribute == Attributes.MAX_DAMAGE)
+                    {
+                        max_damage = LanstarStats[g].value;
+                    }
+                    else if (LanstarStats[g].attribute == Attributes.MAX_HEALTH)
+                    {
+                        MAX_HP = LanstarStats[g].value;
+                    }
+                    else if (LanstarStats[g].attribute == Attributes.CURR_HEALTH)
+                    {
+                        cur_hp = LanstarStats[g].value;
+                    }
+                    else if (LanstarStats[g].attribute == Attributes.AGILITY)
+                    {
+                        agility = LanstarStats[g].value;
+                    }
+                }
                 break;
+
             case CHARACTER.SIGFRID:
+                List<Stat> SigfridStats = GameStats.Instance.GetSigfridStats();
+                for (int g = 0; g < SigfridStats.Count; g++)
+                {
+                    if (SigfridStats[g].attribute == Attributes.MIN_DAMAGE)
+                    {
+                        min_damage = SigfridStats[g].value;
+                    }
+                    else if (SigfridStats[g].attribute == Attributes.MAX_DAMAGE)
+                    {
+                        max_damage = SigfridStats[g].value;
+                    }
+                    else if (SigfridStats[g].attribute == Attributes.MAX_HEALTH)
+                    {
+                        MAX_HP = SigfridStats[g].value;
+                    }
+                    else if (SigfridStats[g].attribute == Attributes.CURR_HEALTH)
+                    {
+                        cur_hp = SigfridStats[g].value;
+                    }
+                    else if (SigfridStats[g].attribute == Attributes.AGILITY)
+                    {
+                        agility = SigfridStats[g].value;
+                    }
+                }
                 break;
-            case CHARACTER.LAST_NO_USE:
-                break;
+
             default:
                 break;
         }
@@ -104,8 +180,10 @@ public class PawnController : MonoBehaviour
                 case PAWN_STATUS.ATTACK:
                     if (!attackPerformed)
                     {
-                        animator.SetBool("playerAttack", true);
                         attackPerformed = true;
+                        damage = Random.Range(min_damage, max_damage + 1);
+                        m_pawnToAttack.TakeDamage(damage);
+                        animator.SetBool("playerAttack", true);
                     }
                     else {
                         attackCurrentTimer += Time.deltaTime;
@@ -120,7 +198,6 @@ public class PawnController : MonoBehaviour
                         }
                     }
                     break;
-
 
                 case PAWN_STATUS.RETURN:
                     if (transform.position.x <= m_initialPosition.x)
@@ -415,6 +492,10 @@ public class PawnController : MonoBehaviour
             default:
                 break;
         }
+    }
+
+    public void TakeDamage(int damage) {
+        cur_hp -= damage;
     }
 
     public void SetCurrentTile(TileManager tile) {
