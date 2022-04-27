@@ -82,7 +82,7 @@ public class CombatManager : MonoBehaviour
                 case 1:
                     if (!turnSet)
                     {
-                        m_players[1].GetComponent<PawnController>().SetTurnOn();
+                        m_enemies[0].GetComponent<EnemyPawn>().SetTurnOn();
                         turnSet = true;
                     }
                     break;
@@ -90,7 +90,7 @@ public class CombatManager : MonoBehaviour
                 case 2:
                     if (!turnSet)
                     {
-                        m_players[2].GetComponent<PawnController>().SetTurnOn();
+                        m_players[1].GetComponent<PawnController>().SetTurnOn();
                         turnSet = true;
                     }
                     break;

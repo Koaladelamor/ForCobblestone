@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7720593678191878120}
   - component: {fileID: 7720593678191878123}
   - component: {fileID: 7720593678191878122}
-  - component: {fileID: 1754883393672653439}
+  - component: {fileID: -968547325789942989}
   m_Layer: 0
   m_Name: Minotaur
   m_TagString: Enemy
@@ -103,7 +103,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &1754883393672653439
+--- !u!114 &-968547325789942989
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -112,7 +112,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7720593678191878125}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2ec3891f341138488fefed8531958ed, type: 3}
+  m_Script: {fileID: 11500000, guid: e742da96afb6a874099538fbd831cb56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_type: 1

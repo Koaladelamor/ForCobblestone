@@ -8,7 +8,8 @@ public enum PAWN_TYPE { RANGED, MELEE, TANK }
 
 public class PawnController : MonoBehaviour
 {
-    
+    public enum CHARACTER { GRODNAR, LANSTAR, SIGFRID, LAST_NO_USE }
+    public CHARACTER character;
 
     protected bool draggable;
     protected bool isDragged;
@@ -35,7 +36,6 @@ public class PawnController : MonoBehaviour
     public Animator animator;
 
     protected bool myTurn;
-    protected bool myTurnIsDone;
 
     protected bool diagonalChecked;
     protected bool straighMovement;
@@ -47,7 +47,7 @@ public class PawnController : MonoBehaviour
     protected float attackTimer;
     protected float attackCurrentTimer;
 
-    protected void Start()
+    protected virtual void Awake()
     {
         attackTimer = 1.5f;
         attackCurrentTimer = 0;
@@ -67,7 +67,26 @@ public class PawnController : MonoBehaviour
         m_previousPosition = m_position;
         combatManager = GameObject.FindGameObjectWithTag("CombatManager").GetComponent<CombatManager>();
     }
-    protected void Update()
+
+    protected void Start()
+    {
+        switch (character)
+        {
+            case CHARACTER.GRODNAR:
+                //damage = GameStats.Instance.GetGrodnarStats().Find()
+                break;
+            case CHARACTER.LANSTAR:
+                break;
+            case CHARACTER.SIGFRID:
+                break;
+            case CHARACTER.LAST_NO_USE:
+                break;
+            default:
+                break;
+        }
+    }
+
+    protected virtual void Update()
     {
         if (myTurn)
         {
@@ -202,7 +221,8 @@ public class PawnController : MonoBehaviour
         }
         return false;
     }
-    protected void OnMouseDown()
+
+    private void OnMouseDown()
     {
         if (draggable)
         {
@@ -211,7 +231,7 @@ public class PawnController : MonoBehaviour
         }
     }
 
-    protected void OnMouseDrag()
+    private void OnMouseDrag()
     {
         if (isDragged)
         {
@@ -223,7 +243,7 @@ public class PawnController : MonoBehaviour
         }
     }
 
-    protected void OnMouseUp()
+    private void OnMouseUp()
     {
         if (isDragged)
         {
@@ -341,6 +361,9 @@ public class PawnController : MonoBehaviour
                 else {
                     m_pawnToAttack = null;
                     m_positionToGo = null;
+                    combatManager.NextTurn();
+                    myTurn = false;
+                    m_state = PAWN_STATUS.IDLE;
                     Debug.Log("NO ENEMY TO ATTACK");
                 }
                 break;
@@ -380,6 +403,14 @@ public class PawnController : MonoBehaviour
                     m_pawnToAttack = enemyTilePosition.GetPawn();
                     m_positionToGo = GridManager.Instance.GetTile(currentTilePosition + new Vector2(1, -1)).transform;
                 }
+                else {
+                    m_pawnToAttack = null;
+                    m_positionToGo = null;
+                    combatManager.NextTurn();
+                    myTurn = false;
+                    m_state = PAWN_STATUS.IDLE;
+                    Debug.Log("NO ENEMY TO ATTACK");
+                }
                 break;
             default:
                 break;
@@ -416,17 +447,15 @@ public class PawnController : MonoBehaviour
     public void SetTurnOn()
     {
         myTurn = true;
-        myTurnIsDone = false;
     }
 
     public void SetTurnOff()
     {
         myTurn = false;
-        myTurnIsDone = true;
     }
 
     public bool GetTurn() { return myTurn; }
-    public bool GetTurnDone() { return myTurnIsDone; }
+
 
     public virtual void EndAttackAnimation()
     {
