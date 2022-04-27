@@ -12,8 +12,6 @@ public class GameStats : MonoBehaviour
         public int _attribute_points;
         public float _required_xp;
         public float _current_xp;
-        public float _dodge;
-        public float _speed;//increases speed on map
     }
     public Stadistics Grodnar;
     public Stadistics Lanstar;
@@ -62,6 +60,8 @@ public class GameStats : MonoBehaviour
     public List<Stat> GetLanstarStats() { return Lanstar._stats; }
     public List<Stat> GetSigfridStats() { return Sigfrid._stats; }
 
+    public List<Stat> GetMinotaurStats() { return Minotaur._stats; }
+
     public Stadistics InitStats(string name, int health, int min_damage, int max_damage, int strenght, int stamina, int agility, int intelligence)
     {
         Stadistics player = new Stadistics();
@@ -71,8 +71,6 @@ public class GameStats : MonoBehaviour
         player._attribute_points = 0;
         player._required_xp = 500;
         player._current_xp = 0;
-        player._dodge = 1;
-        player._speed = 1;
 
         return player;
     }
@@ -81,7 +79,8 @@ public class GameStats : MonoBehaviour
     {
         List<Stat> statsList = new List<Stat>
         {
-            new Stat(Attributes.HEALTH, health),
+            new Stat(Attributes.MAX_HEALTH, health),
+            new Stat(Attributes.CURR_HEALTH, health),
             new Stat(Attributes.MIN_DAMAGE, min_damage),
             new Stat(Attributes.MAX_DAMAGE, max_damage),
             new Stat(Attributes.STRENGHT, strenght),

@@ -5,6 +5,8 @@ using TMPro;
 
 public class EnemyPawn : PawnController
 {
+    public enum EnemyType { MINOTAUR, SPIDER }
+    public EnemyType enemyType;
 
     protected override void Awake() {
         attackTimer = 1.5f;
@@ -24,6 +26,43 @@ public class EnemyPawn : PawnController
         m_position = transform.position;
         m_previousPosition = m_position;
         combatManager = GameObject.FindGameObjectWithTag("CombatManager").GetComponent<CombatManager>();
+    }
+
+    protected override void Start()
+    {
+        switch (enemyType)
+        {
+            case EnemyType.MINOTAUR:
+                List<Stat> MinotaurStats = GameStats.Instance.GetMinotaurStats();
+                for (int g = 0; g < MinotaurStats.Count; g++)
+                {
+                    if (MinotaurStats[g].attribute == Attributes.MIN_DAMAGE)
+                    {
+                        min_damage = MinotaurStats[g].value;
+                    }
+                    else if (MinotaurStats[g].attribute == Attributes.MAX_DAMAGE)
+                    {
+                        max_damage = MinotaurStats[g].value;
+                    }
+                    else if (MinotaurStats[g].attribute == Attributes.MAX_HEALTH)
+                    {
+                        MAX_HP = MinotaurStats[g].value;
+                    }
+                    else if (MinotaurStats[g].attribute == Attributes.CURR_HEALTH)
+                    {
+                        cur_hp = MinotaurStats[g].value;
+                    }
+                    else if (MinotaurStats[g].attribute == Attributes.AGILITY)
+                    {
+                        agility = MinotaurStats[g].value;
+                    }
+                }
+                break;
+            case EnemyType.SPIDER:
+                break;
+            default:
+                break;
+        }
     }
 
     protected override void Update()
@@ -47,6 +86,9 @@ public class EnemyPawn : PawnController
                     {
                         gfxController.Attack();
                         attackPerformed = true;
+                        damage = Random.Range(min_damage, max_damage + 1);
+                        m_pawnToAttack.TakeDamage(damage);
+                        animator.SetBool("isAttacking", true);
                     }
                     else
                     {

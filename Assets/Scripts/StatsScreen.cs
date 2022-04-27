@@ -81,11 +81,8 @@ public class StatsScreen : MonoBehaviour
         {
             switch (characterStat[i].attribute)
             {
-                case Attributes.HEALTH:
+                case Attributes.MAX_HEALTH:
                     UpdateText(healthValue, characterStat[i]);
-                    break;
-                case Attributes.MIN_DAMAGE:
-                    UpdateText(damageValue, characterStat[i]);
                     break;
                 case Attributes.MAX_DAMAGE:
                     UpdateText(damageValue, characterStat[i]);
