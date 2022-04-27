@@ -99,7 +99,7 @@ public class GridManager : MonoBehaviour
     {
         TileManager currentTile = m_tiles[(int)p_tilePosition.y, (int)p_tilePosition.x].GetComponent<TileManager>();
 
-        Debug.Log(p_tilePosition.x + " | " + p_tilePosition.y);
+        //Debug.Log(p_tilePosition.x + " | " + p_tilePosition.y);
 
         return currentTile.AddPawn(p_pawn);
 
@@ -154,6 +154,15 @@ public class GridManager : MonoBehaviour
             return m_tiles[(int)p_tilePosition.y, (int)p_tilePosition.x].GetComponent<TileManager>().IsTileEmpty;
         }
         return false;
+    }
+
+    public bool OutOfGrid(Vector2 p_tilePosition)
+    {
+        if (p_tilePosition.x >= 0 && p_tilePosition.x < MAX_COLUMNAS && p_tilePosition.y >= 0 && p_tilePosition.y < MAX_FILAS)
+        {
+            return false;
+        }
+        return true;
     }
 
     public void StartingTiles_LightsOn()
