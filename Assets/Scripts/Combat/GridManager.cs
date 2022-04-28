@@ -156,6 +156,15 @@ public class GridManager : MonoBehaviour
         return false;
     }
 
+    public bool OutOfGrid(Vector2 p_tilePosition)
+    {
+        if (p_tilePosition.x >= 0 && p_tilePosition.x < MAX_COLUMNAS && p_tilePosition.y >= 0 && p_tilePosition.y < MAX_FILAS)
+        {
+            return false;
+        }
+        return true;
+    }
+
     public void StartingTiles_LightsOn()
     {
         for (int i = 0; i < 4; i++) {

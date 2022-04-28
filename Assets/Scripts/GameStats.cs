@@ -12,12 +12,12 @@ public class GameStats : MonoBehaviour
         public int _attribute_points;
         public float _required_xp;
         public float _current_xp;
-        public float _dodge;
-        public float _speed;//increases speed on map
     }
     public Stadistics Grodnar;
     public Stadistics Lanstar;
     public Stadistics Sigfrid;
+
+    public Stadistics Minotaur;
 
     private int coins;
 
@@ -43,9 +43,11 @@ public class GameStats : MonoBehaviour
             return;
         }
 
-        Grodnar = InitStats("Grodnar", 150, 5, 10, 18, 2, 1);
-        Lanstar = InitStats("Lanstar", 100, 20, 16, 10, 10, 5);
-        Sigfrid = InitStats("Sigfrid", 80, 15, 12, 5, 20, 15);
+        Grodnar = InitStats("Grodnar", 150, 5, 15, 10, 18, 2, 1);
+        Lanstar = InitStats("Lanstar", 100, 20, 35, 16, 10, 10, 5);
+        Sigfrid = InitStats("Sigfrid", 80, 15, 30, 12, 5, 20, 15);
+
+        Minotaur = InitStats("Minotaur", 75, 10, 20, 15, 10, 5, 1);
 
         coins = 0;
     }
@@ -58,27 +60,29 @@ public class GameStats : MonoBehaviour
     public List<Stat> GetLanstarStats() { return Lanstar._stats; }
     public List<Stat> GetSigfridStats() { return Sigfrid._stats; }
 
-    public Stadistics InitStats(string name, int health, int damage, int strenght, int stamina, int agility, int intelligence)
+    public List<Stat> GetMinotaurStats() { return Minotaur._stats; }
+
+    public Stadistics InitStats(string name, int health, int min_damage, int max_damage, int strenght, int stamina, int agility, int intelligence)
     {
         Stadistics player = new Stadistics();
         player._name = name;
-        player._stats = SetPlayerStats(health, damage, strenght, stamina, agility, intelligence);
+        player._stats = SetPlayerStats(health, min_damage, max_damage, strenght, stamina, agility, intelligence);
         player._level = 1;
         player._attribute_points = 0;
         player._required_xp = 500;
         player._current_xp = 0;
-        player._dodge = 1;
-        player._speed = 1;
 
         return player;
     }
 
-    public List<Stat> SetPlayerStats(int health, int damage, int strenght, int stamina, int agility, int intelligence)
+    public List<Stat> SetPlayerStats(int health, int min_damage, int max_damage, int strenght, int stamina, int agility, int intelligence)
     {
         List<Stat> statsList = new List<Stat>
         {
-            new Stat(Attributes.HEALTH, health),
-            new Stat(Attributes.BASE_DAMAGE, damage),
+            new Stat(Attributes.MAX_HEALTH, health),
+            new Stat(Attributes.CURR_HEALTH, health),
+            new Stat(Attributes.MIN_DAMAGE, min_damage),
+            new Stat(Attributes.MAX_DAMAGE, max_damage),
             new Stat(Attributes.STRENGHT, strenght),
             new Stat(Attributes.STAMINA, stamina),
             new Stat(Attributes.AGILITY, agility),
