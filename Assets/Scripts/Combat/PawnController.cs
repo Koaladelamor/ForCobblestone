@@ -69,6 +69,7 @@ public class PawnController : MonoBehaviour
         myTurn = false;
         draggable = true;
         m_state = PAWN_STATUS.IDLE;
+        m_tilePosition = new Vector2(-1, -1);
         m_position = transform.position;
         m_previousPosition = m_position;
         anim = GetComponent<Animator>();
@@ -187,6 +188,7 @@ public class PawnController : MonoBehaviour
                         attackPerformed = true;
                         damage = Random.Range(min_damage, max_damage + 1);
                         m_pawnToAttack.TakeDamage(damage);
+                        m_pawnToAttack.GetComponentInChildren<HealthBar>().HealthChangeEvent();
                     }
                     else {
                         attackCurrentTimer += Time.deltaTime;
@@ -355,7 +357,10 @@ public class PawnController : MonoBehaviour
             {
                 if (GridManager.Instance.IsTileEmpty(tilePosition))
                 {
-                    GridManager.Instance.TakePawnFromTile(tilePosition);
+                    if (m_tilePosition != new Vector2(-1, -1))
+                    {
+                        GridManager.Instance.TakePawnFromTile(m_tilePosition);
+                    }
                     m_tilePosition = tilePosition;
                     GridManager.Instance.AssignPawnToTile(this.gameObject, tilePosition);
                 }
