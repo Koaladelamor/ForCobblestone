@@ -16,8 +16,10 @@ public class GFXController : MonoBehaviour
         switch (pc.character)
         {
             case PawnController.CHARACTER.GRODNAR:
+                tank.SetActive(true);
                 break;
             case PawnController.CHARACTER.LANSTAR:
+                range.SetActive(true); 
                 break;
             case PawnController.CHARACTER.SIGFRID:
                 warrior.SetActive(true);
