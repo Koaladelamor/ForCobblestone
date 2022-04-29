@@ -38,6 +38,7 @@ public class PawnController : MonoBehaviour
     protected CombatManager combatManager;
     protected TileManager tileToMove;
 
+    protected Animator anim;
     public GFXController gfxController;
 
     protected bool myTurn;
@@ -68,8 +69,10 @@ public class PawnController : MonoBehaviour
         myTurn = false;
         draggable = true;
         m_state = PAWN_STATUS.IDLE;
+        m_tilePosition = new Vector2(-1, -1);
         m_position = transform.position;
         m_previousPosition = m_position;
+        anim = GetComponent<Animator>();
         combatManager = GameObject.FindGameObjectWithTag("CombatManager").GetComponent<CombatManager>();
     }
 
@@ -180,10 +183,12 @@ public class PawnController : MonoBehaviour
                 case PAWN_STATUS.ATTACK:
                     if (!attackPerformed)
                     {
-                        gfxController.Attack();
+                        anim.SetBool("playerAttack", true);
+                        //gfxController.Attack();
                         attackPerformed = true;
                         damage = Random.Range(min_damage, max_damage + 1);
                         m_pawnToAttack.TakeDamage(damage);
+                        m_pawnToAttack.GetComponentInChildren<HealthBar>().HealthChangeEvent();
                     }
                     else {
                         attackCurrentTimer += Time.deltaTime;
@@ -204,7 +209,7 @@ public class PawnController : MonoBehaviour
                     {
                         transform.position = m_initialPosition;
                         positionReached = true;
-                        Debug.Log("POSITION REACHED");
+                        //Debug.Log("POSITION REACHED");
                         combatManager.NextTurn();
                         myTurn = false;
                         m_state = PAWN_STATUS.IDLE;
@@ -239,12 +244,18 @@ public class PawnController : MonoBehaviour
                     break;
 
                 case PAWN_STATUS.MOVE:
+                    if (m_positionToGo == null)
+                    {
+                        combatManager.NextTurn();
+                        myTurn = false;
+                        break;
+                    }
                     if (transform.position.x >= m_positionToGo.position.x)
                     {
                         transform.position = m_positionToGo.position;
                         positionReached = true;
                         diagonalChecked = false;
-                        Debug.Log("POSITION REACHED");
+                        //Debug.Log("POSITION REACHED");
                         m_state = PAWN_STATUS.ATTACK;
                         break;
                     }
@@ -279,6 +290,12 @@ public class PawnController : MonoBehaviour
 
                 case PAWN_STATUS.GET_PAWN:
                     GetPawnToAttack();
+                    if (m_positionToGo == null) {
+                        m_state = PAWN_STATUS.IDLE;
+                        combatManager.NextTurn();
+                        myTurn = false;
+                        break; 
+                    }
                     m_initialPosition = transform.position;
                     m_state = PAWN_STATUS.MOVE;
                     break;
@@ -340,7 +357,10 @@ public class PawnController : MonoBehaviour
             {
                 if (GridManager.Instance.IsTileEmpty(tilePosition))
                 {
-                    GridManager.Instance.TakePawnFromTile(m_tilePosition);
+                    if (m_tilePosition != new Vector2(-1, -1))
+                    {
+                        GridManager.Instance.TakePawnFromTile(m_tilePosition);
+                    }
                     m_tilePosition = tilePosition;
                     GridManager.Instance.AssignPawnToTile(this.gameObject, tilePosition);
                 }
@@ -365,19 +385,19 @@ public class PawnController : MonoBehaviour
             case PAWN_TYPE.RANGED:
                 break;
             case PAWN_TYPE.MELEE:
-                if (!GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(2, 0)))
+                if (!GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(2, 0)) && !GridManager.Instance.OutOfGrid(currentTilePosition + new Vector2(2, 0)))
                 {
                     TileManager enemyTilePosition = GridManager.Instance.GetTile(currentTilePosition + new Vector2(2, 0));
                     m_pawnToAttack = enemyTilePosition.GetPawn();
                     m_positionToGo = GridManager.Instance.GetTile(currentTilePosition + new Vector2(1, 0)).transform;
                 }
-                else if (!GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(3, 0)))
+                else if (!GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(3, 0)) && !GridManager.Instance.OutOfGrid(currentTilePosition + new Vector2(3, 0)))
                 {
                     TileManager enemyTilePosition = GridManager.Instance.GetTile(currentTilePosition + new Vector2(3, 0));
                     m_pawnToAttack = enemyTilePosition.GetPawn();
                     m_positionToGo = GridManager.Instance.GetTile(currentTilePosition + new Vector2(2, 0)).transform;
                 }
-                else if (!GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(2, 1)) && !GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(2, -1)))
+                else if (!GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(2, 1)) && !GridManager.Instance.OutOfGrid(currentTilePosition + new Vector2(2, 1)) && !GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(2, -1)) && !GridManager.Instance.OutOfGrid(currentTilePosition + new Vector2(2, -1)))
                 {
                     //RANDOM PICK
                     int randomInt = Random.Range(0, 2);
@@ -394,19 +414,19 @@ public class PawnController : MonoBehaviour
                         m_positionToGo = GridManager.Instance.GetTile(currentTilePosition + new Vector2(1, -1)).transform;
                     }
                 }
-                else if (!GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(2, 1)))
+                else if (!GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(2, 1)) && !GridManager.Instance.OutOfGrid(currentTilePosition + new Vector2(2, 1)))
                 {
                     TileManager enemyTilePosition = GridManager.Instance.GetTile(currentTilePosition + new Vector2(2, 1));
                     m_pawnToAttack = enemyTilePosition.GetPawn();
                     m_positionToGo = GridManager.Instance.GetTile(currentTilePosition + new Vector2(1, 1)).transform;
                 }
-                else if (!GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(2, -1)))
+                else if (!GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(2, -1)) && !GridManager.Instance.OutOfGrid(currentTilePosition + new Vector2(2, -1)))
                 {
                     TileManager enemyTilePosition = GridManager.Instance.GetTile(currentTilePosition + new Vector2(2, -1));
                     m_pawnToAttack = enemyTilePosition.GetPawn();
                     m_positionToGo = GridManager.Instance.GetTile(currentTilePosition + new Vector2(1, -1)).transform;
                 }
-                else if (!GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(3, 1)) && !GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(3, -1)))
+                else if (!GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(3, 1)) && !GridManager.Instance.OutOfGrid(currentTilePosition + new Vector2(3, 1)) && !GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(3, -1)) && !GridManager.Instance.OutOfGrid(currentTilePosition + new Vector2(3, -1)))
                 {
                     //RANDOM PICK
                     int randomInt = Random.Range(0, 2);
@@ -423,13 +443,13 @@ public class PawnController : MonoBehaviour
                         m_positionToGo = GridManager.Instance.GetTile(currentTilePosition + new Vector2(2, -1)).transform;
                     }
                 }
-                else if (!GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(3, 1)))
+                else if (!GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(3, 1)) && !GridManager.Instance.OutOfGrid(currentTilePosition + new Vector2(3, 1)))
                 {
                     TileManager enemyTilePosition = GridManager.Instance.GetTile(currentTilePosition + new Vector2(3, 1));
                     m_pawnToAttack = enemyTilePosition.GetPawn();
                     m_positionToGo = GridManager.Instance.GetTile(currentTilePosition + new Vector2(2, 1)).transform;
                 }
-                else if (!GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(3, -1)))
+                else if (!GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(3, -1)) && !GridManager.Instance.OutOfGrid(currentTilePosition + new Vector2(3, -1)))
                 {
                     TileManager enemyTilePosition = GridManager.Instance.GetTile(currentTilePosition + new Vector2(3, -1));
                     m_pawnToAttack = enemyTilePosition.GetPawn();
@@ -445,13 +465,13 @@ public class PawnController : MonoBehaviour
                 }
                 break;
             case PAWN_TYPE.TANK:
-                if (!GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(2, 0)))
+                if (!GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(2, 0)) && !GridManager.Instance.OutOfGrid(currentTilePosition + new Vector2(2, 0)))
                 {
                     TileManager enemyTilePosition = GridManager.Instance.GetTile(currentTilePosition + new Vector2(2, 0));
                     m_pawnToAttack = enemyTilePosition.GetPawn();
                     m_positionToGo = GridManager.Instance.GetTile(currentTilePosition + new Vector2(1, 0)).transform;
                 }
-                else if (!GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(2, 1)) && !GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(2, -1)))
+                else if (!GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(2, 1)) && !GridManager.Instance.OutOfGrid(currentTilePosition + new Vector2(2, 1)) && !GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(2, -1)) && !GridManager.Instance.OutOfGrid(currentTilePosition + new Vector2(2, -1)))
                 {
                     //RANDOM PICK
                     int randomInt = Random.Range(0, 2);
@@ -468,14 +488,15 @@ public class PawnController : MonoBehaviour
                         m_positionToGo = GridManager.Instance.GetTile(currentTilePosition + new Vector2(1, -1)).transform;
                     }
                 }
-                else if (!GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(2, 1)))
+                else if (!GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(2, 1)) && !GridManager.Instance.OutOfGrid(currentTilePosition + new Vector2(2, 1)))
                 {
                     TileManager enemyTilePosition = GridManager.Instance.GetTile(currentTilePosition + new Vector2(2, 1));
                     m_pawnToAttack = enemyTilePosition.GetPawn();
                     m_positionToGo = GridManager.Instance.GetTile(currentTilePosition + new Vector2(1, 1)).transform;
                 }
-                else if (!GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(2, -1)))
+                else if (!GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(2, -1)) && !GridManager.Instance.OutOfGrid(currentTilePosition + new Vector2(2, -1)))
                 {
+                    Debug.Log(GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(2, -1)));
                     TileManager enemyTilePosition = GridManager.Instance.GetTile(currentTilePosition + new Vector2(2, -1));
                     m_pawnToAttack = enemyTilePosition.GetPawn();
                     m_positionToGo = GridManager.Instance.GetTile(currentTilePosition + new Vector2(1, -1)).transform;
@@ -483,8 +504,6 @@ public class PawnController : MonoBehaviour
                 else {
                     m_pawnToAttack = null;
                     m_positionToGo = null;
-                    combatManager.NextTurn();
-                    myTurn = false;
                     m_state = PAWN_STATUS.IDLE;
                     Debug.Log("NO ENEMY TO ATTACK");
                 }
@@ -537,6 +556,11 @@ public class PawnController : MonoBehaviour
 
     public bool GetTurn() { return myTurn; }
 
+    public int GetMaxHP() { return MAX_HP; }
 
+    public int GetCurrentHP() { return cur_hp; }
 
+    public virtual void EndAttackAnimation() {
+        anim.SetBool("playerAttack", false);
+    }
 }
