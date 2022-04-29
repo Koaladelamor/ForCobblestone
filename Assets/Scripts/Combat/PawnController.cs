@@ -39,7 +39,7 @@ public class PawnController : MonoBehaviour
     protected TileManager tileToMove;
 
     protected Animator anim;
-    public GFXController gfxController;
+    protected GFXController gfxController;
 
     protected bool myTurn;
 
@@ -59,7 +59,7 @@ public class PawnController : MonoBehaviour
         attackCurrentTimer = 0;
         attackPerformed = false;
         attackEnded = false;
-        speed = 50f;
+        speed = 70f;
         diagonalChecked = false;
         straighMovement = true;
         positionReached = false;
@@ -74,6 +74,7 @@ public class PawnController : MonoBehaviour
         m_previousPosition = m_position;
         anim = GetComponent<Animator>();
         combatManager = GameObject.FindGameObjectWithTag("CombatManager").GetComponent<CombatManager>();
+        gfxController = GetComponent<GFXController>();
     }
 
     protected virtual void Start()
@@ -183,8 +184,8 @@ public class PawnController : MonoBehaviour
                 case PAWN_STATUS.ATTACK:
                     if (!attackPerformed)
                     {
-                        anim.SetBool("playerAttack", true);
-                        //gfxController.Attack();
+                        gfxController.Idle();
+                        gfxController.Attack();
                         attackPerformed = true;
                         damage = Random.Range(min_damage, max_damage + 1);
                         m_pawnToAttack.TakeDamage(damage);
@@ -200,6 +201,7 @@ public class PawnController : MonoBehaviour
                             attackPerformed = false;
                             attackEnded = false;
                             m_state = PAWN_STATUS.RETURN;
+                            gfxController.Move();
                         }
                     }
                     break;
@@ -213,6 +215,7 @@ public class PawnController : MonoBehaviour
                         combatManager.NextTurn();
                         myTurn = false;
                         m_state = PAWN_STATUS.IDLE;
+                        gfxController.Idle();
                         break;
                     }
 
@@ -298,6 +301,8 @@ public class PawnController : MonoBehaviour
                     }
                     m_initialPosition = transform.position;
                     m_state = PAWN_STATUS.MOVE;
+                    gfxController.Move();
+
                     break;
 
             }
@@ -563,4 +568,6 @@ public class PawnController : MonoBehaviour
     public virtual void EndAttackAnimation() {
         anim.SetBool("playerAttack", false);
     }
+
+    public int GetAgility() { return agility; }
 }

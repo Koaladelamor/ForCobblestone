@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class CombatManager : MonoBehaviour
 {
-    public GameObject[] m_players;
+    public GameObject[] m_players_temp;
+    private GameObject[] m_players;
     private GameObject[] m_enemies;
 
     public GameObject m_minotaurPrefab;
@@ -16,15 +17,15 @@ public class CombatManager : MonoBehaviour
     Vector2 EnemySpawnTile2 = new Vector2(3, 2);
     Vector2 EnemySpawnTile3 = new Vector2(3, 3);
 
-    int turn;
+    private int turn;
     public bool startCombat;
     private bool turnSet;
-    public bool turnDone;
 
     private void Awake()
     {
         turnSet = false;
         m_enemies = new GameObject[3];
+        m_players = new GameObject[m_players_temp.Length];
     }
 
 
@@ -41,18 +42,8 @@ public class CombatManager : MonoBehaviour
 
         Invoke("AssignEnemies", 0.2f);
 
-
-
-
-        /*for (int i = 0; i < m_enemies.Length; i++)
-{
-    m_enemies[i].GetComponent<PawnController>().m_isAlive = true;
-    m_enemies[i].GetComponent<PawnController>().SetTurnOff();
-}*/
-        /*m_enemies[0].GetComponent<PawnController>().m_turnOrder = 2;
-        m_enemies[1].GetComponent<PawnController>().m_turnOrder = 4;
-        m_enemies[2].GetComponent<PawnController>().m_turnOrder = 6;*/
         turn = 0;
+        CalculatePlayersTurn();
     }
 
     // Update is called once per frame
@@ -64,7 +55,7 @@ public class CombatManager : MonoBehaviour
             Invoke("SetCanvasActive", 1f);
         }*/
 
-        if (startCombat) {
+        if (startCombat && !turnSet) {
 
             switch (turn)
             {
@@ -72,56 +63,110 @@ public class CombatManager : MonoBehaviour
                     break;
 
                 case 0:
-                    if (!turnSet)
-                    {
-                        m_players[0].GetComponent<PawnController>().SetTurnOn();
-                        turnSet = true;
-                    }
+                    m_players[0].GetComponent<PawnController>().SetTurnOn();
+                    turnSet = true;
                     break;
 
                 case 1:
-                    if (!turnSet)
-                    {
-                        m_enemies[0].GetComponent<EnemyPawn>().SetTurnOn();
-                        turnSet = true;
-                    }
+                    m_enemies[0].GetComponent<EnemyPawn>().SetTurnOn();
+                    turnSet = true;
                     break;
 
                 case 2:
-                    if (!turnSet)
-                    {
-                        m_players[1].GetComponent<PawnController>().SetTurnOn();
-                        turnSet = true;
-                    }
+                    m_players[1].GetComponent<PawnController>().SetTurnOn();
+                    turnSet = true;
                     break;
 
                 case 3:
-                    if (!turnSet)
-                    {
-                        m_enemies[1].GetComponent<PawnController>().SetTurnOn();
-                        turnSet = true;
-                    }
+                    m_enemies[1].GetComponent<PawnController>().SetTurnOn();
+                    turnSet = true;
                     break;
 
                 case 4:
-                    if (!turnSet)
-                    {
-                        m_players[2].GetComponent<PawnController>().SetTurnOn();
-                        turnSet = true;
-                    }
+                    m_players[2].GetComponent<PawnController>().SetTurnOn();
+                    turnSet = true;
                     break;
 
                 case 5:
-                    if (!turnSet)
-                    {
-                        m_enemies[2].GetComponent<PawnController>().SetTurnOn();
-                        turnSet = true;
-                    }
+                    m_enemies[2].GetComponent<PawnController>().SetTurnOn();
+                    turnSet = true;
                     break;
 
                 case 6:
                     turn = 0;
                     break;
+            }
+        }
+    }
+
+    private void CalculatePlayersTurn() {
+
+        int[] pawnsAgility = new int[m_players_temp.Length];
+
+        for (int i = 0; i < m_players_temp.Length; i++)
+        {
+            pawnsAgility[i] = m_players_temp[i].GetComponent<PawnController>().GetAgility();
+        }
+
+        //1st Turn
+        if (pawnsAgility[0] > pawnsAgility[1] && pawnsAgility[0] > pawnsAgility[1])
+        {
+            m_players[0] = m_players_temp[0];
+        }
+        else if (pawnsAgility[1] > pawnsAgility[0] && pawnsAgility[1] > pawnsAgility[2])
+        {
+            m_players[0] = m_players_temp[1];
+        }
+        else if (pawnsAgility[2] > pawnsAgility[0] && pawnsAgility[2] > pawnsAgility[1])
+        {
+            m_players[0] = m_players_temp[2];
+        }
+
+        //2nd Turn
+        if (pawnsAgility[0] > pawnsAgility[1] && pawnsAgility[0] < pawnsAgility[2])
+        {
+            m_players[1] = m_players_temp[0];
+        }
+        else if (pawnsAgility[0] < pawnsAgility[1] && pawnsAgility[0] > pawnsAgility[2])
+        {
+            m_players[1] = m_players_temp[0];
+        }
+        else if (pawnsAgility[1] > pawnsAgility[0] && pawnsAgility[1] < pawnsAgility[2])
+        {
+            m_players[1] = m_players_temp[1];
+        }
+        else if (pawnsAgility[1] < pawnsAgility[0] && pawnsAgility[1] > pawnsAgility[2])
+        {
+            m_players[1] = m_players_temp[1];
+        }
+        else if (pawnsAgility[2] > pawnsAgility[0] && pawnsAgility[2] < pawnsAgility[1])
+        {
+            m_players[1] = m_players_temp[2];
+        }
+        else if (pawnsAgility[2] < pawnsAgility[0] && pawnsAgility[2] > pawnsAgility[1])
+        {
+            m_players[1] = m_players_temp[2];
+        }
+
+
+        //3rd Turn
+        if (pawnsAgility[0] < pawnsAgility[1] && pawnsAgility[0] < pawnsAgility[2])
+        {
+            m_players[2] = m_players_temp[0];
+        }
+        else if (pawnsAgility[1] < pawnsAgility[0] && pawnsAgility[1] < pawnsAgility[2])
+        {
+            m_players[2] = m_players_temp[1];
+        }
+        else if (pawnsAgility[2] < pawnsAgility[0] && pawnsAgility[2] < pawnsAgility[1])
+        {
+            m_players[2] = m_players_temp[2];
+        }
+
+        for (int i = 0; i < m_players.Length; i++)
+        {
+            if (m_players[i] == null) {
+                Debug.Log("ERROR on setting players turn");
             }
         }
     }
@@ -174,8 +219,6 @@ public class CombatManager : MonoBehaviour
     {
         Time.timeScale = 0;
     }
-
-    public void SetTurnDone(bool done) { turnDone = done; }
 
     public void NextTurn() {
         turn++;

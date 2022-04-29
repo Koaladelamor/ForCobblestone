@@ -89,8 +89,13 @@ public class EnemyPawn : PawnController
                         //gfxController.Attack();
                         attackPerformed = true;
                         damage = Random.Range(min_damage, max_damage + 1);
-                        m_pawnToAttack.TakeDamage(damage);
-                        m_pawnToAttack.GetComponentInChildren<HealthBar>().HealthChangeEvent();
+                        
+                        if(m_pawnToAttack != null)
+                        {
+                            m_pawnToAttack.TakeDamage(damage);
+                            m_pawnToAttack.GetComponentInChildren<HealthBar>().HealthChangeEvent();
+                        }
+                        
                     }
                     else
                     {

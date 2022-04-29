@@ -221,7 +221,7 @@ public class OldPawnController : MonoBehaviour
             m_state = PAWN_STATUS.IDLE;
             //m_isMyTurn = false;
             m_myTurnIsDone = true;
-            combatManager.GetComponent<CombatManager>().SetTurnDone(true);
+            //combatManager.GetComponent<CombatManager>().SetTurnDone(true);
             return;
         }
         
@@ -295,14 +295,14 @@ public class OldPawnController : MonoBehaviour
             m_state = PAWN_STATUS.IDLE;
             //m_isMyTurn = false;
             m_myTurnIsDone = true;
-            combatManager.GetComponent<CombatManager>().SetTurnDone(true);
+            //combatManager.GetComponent<CombatManager>().SetTurnDone(true);
 
         }
         else {
             m_state = PAWN_STATUS.IDLE;
             //m_isMyTurn = false;
             m_myTurnIsDone = true;
-            combatManager.GetComponent<CombatManager>().SetTurnDone(true);
+            //combatManager.GetComponent<CombatManager>().SetTurnDone(true);
         }
 
         readyToAttack = true;
