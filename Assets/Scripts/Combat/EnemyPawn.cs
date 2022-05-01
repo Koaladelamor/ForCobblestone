@@ -5,15 +5,13 @@ using TMPro;
 
 public class EnemyPawn : PawnController
 {
-    public enum EnemyType { MINOTAUR, SPIDER }
-    public EnemyType enemyType;
 
     protected override void Awake() {
         attackTimer = 1.5f;
         attackCurrentTimer = 0;
         attackPerformed = false;
         attackEnded = false;
-        speed = 50f;
+        speed = 70f;
         diagonalChecked = false;
         straighMovement = true;
         positionReached = false;
@@ -25,15 +23,16 @@ public class EnemyPawn : PawnController
         m_state = PAWN_STATUS.IDLE;
         m_position = transform.position;
         m_previousPosition = m_position;
-        anim = GetComponent<Animator>();
         combatManager = GameObject.FindGameObjectWithTag("CombatManager").GetComponent<CombatManager>();
+        gfxController = GetComponent<GFXController>();
+        
     }
 
     protected override void Start()
     {
-        switch (enemyType)
+        switch (character)
         {
-            case EnemyType.MINOTAUR:
+            case CHARACTER.SPIDER:
                 List<Stat> MinotaurStats = GameStats.Instance.GetMinotaurStats();
                 for (int g = 0; g < MinotaurStats.Count; g++)
                 {
@@ -59,7 +58,7 @@ public class EnemyPawn : PawnController
                     }
                 }
                 break;
-            case EnemyType.SPIDER:
+            case CHARACTER.WORM:
                 break;
             default:
                 break;
@@ -85,17 +84,17 @@ public class EnemyPawn : PawnController
                 case PAWN_STATUS.ATTACK:
                     if (!attackPerformed)
                     {
-                        anim.SetBool("isAttacking", true);
-                        //gfxController.Attack();
+                        gfxController.Attack();
                         attackPerformed = true;
                         damage = Random.Range(min_damage, max_damage + 1);
                         
                         if(m_pawnToAttack != null)
                         {
                             m_pawnToAttack.TakeDamage(damage);
-                            m_pawnToAttack.GetComponentInChildren<HealthBar>().HealthChangeEvent();
+                            //m_pawnToAttack.GetComponentInChildren<HealthBar>().HealthChangeEvent();
                         }
-                        
+
+
                     }
                     else
                     {
@@ -234,7 +233,12 @@ public class EnemyPawn : PawnController
 
     protected override void GetPawnToAttack()
     {
-
+        if (!alive) {
+            myTurn = false;
+            combatManager.NextTurn();
+            Debug.Log("PAWN IS DEAD");
+            return;
+        }
         Vector2 currentTilePosition = GridManager.Instance.ScreenToTilePosition(Camera.main.WorldToScreenPoint(GetCurrentTile().transform.position));
 
         switch (m_type)
@@ -317,6 +321,8 @@ public class EnemyPawn : PawnController
                     m_pawnToAttack = null;
                     m_positionToGo = null;
                     m_state = PAWN_STATUS.IDLE;
+                    myTurn = false;
+                    combatManager.NextTurn();
                     Debug.Log("NO ENEMY TO ATTACK");
                 }
                 break;
@@ -372,13 +378,9 @@ public class EnemyPawn : PawnController
         }
     }
 
-    public override void SpawnDamageText()
+    public void SpawnDamageText()
     {
         combatManager.GetComponent<DamagePopUp>().Create(m_pawnToAttack.transform.position, damage);
     }
 
-    public override void EndAttackAnimation()
-    {
-        anim.SetBool("isAttacking", false);
-    }
 }

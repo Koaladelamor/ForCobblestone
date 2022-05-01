@@ -1,14 +1,12 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 
 public enum PAWN_STATUS { IDLE, ATTACK, MOVE, RETURN, GET_PAWN }
 public enum PAWN_TYPE { RANGED, MELEE, TANK }
 
 public class PawnController : MonoBehaviour
 {
-    public enum CHARACTER { GRODNAR, LANSTAR, SIGFRID, LAST_NO_USE }
+    public enum CHARACTER { GRODNAR, LANSTAR, SIGFRID, SPIDER, WORM, LAST_NO_USE }
     public CHARACTER character;
 
     protected bool draggable;
@@ -38,7 +36,6 @@ public class PawnController : MonoBehaviour
     protected CombatManager combatManager;
     protected TileManager tileToMove;
 
-    protected Animator anim;
     protected GFXController gfxController;
 
     protected bool myTurn;
@@ -53,8 +50,11 @@ public class PawnController : MonoBehaviour
     protected float attackTimer;
     protected float attackCurrentTimer;
 
+    protected bool alive;
+
     protected virtual void Awake()
     {
+        alive = true;
         attackTimer = 1.5f;
         attackCurrentTimer = 0;
         attackPerformed = false;
@@ -72,9 +72,9 @@ public class PawnController : MonoBehaviour
         m_tilePosition = new Vector2(-1, -1);
         m_position = transform.position;
         m_previousPosition = m_position;
-        anim = GetComponent<Animator>();
         combatManager = GameObject.FindGameObjectWithTag("CombatManager").GetComponent<CombatManager>();
         gfxController = GetComponent<GFXController>();
+        //OnHurtAnimEnd += OnHurtAnimDone;
     }
 
     protected virtual void Start()
@@ -168,7 +168,7 @@ public class PawnController : MonoBehaviour
 
     protected virtual void Update()
     {
-        if (myTurn)
+        if (myTurn && character != CHARACTER.LANSTAR)
         {
             switch (m_state)
             {
@@ -176,7 +176,8 @@ public class PawnController : MonoBehaviour
                     break;
 
                 case PAWN_STATUS.IDLE:
-                    if (myTurn) {
+                    if (myTurn && alive)
+                    {
                         m_state = PAWN_STATUS.GET_PAWN;
                     }
                     break;
@@ -189,15 +190,18 @@ public class PawnController : MonoBehaviour
                         attackPerformed = true;
                         damage = Random.Range(min_damage, max_damage + 1);
                         m_pawnToAttack.TakeDamage(damage);
-                        m_pawnToAttack.GetComponentInChildren<HealthBar>().HealthChangeEvent();
+                        //m_pawnToAttack.GetComponentInChildren<HealthBar>().HealthChangeEvent();
                     }
-                    else {
+                    else
+                    {
                         attackCurrentTimer += Time.deltaTime;
-                        if (attackCurrentTimer >= attackTimer) {
+                        if (attackCurrentTimer >= attackTimer)
+                        {
                             attackEnded = true;
                             attackCurrentTimer = 0;
                         }
-                        if (attackEnded) {
+                        if (attackEnded)
+                        {
                             attackPerformed = false;
                             attackEnded = false;
                             m_state = PAWN_STATUS.RETURN;
@@ -268,7 +272,8 @@ public class PawnController : MonoBehaviour
                         straighMovement = false;
                         diagonalChecked = true;
                     }
-                    else if (!diagonalChecked) {
+                    else if (!diagonalChecked)
+                    {
                         straighMovement = true;
                     }
 
@@ -276,14 +281,16 @@ public class PawnController : MonoBehaviour
                     {
                         transform.position += Vector3.right * speed * Time.deltaTime;
                     }
-                    else {
+                    else
+                    {
                         if (transform.position.y > m_positionToGo.position.y)
                         {
                             Vector3 movePos = Vector3.right + Vector3.down;
                             movePos.Normalize();
                             transform.position += movePos * speed * Time.deltaTime;
                         }
-                        else {
+                        else
+                        {
                             Vector3 movePos = Vector3.right + Vector3.up;
                             movePos.Normalize();
                             transform.position += movePos * speed * Time.deltaTime;
@@ -293,11 +300,12 @@ public class PawnController : MonoBehaviour
 
                 case PAWN_STATUS.GET_PAWN:
                     GetPawnToAttack();
-                    if (m_positionToGo == null) {
+                    if (m_positionToGo == null)
+                    {
                         m_state = PAWN_STATUS.IDLE;
                         combatManager.NextTurn();
                         myTurn = false;
-                        break; 
+                        break;
                     }
                     m_initialPosition = transform.position;
                     m_state = PAWN_STATUS.MOVE;
@@ -305,6 +313,74 @@ public class PawnController : MonoBehaviour
 
                     break;
 
+            }
+        }
+        else if (myTurn && character == CHARACTER.LANSTAR) 
+        {
+
+            switch (m_state)
+            {
+                case PAWN_STATUS.IDLE:
+
+                    if (myTurn)
+                    {
+                        m_state = PAWN_STATUS.GET_PAWN;
+                    }
+                    break;
+                case PAWN_STATUS.ATTACK:
+                    if (!attackPerformed)
+                    {
+                        gfxController.Idle();
+                        gfxController.Attack();
+                        attackPerformed = true;
+                        damage = Random.Range(min_damage, max_damage + 1);
+                        m_pawnToAttack.TakeDamage(damage);
+                        //m_pawnToAttack.GetComponentInChildren<HealthBar>().HealthChangeEvent();
+                        /*if (m_pawnToAttack.GetCurrentHP() < 1)
+                        {
+
+                        }*/
+                    }
+                    else
+                    {
+                        attackCurrentTimer += Time.deltaTime;
+                        if (attackCurrentTimer >= attackTimer)
+                        {
+                            attackEnded = true;
+                            attackCurrentTimer = 0;
+                        }
+                        if (attackEnded)
+                        {
+                            attackPerformed = false;
+                            attackEnded = false;
+                            /*m_state = PAWN_STATUS.RETURN;
+                            gfxController.Move();*/
+                            combatManager.NextTurn();
+                            myTurn = false;
+                            m_state = PAWN_STATUS.IDLE;
+                        }
+                    }
+                    break;
+                case PAWN_STATUS.MOVE:
+                    break;
+                case PAWN_STATUS.RETURN:
+                    break;
+                case PAWN_STATUS.GET_PAWN:
+                    GetPawnToAttack();
+                    if (m_positionToGo == null && m_pawnToAttack != null)
+                    {
+                        m_state = PAWN_STATUS.ATTACK;
+                        break;
+                    }
+                    else if (m_positionToGo != null && m_pawnToAttack != null) {
+                        m_initialPosition = transform.position;
+                        m_state = PAWN_STATUS.MOVE;
+                        gfxController.Move();
+                        break;
+                    }
+                    break;
+                default:
+                    break;
             }
         }
 
@@ -383,11 +459,40 @@ public class PawnController : MonoBehaviour
 
     protected virtual void GetPawnToAttack() {
 
+        if (!alive)
+        {
+            myTurn = false;
+            combatManager.NextTurn();
+            Debug.Log("PAWN IS DEAD");
+            return;
+        }
+
         Vector2 currentTilePosition = GridManager.Instance.ScreenToTilePosition(Camera.main.WorldToScreenPoint(GetCurrentTile().transform.position));
 
         switch (m_type)
         {
             case PAWN_TYPE.RANGED:
+                if (!GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(2, 0)) && !GridManager.Instance.OutOfGrid(currentTilePosition + new Vector2(2, 0)))
+                {
+                    TileManager enemyTilePosition = GridManager.Instance.GetTile(currentTilePosition + new Vector2(2, 0));
+                    m_pawnToAttack = enemyTilePosition.GetPawn();
+                    m_positionToGo = null;
+                }
+                else if (!GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(3, 0)) && !GridManager.Instance.OutOfGrid(currentTilePosition + new Vector2(3, 0)))
+                {
+                    TileManager enemyTilePosition = GridManager.Instance.GetTile(currentTilePosition + new Vector2(3, 0));
+                    m_pawnToAttack = enemyTilePosition.GetPawn();
+                    m_positionToGo = null;
+                }
+                else
+                {
+                    m_pawnToAttack = null;
+                    m_positionToGo = null;
+                    combatManager.NextTurn();
+                    myTurn = false;
+                    m_state = PAWN_STATUS.IDLE;
+                    Debug.Log("NO ENEMY TO ATTACK");
+                }
                 break;
             case PAWN_TYPE.MELEE:
                 if (!GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(2, 0)) && !GridManager.Instance.OutOfGrid(currentTilePosition + new Vector2(2, 0)))
@@ -509,6 +614,8 @@ public class PawnController : MonoBehaviour
                 else {
                     m_pawnToAttack = null;
                     m_positionToGo = null;
+                    combatManager.NextTurn();
+                    myTurn = false;
                     m_state = PAWN_STATUS.IDLE;
                     Debug.Log("NO ENEMY TO ATTACK");
                 }
@@ -536,11 +643,7 @@ public class PawnController : MonoBehaviour
         m_position = p_position;
     }
 
-    public virtual void SpawnDamageText()
-    {
-        DamagePopUp damageText = combatManager.GetComponent<DamagePopUp>().Create(m_pawnToAttack.transform.position, damage);
-        damageText.gameObject.GetComponent<TextMeshPro>().color = new Color(0, 255, 0);
-    }
+
 
     public void KillPawn()
     {
@@ -565,9 +668,29 @@ public class PawnController : MonoBehaviour
 
     public int GetCurrentHP() { return cur_hp; }
 
-    public virtual void EndAttackAnimation() {
-        anim.SetBool("playerAttack", false);
+    public int GetAgility() { return agility; }
+
+    public PawnController GetCurrentTarget() { return m_pawnToAttack; }
+
+    public int GetDamage() { return damage; }
+
+    public GFXController GetGFXController() { return gfxController; }
+
+    public void HurtAnimDone() { 
+        if (cur_hp < 1) {
+            alive = false;
+            if (m_state == PAWN_STATUS.MOVE || m_state == PAWN_STATUS.GET_PAWN)
+            {
+                m_state = PAWN_STATUS.IDLE;
+            }
+            GetCurrentTile().TakePawn();
+            GetComponentInChildren<HealthBar>().transform.parent.gameObject.SetActive(false);
+            gfxController.Die();
+            if (myTurn) {
+                combatManager.NextTurn();
+                myTurn = false;
+            }
+        }
     }
 
-    public int GetAgility() { return agility; }
 }

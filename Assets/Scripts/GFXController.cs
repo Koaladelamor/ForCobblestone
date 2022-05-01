@@ -1,20 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class GFXController : MonoBehaviour
 {
-    public GameObject warrior, archer, tank;
-    public Animator warriorAnim, archerAnim, tankAnim;
+    public GameObject warrior, archer, tank, spider;
+    public Animator warriorAnim, archerAnim, tankAnim, spiderAnim;
 
-    private PawnController pc;
+    private bool attackDone;
 
+    private PawnController pawnController;
+    private CombatManager combatManager;
     // Start is called before the first frame update
-    void Awake()
+    private void Awake()
     {
-        pc = GetComponent<PawnController>();
+        attackDone = false;
+        combatManager = GameObject.FindGameObjectWithTag("CombatManager").GetComponent<CombatManager>();
+        pawnController = GetComponent<PawnController>();
 
-        switch (pc.character)
+        switch (pawnController.character)
         {
             case PawnController.CHARACTER.GRODNAR:
                 tank.SetActive(true);
@@ -25,14 +28,36 @@ public class GFXController : MonoBehaviour
             case PawnController.CHARACTER.SIGFRID:
                 warrior.SetActive(true);
                 break;
+            case PawnController.CHARACTER.SPIDER:
+                
+                break;
+            case PawnController.CHARACTER.WORM:
+                
+                break;
             case PawnController.CHARACTER.LAST_NO_USE:
                 break;
         }
     }
+    private void Update()
+    {
+        if (attackDone) {
+            PawnController pawnToAttack = GetComponent<PawnController>().GetCurrentTarget();
+            if (pawnToAttack != null)
+            {
+                attackDone = false;
+                SpawnDamageText();
+                pawnToAttack.GetComponentInChildren<HealthBar>().HealthChangeEvent();
+                pawnToAttack.GetGFXController().Hurt();
+            }
+            else Debug.Log("NO PAWN TO ATTACK DETECTED");
+        }
+    }
+
+
 
     public void Attack()
     {
-        switch (pc.character)
+        switch (pawnController.character)
         {
             case PawnController.CHARACTER.GRODNAR:
                 tankAnim.SetTrigger("Attack");
@@ -43,6 +68,12 @@ public class GFXController : MonoBehaviour
             case PawnController.CHARACTER.SIGFRID:
                 warriorAnim.SetTrigger("Attack");
                 break;
+            case PawnController.CHARACTER.SPIDER:
+                spiderAnim.SetTrigger("Attack");
+                break;
+            case PawnController.CHARACTER.WORM:
+
+                break;
             case PawnController.CHARACTER.LAST_NO_USE:
                 break;
         }
@@ -50,7 +81,7 @@ public class GFXController : MonoBehaviour
 
     public void Hurt()
     {
-        switch (pc.character)
+        switch (pawnController.character)
         {
             case PawnController.CHARACTER.GRODNAR:
                 tankAnim.SetTrigger("Hurt");
@@ -61,6 +92,12 @@ public class GFXController : MonoBehaviour
             case PawnController.CHARACTER.SIGFRID:
                 warriorAnim.SetTrigger("Hurt");
                 break;
+            case PawnController.CHARACTER.SPIDER:
+                spiderAnim.SetTrigger("Hurt");
+                break;
+            case PawnController.CHARACTER.WORM:
+
+                break;
             case PawnController.CHARACTER.LAST_NO_USE:
                 break;
         }
@@ -68,7 +105,7 @@ public class GFXController : MonoBehaviour
 
     public void Die()
     {
-        switch (pc.character)
+        switch (pawnController.character)
         {
             case PawnController.CHARACTER.GRODNAR:
                 tankAnim.SetBool("IsDead", true);
@@ -79,6 +116,12 @@ public class GFXController : MonoBehaviour
             case PawnController.CHARACTER.SIGFRID:
                 warriorAnim.SetBool("IsDead", true);
                 break;
+            case PawnController.CHARACTER.SPIDER:
+                spiderAnim.SetBool("IsDead", true);
+                break;
+            case PawnController.CHARACTER.WORM:
+
+                break;
             case PawnController.CHARACTER.LAST_NO_USE:
                 break;
         }
@@ -86,7 +129,7 @@ public class GFXController : MonoBehaviour
 
     public void Move()
     {
-        switch (pc.character)
+        switch (pawnController.character)
         {
             case PawnController.CHARACTER.GRODNAR:
                 tankAnim.SetBool("IsRunning", true);
@@ -97,6 +140,12 @@ public class GFXController : MonoBehaviour
             case PawnController.CHARACTER.SIGFRID:
                 warriorAnim.SetBool("IsRunning", true);
                 break;
+            case PawnController.CHARACTER.SPIDER:
+                spiderAnim.SetBool("IsRunning", true);
+                break;
+            case PawnController.CHARACTER.WORM:
+
+                break;
             case PawnController.CHARACTER.LAST_NO_USE:
                 break;
         }
@@ -104,7 +153,7 @@ public class GFXController : MonoBehaviour
 
     public void Idle()
     {
-        switch (pc.character)
+        switch (pawnController.character)
         {
             case PawnController.CHARACTER.GRODNAR:
                 tankAnim.SetBool("IsRunning", false);
@@ -115,8 +164,24 @@ public class GFXController : MonoBehaviour
             case PawnController.CHARACTER.SIGFRID:
                 warriorAnim.SetBool("IsRunning", false);
                 break;
+            case PawnController.CHARACTER.SPIDER:
+                spiderAnim.SetBool("IsRunning", false);
+                break;
+            case PawnController.CHARACTER.WORM:
+
+                break;
             case PawnController.CHARACTER.LAST_NO_USE:
                 break;
         }
     }
+
+    public void SpawnDamageText()
+    {
+        Vector3 targetPosition = GetComponent<PawnController>().GetCurrentTarget().transform.position;
+        DamagePopUp damageText = combatManager.GetComponent<DamagePopUp>().Create(new Vector3(targetPosition.x, targetPosition.y + 10, 0), GetComponent<PawnController>().GetDamage());
+        damageText.gameObject.GetComponent<TextMeshPro>().color = new Color(255, 50, 50);
+    }
+
+    public void AttackIsDone() { attackDone = true; }
+
 }

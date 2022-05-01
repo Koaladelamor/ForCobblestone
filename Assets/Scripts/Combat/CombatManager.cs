@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CombatManager : MonoBehaviour
@@ -8,14 +6,13 @@ public class CombatManager : MonoBehaviour
     private GameObject[] m_players;
     private GameObject[] m_enemies;
 
-    public GameObject m_minotaurPrefab;
-    public GameObject m_wolfPrefab;
+    public GameObject m_spiderPrefab;
 
     public GameObject m_canvasToMap;
 
-    Vector2 EnemySpawnTile1 = new Vector2(3, 0);
-    Vector2 EnemySpawnTile2 = new Vector2(3, 2);
-    Vector2 EnemySpawnTile3 = new Vector2(3, 3);
+    Vector2 EnemySpawnTile1;
+    Vector2 EnemySpawnTile2;
+    Vector2 EnemySpawnTile3;
 
     private int turn;
     public bool startCombat;
@@ -23,6 +20,22 @@ public class CombatManager : MonoBehaviour
 
     private void Awake()
     {
+        EnemySpawnTile1 = new Vector2(3, Random.Range(0, 4));
+        EnemySpawnTile2 = new Vector2(3, Random.Range(0, 4));
+        if (EnemySpawnTile2.y == EnemySpawnTile1.y) {
+            while (EnemySpawnTile2.y == EnemySpawnTile1.y)
+            {
+                EnemySpawnTile2 = new Vector2(3, Random.Range(0, 4));
+            }
+        }
+        EnemySpawnTile3 = new Vector2(3, Random.Range(0, 4));
+        if (EnemySpawnTile3.y == EnemySpawnTile1.y || EnemySpawnTile3.y == EnemySpawnTile2.y)
+        {
+            while (EnemySpawnTile3.y == EnemySpawnTile1.y || EnemySpawnTile3.y == EnemySpawnTile2.y)
+            {
+                EnemySpawnTile3 = new Vector2(3, Random.Range(0, 4));
+            }
+        }
         turnSet = false;
         m_enemies = new GameObject[3];
         m_players = new GameObject[m_players_temp.Length];
@@ -35,12 +48,12 @@ public class CombatManager : MonoBehaviour
 
         m_canvasToMap.SetActive(false);
 
-        m_enemies[0] = Instantiate(m_minotaurPrefab, transform.position, transform.rotation);
-        m_enemies[1] = Instantiate(m_minotaurPrefab, transform.position, transform.rotation);
-        m_enemies[2] = Instantiate(m_minotaurPrefab, transform.position, transform.rotation);
+        m_enemies[0] = Instantiate(m_spiderPrefab, transform.position, transform.rotation);
+        m_enemies[1] = Instantiate(m_spiderPrefab, transform.position, transform.rotation);
+        m_enemies[2] = Instantiate(m_spiderPrefab, transform.position, transform.rotation);
 
 
-        Invoke("AssignEnemies", 0.2f);
+        Invoke("AssignEnemies", 0.1f);
 
         turn = 0;
         CalculatePlayersTurn();
