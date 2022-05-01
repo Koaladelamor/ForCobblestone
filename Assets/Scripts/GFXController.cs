@@ -175,6 +175,20 @@ public class GFXController : MonoBehaviour
         }
     }
 
+    public void MapMove()
+    {
+        tankAnim.SetBool("IsRunning", true);
+        archerAnim.SetBool("IsRunning", true);
+        warriorAnim.SetBool("IsRunning", true);
+    }
+
+    public void MapIdle()
+    {
+        tankAnim.SetBool("IsRunning", false);
+        archerAnim.SetBool("IsRunning", false);
+        warriorAnim.SetBool("IsRunning", false);
+    }
+
     public void SpawnDamageText()
     {
         Vector3 targetPosition = GetComponent<PawnController>().GetCurrentTarget().transform.position;
