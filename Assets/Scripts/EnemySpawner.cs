@@ -1,0 +1,56 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class EnemySpawner : MonoBehaviour
+{
+    private GameObject enemyOnSpawn;
+    private int spawnerID;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (enemyOnSpawn != null && !enemyOnSpawn.GetComponent<PatrolAI>().IsAlive()) {
+            //Destroy Enemy + PatrolPoints and Instantiate a new one when spawner is out of camera
+            Destroy(enemyOnSpawn);
+            Destroy(this.gameObject);
+        }
+    }
+
+    public GameObject RespawnEnemy(GameObject prefab, Vector3 enemySpawnPos, int ID)
+    {
+
+        GameObject enemy = Instantiate(prefab, enemySpawnPos, transform.rotation);
+        PatrolAI AI = enemy.GetComponent<PatrolAI>();
+
+        AI.patrolPoints[0] = AI.InstantiatePatrolPoint(50f, 50f);
+        AI.patrolPoints[1] = AI.InstantiatePatrolPoint(-50f, 50f);
+        AI.patrolPoints[2] = AI.InstantiatePatrolPoint(-50f, -50f);
+        AI.patrolPoints[3] = AI.InstantiatePatrolPoint(50f, -50f);
+
+        enemy.GetComponent<PatrolAI>().SetEnemyID(ID);
+        spawnerID = ID;
+
+        enemy.name = "EnemyParty " + ID.ToString();
+
+        SetEnemy(enemy);
+
+        return enemy;
+    }
+
+    public void SetEnemy(GameObject enemy) { enemyOnSpawn = enemy; }
+
+    public GameObject GetEnemy() { return enemyOnSpawn; }
+
+    public PatrolAI GetPatrolAI() { return enemyOnSpawn.GetComponent<PatrolAI>(); }
+
+    public void SetSpawnerID(int ID) { spawnerID = ID; }
+
+    public int GetSpawnerID() { return spawnerID; }
+}

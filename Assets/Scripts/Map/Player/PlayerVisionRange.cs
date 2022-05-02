@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerVisionRange : MonoBehaviour
@@ -9,10 +7,15 @@ public class PlayerVisionRange : MonoBehaviour
     {
         if (other.gameObject.CompareTag("EnemyMap"))
         {
-            other.gameObject.GetComponent<SpriteRenderer>().enabled = true;
-
-            //enemyDetected = true;
+            //other.gameObject.GetComponent<SpriteRenderer>().enabled = true;
+            SpriteRenderer[] sprites = other.gameObject.GetComponentsInChildren<SpriteRenderer>();
+            foreach (SpriteRenderer sprite in sprites)
+            {
+                sprite.enabled = true;
+            }
+            other.gameObject.GetComponentInChildren<Canvas>().enabled = true;
         }
+        
     }
 
     private void OnTriggerExit2D(Collider2D other)
@@ -20,8 +23,14 @@ public class PlayerVisionRange : MonoBehaviour
 
         if (other.gameObject.CompareTag("EnemyMap"))
         {
-            //enemyDetected = false;
-            other.gameObject.GetComponent<SpriteRenderer>().enabled = false;
+            //other.gameObject.GetComponent<SpriteRenderer>().enabled = false;
+            SpriteRenderer[] sprites = other.gameObject.GetComponentsInChildren<SpriteRenderer>();
+            foreach (SpriteRenderer sprite in sprites)
+            {
+                sprite.enabled = false;
+            }
+            other.gameObject.GetComponentInChildren<Canvas>().enabled = false;
         }
+        
     }
 }

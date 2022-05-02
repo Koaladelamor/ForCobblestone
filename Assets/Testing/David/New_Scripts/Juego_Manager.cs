@@ -69,8 +69,8 @@ public class Juego_Manager : MonoBehaviour
             enemyEngaged = false;
 
             //Enemy info
-            enemyIndex = enemyOnCombat.GetComponent<PatrolAI>().enemyID;
-            totalEnemies = enemyOnCombat.GetComponent<PatrolAI>().totalEnemies;
+            //enemyIndex = enemyOnCombat.GetComponent<PatrolAI>().enemyID;
+            //totalEnemies = enemyOnCombat.GetComponent<PatrolAI>().totalEnemies;
 
 
             //Load scene
@@ -110,7 +110,7 @@ public class Juego_Manager : MonoBehaviour
         enemy.GetComponent<PatrolAI>().patrolPoints[2] = GameObject.Find("Enemy1PatrolPoint3");
         enemy.GetComponent<PatrolAI>().patrolPoints[3] = GameObject.Find("Enemy1PatrolPoint4");
 
-        enemy.GetComponent<PatrolAI>().enemyID = 0;
+        //enemy.GetComponent<PatrolAI>().enemyID = 0;
 
         return enemy;
     }
@@ -125,7 +125,7 @@ public class Juego_Manager : MonoBehaviour
         enemy.GetComponent<PatrolAI>().patrolPoints[2] = GameObject.Find("Enemy2PatrolPoint3");
         enemy.GetComponent<PatrolAI>().patrolPoints[3] = GameObject.Find("Enemy2PatrolPoint4");
 
-        enemy.GetComponent<PatrolAI>().enemyID = 1;
+        //enemy.GetComponent<PatrolAI>().enemyID = 1;
 
         return enemy;
     }

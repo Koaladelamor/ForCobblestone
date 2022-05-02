@@ -19,6 +19,8 @@ public class GFXController : MonoBehaviour
 
         switch (pawnController.character)
         {
+            default:
+                break;
             case PawnController.CHARACTER.GRODNAR:
                 tank.SetActive(true);
                 break;
@@ -60,6 +62,8 @@ public class GFXController : MonoBehaviour
     {
         switch (pawnController.character)
         {
+            default:
+                break;
             case PawnController.CHARACTER.GRODNAR:
                 tankAnim.SetTrigger("Attack");
                 break;
@@ -84,6 +88,8 @@ public class GFXController : MonoBehaviour
     {
         switch (pawnController.character)
         {
+            default:
+                break;
             case PawnController.CHARACTER.GRODNAR:
                 tankAnim.SetTrigger("Hurt");
                 break;
@@ -108,6 +114,8 @@ public class GFXController : MonoBehaviour
     {
         switch (pawnController.character)
         {
+            default:
+                break;
             case PawnController.CHARACTER.GRODNAR:
                 tankAnim.SetBool("IsDead", true);
                 break;
@@ -132,6 +140,8 @@ public class GFXController : MonoBehaviour
     {
         switch (pawnController.character)
         {
+            default:
+                break;
             case PawnController.CHARACTER.GRODNAR:
                 tankAnim.SetBool("IsRunning", true);
                 break;
@@ -156,6 +166,8 @@ public class GFXController : MonoBehaviour
     {
         switch (pawnController.character)
         {
+            default:
+                break;
             case PawnController.CHARACTER.GRODNAR:
                 tankAnim.SetBool("IsRunning", false);
                 break;

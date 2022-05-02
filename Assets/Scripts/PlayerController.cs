@@ -8,7 +8,9 @@ public class PlayerController : MonoBehaviour
 
     private GameObject m_gameManager;
     private GameObject m_pointToGo;
+
     public bool engaged;
+    private bool movementAnimSet;
 
     Vector2 previousPosition;
     Vector2 currentPosition;
@@ -19,10 +21,10 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        movementAnimSet = false;
         m_gameManager = GameObject.FindGameObjectWithTag("GameManager");
         m_pointToGo = GameObject.FindGameObjectWithTag("PointToGo");
         engaged = false;
-
         sprites = GetComponentsInChildren<SpriteRenderer>();
     }
 
@@ -57,8 +59,8 @@ public class PlayerController : MonoBehaviour
             engaged = true;
             m_gameManager.GetComponent<GameManager>().enemyEngaged = true;
 
-            GameManager.Instance.SetEnemyOnCombat(other.gameObject);
-
+            GameManager.Instance.SetCurrentEnemyID(other.gameObject.GetComponent<PatrolAI>().GetEnemyID());
+            //Debug.Log(other.gameObject.GetComponent<PatrolAI>().GetEnemyID());
             other.gameObject.GetComponent<Collider2D>().enabled = false;
             m_pointToGo.transform.position = transform.position;
         }
@@ -75,23 +77,28 @@ public class PlayerController : MonoBehaviour
 
     public bool PartyIsMoving()
     {
+        Vector2 playerPos = new Vector2(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y));
+        Vector2 positionToGo = new Vector2(Mathf.Round(m_pointToGo.transform.position.x), Mathf.Round(m_pointToGo.transform.position.y));
 
-        if (currentPosition != previousPosition)
+        if (playerPos != positionToGo)
         {
             return true;
         }
 
         return false;
+
     }
 
     public void SetWalkingAnimation()
     {
-        if (PartyIsMoving())
+        if (PartyIsMoving() && !movementAnimSet)
         {
             gfxController.MapMove();
+            movementAnimSet = true;
         }
-        else {
+        else if(!PartyIsMoving()) {
             gfxController.MapIdle();
+            movementAnimSet = false;
         }
     }
 

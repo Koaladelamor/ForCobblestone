@@ -40,15 +40,11 @@ public class GameManager : MonoBehaviour
     public Button confirmLootButton;
     public Button confirmTradeButton;
 
-    public GameObject m_minotaurPrefab;
-    public GameObject m_wolfPrefab;
+    public GameObject m_spiderPrefab;
 
-    private Vector3[] enemyRespawnPositions = new Vector3[2];
-    public int enemyIndex;
-    public int totalEnemies;
-    public bool[] enemyIsAlive;
-    private GameObject[] enemies = new GameObject[2];
-    private GameObject enemyOnCombat;
+    private int currentEnemyID;
+    //private GameObject enemyOnCombat;
+    public EnemySpawner[] enemySpawners;
 
     public bool enemyEngaged;
     private bool combatIsOver;
@@ -81,28 +77,26 @@ public class GameManager : MonoBehaviour
             Destroy(this.gameObject);
             return;
         }
+
+        combatIsOver = false;
+        enemyEngaged = false;
+        currentEnemyID = -1;
+
     }
 
     // Start is called before the first frame update
     void Start()
     {
         if(this == null) { return; }
-        combatIsOver = false;
-        enemyRespawnPositions[0] = new Vector3(-100f, -80f, 0f);
-        enemyRespawnPositions[1] = new Vector3(370f, -100f, 0f);
-        
-        //m_canvasToCombat.SetActive(false);
 
-        enemyEngaged = false;
-
-        enemies[0] = RespawnEnemy(m_minotaurPrefab, enemyRespawnPositions[0], 0);
-        enemies[1] = RespawnEnemy(m_minotaurPrefab, enemyRespawnPositions[1], 1);
+        for (int i = 0; i < enemySpawners.Length; i++)
+        {
+            enemySpawners[i].RespawnEnemy(m_spiderPrefab, enemySpawners[i].transform.position, i);
+        }
 
         m_currentEquipmentInterface = m_GrodnarEquipmentDisplay;
 
         DisableCombatCanvas();
-
-
 
         for (int i = 0; i < m_GrodnarEquipmentInventory.GetSlots.Length; i++)
         {
@@ -239,30 +233,34 @@ public class GameManager : MonoBehaviour
             //Save stats
 
             //Enemy info
-            enemyIndex = enemyOnCombat.GetComponent<PatrolAI>().enemyID;
-            /*totalEnemies = enemyOnCombat.GetComponent<PatrolAI>().totalEnemies;
-            enemyOnCombatType = enemyOnCombat.GetComponent<PatrolAI>().enemyType;*/
-
+            Debug.Log(currentEnemyID);
             EnableCombatCanvas();
         }
 
 
         if (combatIsOver)
         {
-            combatIsOver = false;
-            GenerateRandomLoot((int)Random.Range(1, 20));
+            LoadMapScene();
+
+            GenerateRandomLoot((int)Random.Range(1, 21));
             GameStats.Instance.AddCoins(500);
             GameStats.Instance.AddXpToGrodnar(800f);
             GameStats.Instance.AddXpToLanstar(800f);
             GameStats.Instance.AddXpToSigfrid(800f);
 
-            LoadMapScene();
+            for (int i = 0; i < enemySpawners.Length; i++)
+            {
+                if (enemySpawners[i].GetSpawnerID() == currentEnemyID)
+                {
+                    enemySpawners[i].GetEnemy().GetComponent<PatrolAI>().SetAlive(false);
+                }
+            }
             NormalSpeed();
-            enemyIsAlive[enemyIndex] = false;
-            enemies[enemyIndex].SetActive(false);
 
             UpdateCoinsAmount();
             DisplayLoot();
+
+            combatIsOver = false;
         }
     }
     public void OnBeforeSlotUpdate(InventorySlot _slot)
@@ -508,37 +506,17 @@ public class GameManager : MonoBehaviour
         m_TavernTradeInventory.Clear();
     }
 
-    GameObject RespawnEnemy(GameObject type, Vector3 enemySpawnPos, int ID) {
-        
-        GameObject enemy = Instantiate(type, enemySpawnPos, transform.rotation);
-        PatrolAI AI = enemy.GetComponent<PatrolAI>();
-        
-
-        AI.patrolPoints[0] = AI.InstantiatePatrolPoint(50f, 50f);
-        AI.patrolPoints[1] = AI.InstantiatePatrolPoint(-50f, 50f);
-        AI.patrolPoints[2] = AI.InstantiatePatrolPoint(-50f, -50f);
-        AI.patrolPoints[3] = AI.InstantiatePatrolPoint(50f, -50f);
-        
 
 
-        enemy.GetComponent<PatrolAI>().enemyID = ID;
-
-        enemy.name = "Enemy " + ID.ToString();
-
-
-
-        return enemy;
-    }
-
-    void EnemiesRespawner() {
+    /*void EnemiesRespawner() {
         for (int i = 0; i < enemies.Length; i++)
         {
             if (enemyIsAlive[i])
             {
-                RespawnEnemy(m_minotaurPrefab, enemyRespawnPositions[i], i);
+                RespawnEnemy(m_spiderPrefab, enemyRespawnPositions[i], i);
             }
         }
-    }
+    }*/
 
     public void LoadCombatScene() {
         GameObject[] gameObjectsOnScene;
@@ -552,14 +530,14 @@ public class GameManager : MonoBehaviour
 
     public void LoadMapScene()
     {
+        SceneManager.UnloadScene(SceneManager.GetSceneByName("CombatScene"));
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName("MapScene"));
         GameObject[] gameObjectsOnScene;
         gameObjectsOnScene = SceneManager.GetSceneByName("MapScene").GetRootGameObjects();
         foreach (GameObject obj in gameObjectsOnScene)
         {
             obj.SetActive(true);
         }
-        SceneManager.UnloadSceneAsync(SceneManager.GetSceneByName("CombatScene"));
-        SceneManager.SetActiveScene(SceneManager.GetSceneByName("MapScene"));
 
         HideInventories();
         DisableCombatCanvas();
@@ -567,6 +545,7 @@ public class GameManager : MonoBehaviour
         canvasHostal.SetActive(false);
         GameObject canvasPause = GameObject.FindGameObjectWithTag("CanvasPause");
         canvasPause.SetActive(false);
+        canvasMenu.SetActive(false);
 
     }
 
@@ -683,11 +662,13 @@ public class GameManager : MonoBehaviour
 
     public void SetCombatIsOver(bool isCombatOver) { combatIsOver = isCombatOver; }
 
-    public void SetEnemyOnCombat(GameObject enemy) { enemyOnCombat = enemy; }
+    //public void SetEnemyOnCombat(GameObject enemy) { enemyOnCombat = enemy; }
 
-    public GameObject GetEnemyOnCombat() { return enemyOnCombat; }
+    //public GameObject GetEnemyOnCombat() { return enemyOnCombat; }
 
     public void SetAddingItemsBool(bool _addingItems) { addingItems = _addingItems; }
 
     public void SetLvlUpWarning(bool lvlUp) { levelUpWarning.SetActive(lvlUp); }
+
+    public void SetCurrentEnemyID(int ID) { currentEnemyID = ID; }
 }

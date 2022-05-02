@@ -10,12 +10,11 @@ public class PatrolAI : MonoBehaviour
     private int currentPatrolPoint;
 
     private bool patrolling;
+    private bool alive;
 
     private GameObject m_player;
 
-    public int totalEnemies;
-
-    public int enemyID;
+    private int enemyID;
 
     Vector2 previousPosition;
     Vector2 currentPosition;
@@ -25,8 +24,7 @@ public class PatrolAI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
-        totalEnemies = 3;
+        alive = true;
         currentPatrolPoint = 0;
         patrolling = true;
         m_player = GameObject.FindGameObjectWithTag("PlayerMap");
@@ -39,21 +37,17 @@ public class PatrolAI : MonoBehaviour
         previousPosition = currentPosition;
         currentPosition = transform.position;
 
-        if (patrolling)
+        /*if (patrolling)
         {
             FlipSprites();
-        }
+        }*/
 
     }
 
     void FixedUpdate()
     {
-
-
         Patrol();
         MoveTowardsPlayer();
-
-
     }
 
     void MoveTowardsPlayer() {
@@ -104,4 +98,12 @@ public class PatrolAI : MonoBehaviour
             GetComponent<SpriteRenderer>().flipX = false;
         }
     }
+
+    public void SetEnemyID(int ID) { enemyID = ID; }
+
+    public int GetEnemyID() { return enemyID; }
+
+    public bool IsAlive() { return alive; }
+
+    public void SetAlive(bool _alive) { alive = _alive; }
 }
