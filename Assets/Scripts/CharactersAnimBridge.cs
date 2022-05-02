@@ -14,4 +14,26 @@ public class CharactersAnimBridge : MonoBehaviour
     {
         gfxController.GetComponent<PawnController>().HurtAnimDone();
     }
+
+    public void HurtStartSound() {
+        PawnController pawnController = gfxController.GetComponent<PawnController>();
+
+        switch (pawnController.GetCharacterType())
+        {
+            case PawnController.CHARACTER.GRODNAR:
+                break;
+            case PawnController.CHARACTER.LANSTAR:
+                break;
+            case PawnController.CHARACTER.SIGFRID:
+                break;
+            case PawnController.CHARACTER.SPIDER:
+                break;
+            case PawnController.CHARACTER.WORM:
+                break;
+            case PawnController.CHARACTER.LAST_NO_USE:
+                break;
+            default:
+                break;
+        }
+    }
 }

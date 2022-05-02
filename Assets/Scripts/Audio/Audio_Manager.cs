@@ -24,6 +24,9 @@ public class Audio_Manager : MonoBehaviour
     [SerializeField] private AudioClip swordHitFleshSound;
     [SerializeField] private AudioClip swordHitObjectSound;
     [SerializeField] private AudioClip swordHitMetalSound;
+    [SerializeField] private AudioClip GrodnarDeathSound;
+    [SerializeField] private AudioClip SigfridDeathSound;
+    [SerializeField] private AudioClip LanstarDeathSound;
 
 
 
@@ -38,7 +41,7 @@ public class Audio_Manager : MonoBehaviour
 
     public enum AudioEffects { NONE, SELECT, PRESSED, LIFESOUND };
 
-    public enum InstantAudios { NONE, ENEMYHURT, PLAYERHURT, BAGCLOSE, BAGOPEN, ARROWFLESH, ONGUARD, BIRD, CHESTOPEN, COIN, DRAMATICBIRD, OWL, WOLFHOWL, SWORDFLESH,SWORDOBJECT, SWORDMETAL };
+    public enum InstantAudios { NONE, ENEMYHURT, PLAYERHURT, BAGCLOSE, BAGOPEN, ARROWFLESH, ONGUARD, BIRD, CHESTOPEN, COIN, DRAMATICBIRD, OWL, WOLFHOWL, SWORDFLESH,SWORDOBJECT, SWORDMETAL, GRODNARDEATH, SIGFRIDDEATH, LANSTARDEATH };
 
     //*****************************************
     public void PlayOnce(AudioEffects effect) {
@@ -117,6 +120,15 @@ public class Audio_Manager : MonoBehaviour
                 break;
             case InstantAudios.SWORDMETAL:
                 effectsSounds.PlayOneShot(swordHitMetalSound);
+                break;
+            case InstantAudios.GRODNARDEATH:
+                effectsSounds.PlayOneShot(GrodnarDeathSound);
+                break;
+            case InstantAudios.SIGFRIDDEATH:
+                effectsSounds.PlayOneShot(SigfridDeathSound);
+                break;
+            case InstantAudios.LANSTARDEATH:
+                effectsSounds.PlayOneShot(LanstarDeathSound);
                 break;
             default:
                 break;

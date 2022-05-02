@@ -44,6 +44,7 @@ public class GFXController : MonoBehaviour
             PawnController pawnToAttack = GetComponent<PawnController>().GetCurrentTarget();
             if (pawnToAttack != null)
             {
+                //AttackSound
                 attackDone = false;
                 SpawnDamageText();
                 pawnToAttack.GetComponentInChildren<HealthBar>().HealthChangeEvent();

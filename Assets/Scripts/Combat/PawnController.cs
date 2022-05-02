@@ -676,9 +676,12 @@ public class PawnController : MonoBehaviour
 
     public GFXController GetGFXController() { return gfxController; }
 
+    public CHARACTER GetCharacterType() { return character; }
+
     public void HurtAnimDone() { 
         if (cur_hp < 1) {
             alive = false;
+            //DieSound
             if (m_state == PAWN_STATUS.MOVE || m_state == PAWN_STATUS.GET_PAWN)
             {
                 m_state = PAWN_STATUS.IDLE;
