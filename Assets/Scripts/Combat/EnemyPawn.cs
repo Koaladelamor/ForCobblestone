@@ -7,6 +7,7 @@ public class EnemyPawn : PawnController
 {
 
     protected override void Awake() {
+        alive = true;
         attackTimer = 1.5f;
         attackCurrentTimer = 0;
         attackPerformed = false;
@@ -236,6 +237,7 @@ public class EnemyPawn : PawnController
         if (!alive) {
             myTurn = false;
             combatManager.NextTurn();
+            m_state = PAWN_STATUS.IDLE;
             Debug.Log("PAWN IS DEAD");
             return;
         }
