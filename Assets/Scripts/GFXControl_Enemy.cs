@@ -1,10 +1,10 @@
 using TMPro;
 using UnityEngine;
 
-public class GFXController : MonoBehaviour
+public class GFXControl_Enemy : MonoBehaviour
 {
-    public GameObject warrior, archer, tank, spider;
-    public Animator warriorAnim, archerAnim, tankAnim, spiderAnim;
+    public GameObject worm, spider;
+    public Animator wormAnim, spiderAnim;
 
     private bool attackDone;
 
@@ -19,32 +19,25 @@ public class GFXController : MonoBehaviour
 
         switch (pawnController.character)
         {
-            case PawnController.CHARACTER.GRODNAR:
-                tank.SetActive(true);
-                break;
-            case PawnController.CHARACTER.LANSTAR:
-                archer.SetActive(true); 
-                break;
-            case PawnController.CHARACTER.SIGFRID:
-                warrior.SetActive(true);
+            case PawnController.CHARACTER.WORM:
+                worm.SetActive(true);
                 break;
             case PawnController.CHARACTER.SPIDER:
-                
+                spider.SetActive(true);
                 break;
-            case PawnController.CHARACTER.WORM:
-                
-                break;
+           
             case PawnController.CHARACTER.LAST_NO_USE:
                 break;
         }
     }
     private void Update()
     {
-        if (attackDone) {
+        if (attackDone)
+        {
             PawnController pawnToAttack = GetComponent<PawnController>().GetCurrentTarget();
             if (pawnToAttack != null)
             {
-                //AttackSound
+                
                 attackDone = false;
                 SpawnDamageText();
                 pawnToAttack.GetComponentInChildren<HealthBar>().HealthChangeEvent();
@@ -60,20 +53,11 @@ public class GFXController : MonoBehaviour
     {
         switch (pawnController.character)
         {
-            case PawnController.CHARACTER.GRODNAR:
-                tankAnim.SetTrigger("Attack");
-                break;
-            case PawnController.CHARACTER.LANSTAR:
-                archerAnim.SetTrigger("Attack");
-                break;
-            case PawnController.CHARACTER.SIGFRID:
-                warriorAnim.SetTrigger("Attack");
-                break;
             case PawnController.CHARACTER.SPIDER:
                 spiderAnim.SetTrigger("Attack");
                 break;
             case PawnController.CHARACTER.WORM:
-
+                wormAnim.SetTrigger("Attack");
                 break;
             case PawnController.CHARACTER.LAST_NO_USE:
                 break;
@@ -84,20 +68,12 @@ public class GFXController : MonoBehaviour
     {
         switch (pawnController.character)
         {
-            case PawnController.CHARACTER.GRODNAR:
-                tankAnim.SetTrigger("Hurt");
-                break;
-            case PawnController.CHARACTER.LANSTAR:
-                archerAnim.SetTrigger("Hurt");
-                break;
-            case PawnController.CHARACTER.SIGFRID:
-                warriorAnim.SetTrigger("Hurt");
-                break;
+          
             case PawnController.CHARACTER.SPIDER:
                 spiderAnim.SetTrigger("Hurt");
                 break;
             case PawnController.CHARACTER.WORM:
-
+                wormAnim.SetTrigger("Hurt");
                 break;
             case PawnController.CHARACTER.LAST_NO_USE:
                 break;
@@ -108,20 +84,12 @@ public class GFXController : MonoBehaviour
     {
         switch (pawnController.character)
         {
-            case PawnController.CHARACTER.GRODNAR:
-                tankAnim.SetBool("IsDead", true);
-                break;
-            case PawnController.CHARACTER.LANSTAR:
-                archerAnim.SetBool("IsDead", true);
-                break;
-            case PawnController.CHARACTER.SIGFRID:
-                warriorAnim.SetBool("IsDead", true);
-                break;
+            
             case PawnController.CHARACTER.SPIDER:
                 spiderAnim.SetBool("IsDead", true);
                 break;
             case PawnController.CHARACTER.WORM:
-
+                wormAnim.SetBool("IsDead", true);
                 break;
             case PawnController.CHARACTER.LAST_NO_USE:
                 break;
@@ -132,20 +100,12 @@ public class GFXController : MonoBehaviour
     {
         switch (pawnController.character)
         {
-            case PawnController.CHARACTER.GRODNAR:
-                tankAnim.SetBool("IsRunning", true);
-                break;
-            case PawnController.CHARACTER.LANSTAR:
-                archerAnim.SetBool("IsRunning", true);
-                break;
-            case PawnController.CHARACTER.SIGFRID:
-                warriorAnim.SetBool("IsRunning", true);
-                break;
+            
             case PawnController.CHARACTER.SPIDER:
                 spiderAnim.SetBool("IsRunning", true);
                 break;
             case PawnController.CHARACTER.WORM:
-
+                wormAnim.SetBool("IsRunning", true);
                 break;
             case PawnController.CHARACTER.LAST_NO_USE:
                 break;
@@ -156,20 +116,12 @@ public class GFXController : MonoBehaviour
     {
         switch (pawnController.character)
         {
-            case PawnController.CHARACTER.GRODNAR:
-                tankAnim.SetBool("IsRunning", false);
-                break;
-            case PawnController.CHARACTER.LANSTAR:
-                archerAnim.SetBool("IsRunning", false);
-                break;
-            case PawnController.CHARACTER.SIGFRID:
-                warriorAnim.SetBool("IsRunning", false);
-                break;
+          
             case PawnController.CHARACTER.SPIDER:
                 spiderAnim.SetBool("IsRunning", false);
                 break;
             case PawnController.CHARACTER.WORM:
-
+                spiderAnim.SetBool("IsRunning", false);
                 break;
             case PawnController.CHARACTER.LAST_NO_USE:
                 break;
@@ -178,17 +130,10 @@ public class GFXController : MonoBehaviour
 
     public void MapMove()
     {
-        tankAnim.SetBool("IsRunning", true);
-        archerAnim.SetBool("IsRunning", true);
-        warriorAnim.SetBool("IsRunning", true);
+     
     }
 
-    public void MapIdle()
-    {
-        tankAnim.SetBool("IsRunning", false);
-        archerAnim.SetBool("IsRunning", false);
-        warriorAnim.SetBool("IsRunning", false);
-    }
+    
 
     public void SpawnDamageText()
     {
