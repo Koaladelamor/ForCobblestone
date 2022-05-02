@@ -14,6 +14,6 @@ public class ItemToPick : MonoBehaviour
     void Pick()
     {
         //Cojer la llave
-        Audio_Manager.PlayEffect(Audio_Manager.AudioEffects.PLAYERHURT);
+        Audio_Manager.PlayInstant(Audio_Manager.InstantAudios.PLAYERHURT);
     }
 }

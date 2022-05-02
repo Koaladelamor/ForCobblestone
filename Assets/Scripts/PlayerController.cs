@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -15,18 +13,16 @@ public class PlayerController : MonoBehaviour
     Vector2 previousPosition;
     Vector2 currentPosition;
 
-    private Animator[] anims;
+    public GFXController gfxController;
     private SpriteRenderer[] sprites;
 
     // Start is called before the first frame update
     void Start()
     {
         m_gameManager = GameObject.FindGameObjectWithTag("GameManager");
+        m_pointToGo = GameObject.FindGameObjectWithTag("PointToGo");
         engaged = false;
 
-        m_pointToGo = GameObject.FindGameObjectWithTag("PointToGo");
-
-        anims = GetComponentsInChildren<Animator>();
         sprites = GetComponentsInChildren<SpriteRenderer>();
     }
 
@@ -36,7 +32,8 @@ public class PlayerController : MonoBehaviour
 
         previousPosition = currentPosition;
         currentPosition = transform.position;
-        FlipSprites();
+        SetWalkingAnimation();
+        //FlipSprites();
 
         if (Input.GetKeyDown(KeyCode.E)) {
             GameManager.Instance.SetAddingItemsBool(true);
@@ -91,17 +88,10 @@ public class PlayerController : MonoBehaviour
     {
         if (PartyIsMoving())
         {
-            for (int i = 0; i < anims.Length; i++)
-            {
-                anims[i].SetBool("isWalking", true);
-            }
-            return;
+            gfxController.MapMove();
         }
         else {
-            for (int i = 0; i < anims.Length; i++)
-            {
-                anims[i].SetBool("isWalking", false);
-            }
+            gfxController.MapIdle();
         }
     }
 

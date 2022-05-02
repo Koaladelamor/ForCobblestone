@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -15,6 +14,8 @@ public class GameManager : MonoBehaviour
         get { return mInstance; }
         private set { }
     }
+
+    public Audio_Manager audioManager;
 
     public UserInterface m_inventoryDisplay;
     public UserInterface m_GrodnarEquipmentDisplay;
@@ -85,6 +86,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if(this == null) { return; }
         combatIsOver = false;
         enemyRespawnPositions[0] = new Vector3(-100f, -80f, 0f);
         enemyRespawnPositions[1] = new Vector3(370f, -100f, 0f);
@@ -266,6 +268,7 @@ public class GameManager : MonoBehaviour
     public void OnBeforeSlotUpdate(InventorySlot _slot)
     {
         if (_slot.ItemObject == null) { return; }
+        if (this == null) { return; }
 
         switch (_slot.parent.mInventory.type)
         {
@@ -307,6 +310,9 @@ public class GameManager : MonoBehaviour
     public void OnAfterSlotUpdate(InventorySlot _slot)
     {
         if (_slot.ItemObject == null) { return; }
+        if (this == null) { 
+            return; 
+        }
 
         switch (_slot.parent.mInventory.type)
         {
@@ -410,6 +416,8 @@ public class GameManager : MonoBehaviour
         m_statsScreen.HideDisplay();
         inventoryOnScreen = false;
 
+        audioManager.PlayInstant(Audio_Manager.InstantAudios.BAGCLOSE);
+
         if (GameStats.Instance.GetGrodnar()._attribute_points == 0 && GameStats.Instance.GetLanstar()._attribute_points == 0 && GameStats.Instance.GetSigfrid()._attribute_points == 0)
         {
             SetLvlUpWarning(false);
@@ -428,6 +436,8 @@ public class GameManager : MonoBehaviour
         m_inventoryDisplay.ShowInventory();
         m_statsScreen.ShowDisplay();
         inventoryOnScreen = true;
+
+        audioManager.PlayInstant(Audio_Manager.InstantAudios.BAGOPEN);
     }
 
     public void GrodnarEquipmentDisplay() {
@@ -576,6 +586,7 @@ public class GameManager : MonoBehaviour
     public void EnableCombatCanvas()
     {
         m_canvasToCombat.SetActive(true);
+        audioManager.PlayInstant(Audio_Manager.InstantAudios.ONGUARD);
     }
 
     public UserInterface GetCurrentEquipmentInterface() { return m_currentEquipmentInterface; }
@@ -647,6 +658,8 @@ public class GameManager : MonoBehaviour
         UpdateCoinsAmount();
         m_inventoryDisplay.HideInventory();
         m_TavernTradeDisplay.HideInventory();
+        confirmTradeButton.gameObject.SetActive(false);
+        Time.timeScale = 1;
     }
 
     public void TradingModeON() {
@@ -663,6 +676,7 @@ public class GameManager : MonoBehaviour
         m_TavernTradeDisplay.HideInventory();
         confirmTradeButton.gameObject.SetActive(false);
         m_canvasTavern.SetActive(true);
+        Time.timeScale = 1;
     }
 
     public bool GetCombatIsOver() { return combatIsOver; }
