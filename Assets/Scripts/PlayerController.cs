@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     Vector2 previousPosition;
     Vector2 currentPosition;
 
-    public GFXController gfxController;
+    public GFX_MapParty gfxController;
     private SpriteRenderer[] sprites;
 
     // Start is called before the first frame update

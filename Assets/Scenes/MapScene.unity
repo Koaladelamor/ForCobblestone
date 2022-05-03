@@ -16249,17 +16249,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 3635966324276022958}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06a4fa3025eda9c41a37a669bbaf2df2, type: 3}
+  m_Script: {fileID: 11500000, guid: 6df6095a31235c44c86a3b67bafec8a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   warrior: {fileID: 2387923299718115624}
   archer: {fileID: 1273680634}
   tank: {fileID: 3635966326049109192}
-  spider: {fileID: 0}
   warriorAnim: {fileID: 3635966325455742294}
   archerAnim: {fileID: 2054581104}
   tankAnim: {fileID: 3635966325695112355}
-  spiderAnim: {fileID: 0}
 --- !u!1 &3635966324408258832
 GameObject:
   m_ObjectHideFlags: 0
@@ -17832,7 +17830,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 482509a5109d47245b55c63eb6bc7a58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gfxController: {fileID: 3635966324276022959}
+  gfxController: {fileID: 0}
 --- !u!1001 &5999787020921032546
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18086,4 +18084,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 482509a5109d47245b55c63eb6bc7a58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gfxController: {fileID: 3635966324276022959}
+  gfxController: {fileID: 0}
