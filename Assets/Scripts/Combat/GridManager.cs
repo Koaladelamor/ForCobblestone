@@ -33,7 +33,7 @@ public class GridManager : MonoBehaviour
             for (int j = 0; j < MAX_COLUMNAS; j++)
             {
                 m_tiles[i, j] = Instantiate(m_tile);
-                m_tiles[i, j].transform.position = new Vector3(m_initialPosition.position.x + j * 40, m_initialPosition.position.y - i * 40, m_initialPosition.position.z);
+                m_tiles[i, j].transform.position = new Vector3(m_initialPosition.position.x + j * 50, m_initialPosition.position.y - i * 50, m_initialPosition.position.z);
                 m_tiles[i, j].transform.parent = this.transform;
                 m_tiles[i, j].name = i + "-" + j;
 

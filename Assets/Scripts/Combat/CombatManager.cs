@@ -192,7 +192,7 @@ public class CombatManager : MonoBehaviour
         int enemiesDead = 0;
         int enemies = m_enemies.Length;
         for (int i = 0; i < enemies; i++) {
-            if (!m_enemies[i].GetComponent<OldPawnController>().m_isAlive) {
+            if (!m_enemies[i].GetComponent<PawnController>().IsAlive()) {
                 enemiesDead++;
             }
         }

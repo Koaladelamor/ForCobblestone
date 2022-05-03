@@ -530,7 +530,7 @@ public class GameManager : MonoBehaviour
 
     public void LoadMapScene()
     {
-        SceneManager.UnloadScene(SceneManager.GetSceneByName("CombatScene"));
+        SceneManager.UnloadSceneAsync(SceneManager.GetSceneByName("CombatScene"));
         SceneManager.SetActiveScene(SceneManager.GetSceneByName("MapScene"));
         GameObject[] gameObjectsOnScene;
         gameObjectsOnScene = SceneManager.GetSceneByName("MapScene").GetRootGameObjects();
@@ -671,4 +671,6 @@ public class GameManager : MonoBehaviour
     public void SetLvlUpWarning(bool lvlUp) { levelUpWarning.SetActive(lvlUp); }
 
     public void SetCurrentEnemyID(int ID) { currentEnemyID = ID; }
+
+    public GameObject GetSpiderPrefab() { return m_spiderPrefab; }
 }

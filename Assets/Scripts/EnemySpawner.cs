@@ -16,13 +16,23 @@ public class EnemySpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (enemyOnSpawn != null && !enemyOnSpawn.GetComponent<PatrolAI>().IsAlive()) {
+        if (enemyOnSpawn != null && !GetPatrolAI().IsAlive()) {
             //Destroy Enemy + PatrolPoints and Instantiate a new one when spawner is out of camera
+            for (int i = 0; i < GetPatrolAI().patrolPoints.Length; i++)
+            {
+                Destroy(GetPatrolAI().patrolPoints[i]);
+            }
             Destroy(enemyOnSpawn);
-            Destroy(this.gameObject);
+            enemyOnSpawn = null;
         }
     }
 
+    private void OnBecameInvisible()
+    {
+        if (enemyOnSpawn == null) {
+            RespawnEnemy(GameManager.Instance.GetSpiderPrefab(), transform.position, spawnerID);
+        }
+    }
     public GameObject RespawnEnemy(GameObject prefab, Vector3 enemySpawnPos, int ID)
     {
 

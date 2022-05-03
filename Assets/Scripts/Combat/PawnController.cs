@@ -696,4 +696,5 @@ public class PawnController : MonoBehaviour
         }
     }
 
+    public bool IsAlive() { return alive; }
 }
