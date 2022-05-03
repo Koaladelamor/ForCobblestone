@@ -336,10 +336,6 @@ public class PawnController : MonoBehaviour
                         damage = Random.Range(min_damage, max_damage + 1);
                         m_pawnToAttack.TakeDamage(damage);
                         //m_pawnToAttack.GetComponentInChildren<HealthBar>().HealthChangeEvent();
-                        /*if (m_pawnToAttack.GetCurrentHP() < 1)
-                        {
-
-                        }*/
                     }
                     else
                     {
@@ -483,6 +479,112 @@ public class PawnController : MonoBehaviour
                     TileManager enemyTilePosition = GridManager.Instance.GetTile(currentTilePosition + new Vector2(3, 0));
                     m_pawnToAttack = enemyTilePosition.GetPawn();
                     m_positionToGo = null;
+                }
+                else if (!GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(2, 1)) && !GridManager.Instance.OutOfGrid(currentTilePosition + new Vector2(2, 1)) && !GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(2, -1)) && !GridManager.Instance.OutOfGrid(currentTilePosition + new Vector2(2, -1)))
+                {
+                    //RANDOM PICK
+                    int randomInt = Random.Range(0, 2);
+                    if (randomInt == 0)
+                    {
+                        TileManager enemyTilePosition = GridManager.Instance.GetTile(currentTilePosition + new Vector2(2, 1));
+                        m_pawnToAttack = enemyTilePosition.GetPawn();
+                        m_positionToGo = GridManager.Instance.GetTile(currentTilePosition + new Vector2(0, 1)).transform;
+                    }
+                    else if (randomInt == 1)
+                    {
+                        TileManager enemyTilePosition = GridManager.Instance.GetTile(currentTilePosition + new Vector2(2, -1));
+                        m_pawnToAttack = enemyTilePosition.GetPawn();
+                        m_positionToGo = GridManager.Instance.GetTile(currentTilePosition + new Vector2(0, -1)).transform;
+                    }
+                }
+                else if (!GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(2, 1)) && !GridManager.Instance.OutOfGrid(currentTilePosition + new Vector2(2, 1)))
+                {
+                    TileManager enemyTilePosition = GridManager.Instance.GetTile(currentTilePosition + new Vector2(2, 1));
+                    m_pawnToAttack = enemyTilePosition.GetPawn();
+                    m_positionToGo = GridManager.Instance.GetTile(currentTilePosition + new Vector2(0, 1)).transform;
+                }
+                else if (!GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(2, -1)) && !GridManager.Instance.OutOfGrid(currentTilePosition + new Vector2(2, -1)))
+                {
+                    TileManager enemyTilePosition = GridManager.Instance.GetTile(currentTilePosition + new Vector2(2, -1));
+                    m_pawnToAttack = enemyTilePosition.GetPawn();
+                    m_positionToGo = GridManager.Instance.GetTile(currentTilePosition + new Vector2(0, -1)).transform;
+                }
+                else if (!GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(3, 1)) && !GridManager.Instance.OutOfGrid(currentTilePosition + new Vector2(3, 1)) && !GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(3, -1)) && !GridManager.Instance.OutOfGrid(currentTilePosition + new Vector2(3, -1)))
+                {
+                    //RANDOM PICK
+                    int randomInt = Random.Range(0, 2);
+                    if (randomInt == 0)
+                    {
+                        TileManager enemyTilePosition = GridManager.Instance.GetTile(currentTilePosition + new Vector2(3, 1));
+                        m_pawnToAttack = enemyTilePosition.GetPawn();
+                        m_positionToGo = GridManager.Instance.GetTile(currentTilePosition + new Vector2(0, 1)).transform;
+                    }
+                    else if (randomInt == 1)
+                    {
+                        TileManager enemyTilePosition = GridManager.Instance.GetTile(currentTilePosition + new Vector2(3, -1));
+                        m_pawnToAttack = enemyTilePosition.GetPawn();
+                        m_positionToGo = GridManager.Instance.GetTile(currentTilePosition + new Vector2(0, -1)).transform;
+                    }
+                }
+                else if (!GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(3, 1)) && !GridManager.Instance.OutOfGrid(currentTilePosition + new Vector2(3, 1)))
+                {
+                    TileManager enemyTilePosition = GridManager.Instance.GetTile(currentTilePosition + new Vector2(3, 1));
+                    m_pawnToAttack = enemyTilePosition.GetPawn();
+                    m_positionToGo = GridManager.Instance.GetTile(currentTilePosition + new Vector2(0, 1)).transform;
+                }
+                else if (!GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(3, -1)) && !GridManager.Instance.OutOfGrid(currentTilePosition + new Vector2(2, -1)))
+                {
+                    TileManager enemyTilePosition = GridManager.Instance.GetTile(currentTilePosition + new Vector2(3, -1));
+                    m_pawnToAttack = enemyTilePosition.GetPawn();
+                    m_positionToGo = GridManager.Instance.GetTile(currentTilePosition + new Vector2(0, -1)).transform;
+                }
+                else if (!GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(2, 2)) && !GridManager.Instance.OutOfGrid(currentTilePosition + new Vector2(2, 2)))
+                {
+                    TileManager enemyTilePosition = GridManager.Instance.GetTile(currentTilePosition + new Vector2(2, 2));
+                    m_pawnToAttack = enemyTilePosition.GetPawn();
+                    m_positionToGo = GridManager.Instance.GetTile(currentTilePosition + new Vector2(0, 2)).transform;
+                }
+                else if (!GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(2, -2)) && !GridManager.Instance.OutOfGrid(currentTilePosition + new Vector2(2, -2)))
+                {
+                    TileManager enemyTilePosition = GridManager.Instance.GetTile(currentTilePosition + new Vector2(2, -2));
+                    m_pawnToAttack = enemyTilePosition.GetPawn();
+                    m_positionToGo = GridManager.Instance.GetTile(currentTilePosition + new Vector2(0, -2)).transform;
+                }
+                else if (!GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(3, 2)) && !GridManager.Instance.OutOfGrid(currentTilePosition + new Vector2(3, 2)))
+                {
+                    TileManager enemyTilePosition = GridManager.Instance.GetTile(currentTilePosition + new Vector2(3, 2));
+                    m_pawnToAttack = enemyTilePosition.GetPawn();
+                    m_positionToGo = GridManager.Instance.GetTile(currentTilePosition + new Vector2(0, 2)).transform;
+                }
+                else if (!GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(3, -2)) && !GridManager.Instance.OutOfGrid(currentTilePosition + new Vector2(3, -2)))
+                {
+                    TileManager enemyTilePosition = GridManager.Instance.GetTile(currentTilePosition + new Vector2(3, -2));
+                    m_pawnToAttack = enemyTilePosition.GetPawn();
+                    m_positionToGo = GridManager.Instance.GetTile(currentTilePosition + new Vector2(0, -2)).transform;
+                }
+                else if (!GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(2, 3)) && !GridManager.Instance.OutOfGrid(currentTilePosition + new Vector2(2, 3)))
+                {
+                    TileManager enemyTilePosition = GridManager.Instance.GetTile(currentTilePosition + new Vector2(2, 3));
+                    m_pawnToAttack = enemyTilePosition.GetPawn();
+                    m_positionToGo = GridManager.Instance.GetTile(currentTilePosition + new Vector2(0, 3)).transform;
+                }
+                else if (!GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(2, -3)) && !GridManager.Instance.OutOfGrid(currentTilePosition + new Vector2(2, -3)))
+                {
+                    TileManager enemyTilePosition = GridManager.Instance.GetTile(currentTilePosition + new Vector2(2, -3));
+                    m_pawnToAttack = enemyTilePosition.GetPawn();
+                    m_positionToGo = GridManager.Instance.GetTile(currentTilePosition + new Vector2(0, -3)).transform;
+                }
+                else if (!GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(3, 3)) && !GridManager.Instance.OutOfGrid(currentTilePosition + new Vector2(3, 3)))
+                {
+                    TileManager enemyTilePosition = GridManager.Instance.GetTile(currentTilePosition + new Vector2(3, 3));
+                    m_pawnToAttack = enemyTilePosition.GetPawn();
+                    m_positionToGo = GridManager.Instance.GetTile(currentTilePosition + new Vector2(0, 3)).transform;
+                }
+                else if (!GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(3, -3)) && !GridManager.Instance.OutOfGrid(currentTilePosition + new Vector2(3, -3)))
+                {
+                    TileManager enemyTilePosition = GridManager.Instance.GetTile(currentTilePosition + new Vector2(3, -3));
+                    m_pawnToAttack = enemyTilePosition.GetPawn();
+                    m_positionToGo = GridManager.Instance.GetTile(currentTilePosition + new Vector2(0, -3)).transform;
                 }
                 else
                 {
