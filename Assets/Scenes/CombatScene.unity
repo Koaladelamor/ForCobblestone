@@ -1474,7 +1474,6 @@ MonoBehaviour:
   - {fileID: 365312303}
   m_spiderPrefab: {fileID: 5690949739578322072, guid: 876ab42971beb034ca4f07172fd19011, type: 3}
   m_canvasToMap: {fileID: 253444218}
-  startCombat: 0
 --- !u!4 &1292432836
 Transform:
   m_ObjectHideFlags: 0
@@ -1690,7 +1689,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1292432835}
         m_TargetAssemblyTypeName: CombatManager, Assembly-CSharp
-        m_MethodName: SetBoolCombatToTrue
+        m_MethodName: StartCombat
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

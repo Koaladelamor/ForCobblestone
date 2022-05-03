@@ -15,7 +15,7 @@ public class CombatManager : MonoBehaviour
     Vector2 EnemySpawnTile3;
 
     private int turn;
-    public bool startCombat;
+    private bool startCombat;
     private bool turnSet;
 
     private void Awake()
@@ -36,6 +36,7 @@ public class CombatManager : MonoBehaviour
                 EnemySpawnTile3 = new Vector2(3, Random.Range(0, 4));
             }
         }
+        startCombat = false;
         turnSet = false;
         m_enemies = new GameObject[3];
         m_players = new GameObject[m_players_temp.Length];
@@ -69,6 +70,10 @@ public class CombatManager : MonoBehaviour
         if (EnemiesDefeated())
         {
             Invoke("SetCanvasActive", 1f);
+        }
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            startCombat = true;
         }
 
         if (startCombat && !turnSet) {
@@ -240,4 +245,6 @@ public class CombatManager : MonoBehaviour
         turn++;
         turnSet = false;
     }
+
+    public void StartCombat() { startCombat = true; }
 }

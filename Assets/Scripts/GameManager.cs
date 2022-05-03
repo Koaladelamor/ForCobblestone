@@ -558,6 +558,7 @@ public class GameManager : MonoBehaviour
             obj.SetActive(false);
         }
         SceneManager.LoadSceneAsync("CombatScene", LoadSceneMode.Additive);
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName("CombatScene"));
     }
 
     public void LoadMapScene()
