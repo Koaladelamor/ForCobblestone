@@ -19,7 +19,7 @@ public class Ambience_Sounds_Manager : MonoBehaviour
 
         while (true)
         {
-            yield return new WaitForSeconds(Random.Range(3f, 6f));
+            yield return new WaitForSeconds(Random.Range(5f, 8f));
 
             int r = Random.Range(1, 4);
 

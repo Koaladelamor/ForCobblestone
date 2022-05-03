@@ -6,6 +6,14 @@ using UnityEngine.EventSystems;
 public class Audio_Manager : MonoBehaviour
 {
 
+    static Audio_Manager mInstance;
+
+    static public Audio_Manager Instance
+    {
+        get { return mInstance; }
+        private set { }
+    }
+
     [SerializeField] private AudioSource effectsSounds;
     [SerializeField] private AudioSource BackgroungMusic;
 
@@ -27,6 +35,7 @@ public class Audio_Manager : MonoBehaviour
     [SerializeField] private AudioClip GrodnarDeathSound;
     [SerializeField] private AudioClip SigfridDeathSound;
     [SerializeField] private AudioClip LanstarDeathSound;
+    [SerializeField] private AudioClip BellSound;
 
 
 
@@ -39,9 +48,25 @@ public class Audio_Manager : MonoBehaviour
 
     //Hacer enum de audio sources
 
+    private void Awake()
+    {
+        //Singleton
+        if (mInstance == null)
+        {
+            mInstance = this;
+            DontDestroyOnLoad(this);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+
+    }
+
     public enum AudioEffects { NONE, SELECT, PRESSED, LIFESOUND };
 
-    public enum InstantAudios { NONE, ENEMYHURT, PLAYERHURT, BAGCLOSE, BAGOPEN, ARROWFLESH, ONGUARD, BIRD, CHESTOPEN, COIN, DRAMATICBIRD, OWL, WOLFHOWL, SWORDFLESH,SWORDOBJECT, SWORDMETAL, GRODNARDEATH, SIGFRIDDEATH, LANSTARDEATH };
+    public enum InstantAudios { NONE, ENEMYHURT, PLAYERHURT, BAGCLOSE, BAGOPEN, ARROWFLESH, ONGUARD, BIRD, CHESTOPEN, COIN, DRAMATICBIRD, OWL, WOLFHOWL, SWORDFLESH,SWORDOBJECT, SWORDMETAL, GRODNARDEATH, SIGFRIDDEATH, LANSTARDEATH, BELLSOUND };
 
     //*****************************************
     public void PlayOnce(AudioEffects effect) {
@@ -130,6 +155,9 @@ public class Audio_Manager : MonoBehaviour
             case InstantAudios.LANSTARDEATH:
                 effectsSounds.PlayOneShot(LanstarDeathSound);
                 break;
+            case InstantAudios.BELLSOUND:
+                effectsSounds.PlayOneShot(BellSound);
+                break;
             default:
                 break;
         }
@@ -146,6 +174,52 @@ public class Audio_Manager : MonoBehaviour
         PlayOnce(AudioEffects.PRESSED);
     }
 
+    public void PlayDeathSound(PawnController.CHARACTER ch) {
+        Debug.Log(ch.ToString());
+        switch (ch)
+        {
+            case PawnController.CHARACTER.GRODNAR:
+                PlayInstant(InstantAudios.GRODNARDEATH);
+                break;
+            case PawnController.CHARACTER.LANSTAR:
+                PlayInstant(InstantAudios.LANSTARDEATH);
+                break;
+            case PawnController.CHARACTER.SIGFRID:
+                PlayInstant(InstantAudios.SIGFRIDDEATH);
+                break;
+            case PawnController.CHARACTER.SPIDER:
+                break;
+            case PawnController.CHARACTER.WORM:
+                break;
+            case PawnController.CHARACTER.LAST_NO_USE:
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void PlayAttackSound(PawnController.CHARACTER ch) {
+        Debug.Log(ch.ToString());
+        switch (ch)
+        {
+            case PawnController.CHARACTER.GRODNAR:
+
+            case PawnController.CHARACTER.SIGFRID:
+                PlayInstant(InstantAudios.SWORDFLESH);
+                break;
+            case PawnController.CHARACTER.LANSTAR:
+
+            case PawnController.CHARACTER.SPIDER:
+                
+            case PawnController.CHARACTER.WORM:
+                PlayInstant(InstantAudios.ARROWFLESH);
+                break;
+            case PawnController.CHARACTER.LAST_NO_USE:
+                break;
+            default:
+                break;
+        }
+    }
 
     //public enum BackgroundSongs { NONE, MENUAUDIO, EXPLOREAUDIO, BATTLEAUDIO };
 

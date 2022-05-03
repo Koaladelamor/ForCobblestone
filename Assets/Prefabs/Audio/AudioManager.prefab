@@ -190,6 +190,10 @@ MonoBehaviour:
   swordHitFleshSound: {fileID: 8300000, guid: 2cbf25b7a164f7b4c9920610629b3305, type: 3}
   swordHitObjectSound: {fileID: 8300000, guid: f2286487aa27cda4c85cf0495b11a450, type: 3}
   swordHitMetalSound: {fileID: 8300000, guid: 21e86a1a77ece3349a958659ae8aee75, type: 3}
+  GrodnarDeathSound: {fileID: 8300000, guid: af5be90fecfcf8547821c88b01e2103a, type: 3}
+  SigfridDeathSound: {fileID: 8300000, guid: 70df6fc7464acfd48b9688f9d08a24b7, type: 3}
+  LanstarDeathSound: {fileID: 8300000, guid: 0d27194be782f72449a68bbee08cb9f7, type: 3}
+  BellSound: {fileID: 8300000, guid: b06e56e35b5a87b4eb83e659ba79400c, type: 3}
   enemyHurt: {fileID: 8300000, guid: bc236d3a6013e0d4aab7d14ed7f2fb60, type: 3}
   playerHurt: {fileID: 8300000, guid: c87d9c894bf1c15439dd98728334080a, type: 3}
   lifeSound: {fileID: 8300000, guid: 4140a61bedbba264eaf01685b6e51760, type: 3}
