@@ -349,8 +349,11 @@ public class PawnController : MonoBehaviour
                         {
                             attackPerformed = false;
                             attackEnded = false;
-                            /*m_state = PAWN_STATUS.RETURN;
-                            gfxController.Move();*/
+                            if (m_positionToGo != null)
+                            {
+                                m_state = PAWN_STATUS.RETURN;
+                                gfxController.Move();
+                            }
                             combatManager.NextTurn();
                             myTurn = false;
                             m_state = PAWN_STATUS.IDLE;
@@ -358,6 +361,41 @@ public class PawnController : MonoBehaviour
                     }
                     break;
                 case PAWN_STATUS.MOVE:
+                    if (m_positionToGo == null)
+                    {
+                        combatManager.NextTurn();
+                        myTurn = false;
+                        break;
+                    }
+                    if (transform.position.x >= m_positionToGo.position.x)
+                    {
+                        transform.position = m_positionToGo.position;
+                        positionReached = true;
+                        diagonalChecked = false;
+                        //Debug.Log("POSITION REACHED");
+                        m_state = PAWN_STATUS.ATTACK;
+                        break;
+                    }
+
+                    if (straighMovement)
+                    {
+                        transform.position += Vector3.right * speed * Time.deltaTime;
+                    }
+                    else
+                    {
+                        if (transform.position.y > m_positionToGo.position.y)
+                        {
+                            Vector3 movePos = Vector3.right + Vector3.down;
+                            movePos.Normalize();
+                            transform.position += movePos * speed * Time.deltaTime;
+                        }
+                        else
+                        {
+                            Vector3 movePos = Vector3.right + Vector3.up;
+                            movePos.Normalize();
+                            transform.position += movePos * speed * Time.deltaTime;
+                        }
+                    }
                     break;
                 case PAWN_STATUS.RETURN:
                     break;
@@ -780,10 +818,12 @@ public class PawnController : MonoBehaviour
 
     public CHARACTER GetCharacterType() { return character; }
 
-    public void HurtAnimDone() { 
-        if (cur_hp < 1) {
+    public void HurtAnimDone()
+    {
+        if (cur_hp < 1)
+        {
             alive = false;
-            //DieSound
+            Audio_Manager.Instance.PlayDeathSound(character);
             if (m_state == PAWN_STATUS.MOVE || m_state == PAWN_STATUS.GET_PAWN)
             {
                 m_state = PAWN_STATUS.IDLE;
@@ -791,7 +831,8 @@ public class PawnController : MonoBehaviour
             GetCurrentTile().TakePawn();
             GetComponentInChildren<HealthBar>().transform.parent.gameObject.SetActive(false);
             gfxController.Die();
-            if (myTurn) {
+            if (myTurn)
+            {
                 combatManager.NextTurn();
                 myTurn = false;
             }

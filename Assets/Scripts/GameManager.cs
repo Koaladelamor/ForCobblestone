@@ -219,11 +219,12 @@ public class GameManager : MonoBehaviour
         if (InputManager.Instance.InventoryButtonPressed && inventoryOnScreen)
         {
             HideInventories();
-
+            Audio_Manager.Instance.PlayInstant(Audio_Manager.InstantAudios.BAGCLOSE);
         }
         else if (InputManager.Instance.InventoryButtonPressed && !inventoryOnScreen)
         {
             ShowInventories();
+            Audio_Manager.Instance.PlayInstant(Audio_Manager.InstantAudios.BAGOPEN);
         }
 
         if (enemyEngaged)
