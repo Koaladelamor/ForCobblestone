@@ -52,6 +52,8 @@ public class PawnController : MonoBehaviour
 
     protected bool alive;
 
+    private Vector3 archerDirection;
+
     protected virtual void Awake()
     {
         alive = true;
@@ -180,6 +182,11 @@ public class PawnController : MonoBehaviour
                     {
                         m_state = PAWN_STATUS.GET_PAWN;
                     }
+                    else 
+                    {
+                        combatManager.NextTurn();
+                        myTurn = false;
+                    } 
                     break;
 
                 case PAWN_STATUS.ATTACK:
@@ -322,9 +329,14 @@ public class PawnController : MonoBehaviour
             {
                 case PAWN_STATUS.IDLE:
 
-                    if (myTurn)
+                    if (myTurn && alive)
                     {
                         m_state = PAWN_STATUS.GET_PAWN;
+                    }
+                    else
+                    {
+                        combatManager.NextTurn();
+                        myTurn = false;
                     }
                     break;
                 case PAWN_STATUS.ATTACK:
@@ -353,6 +365,7 @@ public class PawnController : MonoBehaviour
                             {
                                 m_state = PAWN_STATUS.RETURN;
                                 gfxController.Move();
+                                break;
                             }
                             combatManager.NextTurn();
                             myTurn = false;
@@ -367,37 +380,72 @@ public class PawnController : MonoBehaviour
                         myTurn = false;
                         break;
                     }
-                    if (transform.position.x >= m_positionToGo.position.x)
+
+                    if (transform.position.y < m_positionToGo.position.y)
+                    {
+                        archerDirection = Vector3.up;
+                    }
+                    else
+                    {
+                        archerDirection = Vector3.down;
+                    }
+
+                    transform.position += archerDirection * speed * Time.deltaTime;
+
+                    if (archerDirection == Vector3.up && transform.position.y >= m_positionToGo.position.y)
                     {
                         transform.position = m_positionToGo.position;
                         positionReached = true;
-                        diagonalChecked = false;
+                        //Debug.Log("POSITION REACHED");
+                        m_state = PAWN_STATUS.ATTACK;
+                        break;
+                    }
+                    else if (archerDirection == Vector3.down && transform.position.y <= m_positionToGo.position.y)
+                    {
+                        transform.position = m_positionToGo.position;
+                        positionReached = true;
                         //Debug.Log("POSITION REACHED");
                         m_state = PAWN_STATUS.ATTACK;
                         break;
                     }
 
-                    if (straighMovement)
+                    break;
+                case PAWN_STATUS.RETURN:
+
+
+                    if (transform.position.y < m_initialPosition.y)
                     {
-                        transform.position += Vector3.right * speed * Time.deltaTime;
+                        archerDirection = Vector3.up;
                     }
                     else
                     {
-                        if (transform.position.y > m_positionToGo.position.y)
-                        {
-                            Vector3 movePos = Vector3.right + Vector3.down;
-                            movePos.Normalize();
-                            transform.position += movePos * speed * Time.deltaTime;
-                        }
-                        else
-                        {
-                            Vector3 movePos = Vector3.right + Vector3.up;
-                            movePos.Normalize();
-                            transform.position += movePos * speed * Time.deltaTime;
-                        }
+                        archerDirection = Vector3.down;
                     }
-                    break;
-                case PAWN_STATUS.RETURN:
+
+                    transform.position += speed * Time.deltaTime * archerDirection;
+
+                    if (archerDirection == Vector3.up && transform.position.y >= m_initialPosition.y)
+                    {
+                        transform.position = m_initialPosition;
+                        positionReached = true;
+                        //Debug.Log("POSITION REACHED");
+                        combatManager.NextTurn();
+                        myTurn = false;
+                        m_state = PAWN_STATUS.IDLE;
+                        gfxController.Idle();
+                        break;
+                    }
+                    else if (archerDirection == Vector3.down && transform.position.y <= m_initialPosition.y)
+                    {
+                        transform.position = m_initialPosition;
+                        positionReached = true;
+                        //Debug.Log("POSITION REACHED");
+                        combatManager.NextTurn();
+                        myTurn = false;
+                        m_state = PAWN_STATUS.IDLE;
+                        gfxController.Idle();
+                        break;
+                    }
                     break;
                 case PAWN_STATUS.GET_PAWN:
                     GetPawnToAttack();

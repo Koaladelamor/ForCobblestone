@@ -175,7 +175,7 @@ public class Audio_Manager : MonoBehaviour
     }
 
     public void PlayDeathSound(PawnController.CHARACTER ch) {
-        Debug.Log(ch.ToString());
+        //Debug.Log(ch.ToString());
         switch (ch)
         {
             case PawnController.CHARACTER.GRODNAR:
@@ -199,7 +199,7 @@ public class Audio_Manager : MonoBehaviour
     }
 
     public void PlayAttackSound(PawnController.CHARACTER ch) {
-        Debug.Log(ch.ToString());
+        //Debug.Log(ch.ToString());
         switch (ch)
         {
             case PawnController.CHARACTER.GRODNAR:
