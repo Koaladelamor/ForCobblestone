@@ -16,11 +16,9 @@ public class ChestControl : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
-
-                // GetItem();
                 ChestClosed.SetActive(false);
                 ChestOpen.SetActive(true);
-                
+                GameManager.Instance.OpenChestInventory();
             }
         }
     }

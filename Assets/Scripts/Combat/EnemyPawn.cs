@@ -110,7 +110,7 @@ public class EnemyPawn : PawnController
                             attackPerformed = false;
                             attackEnded = false;
                             m_state = PAWN_STATUS.RETURN;
-                            gameObject.transform.localScale = new Vector3(-1, 1, 1);
+                            //playersMesh[0].localScale = new Vector3(-10, 10, 1);
                         }
                     }
                     break;
@@ -125,7 +125,7 @@ public class EnemyPawn : PawnController
                         combatManager.NextTurn();
                         myTurn = false;
                         m_state = PAWN_STATUS.IDLE;
-                        gameObject.transform.localScale = new Vector3(1, 1, 1);
+                        //playersMesh[0].localScale = new Vector3(10, 10, 1);
                         break;
                     }
 

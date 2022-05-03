@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     public UserInterface m_SigfridEquipmentDisplay;
     public UserInterface m_currentEquipmentInterface;
     public UserInterface m_CombatLootDisplay;
+    public UserInterface m_ChestLootDisplay;
     public UserInterface m_TavernTradeDisplay;
 
     public StatsScreen m_statsScreen;
@@ -32,6 +33,7 @@ public class GameManager : MonoBehaviour
     public InventoryObject m_LanstarEquipmentInventory;
     public InventoryObject m_SigfridEquipmentInventory;
     public InventoryObject m_CombatLootInventory;
+    public InventoryObject m_ChestInventory;
     public InventoryObject m_TavernTradeInventory;
 
     private bool inventoryOnScreen = false;
@@ -129,17 +131,27 @@ public class GameManager : MonoBehaviour
 
         }
 
+        for (int i = 0; i < m_ChestInventory.GetSlots.Length; i++)
+        {
+            m_ChestInventory.GetSlots[i].OnBeforeUpdate += OnBeforeSlotUpdate;
+            m_ChestInventory.GetSlots[i].OnAfterUpdate += OnAfterSlotUpdate;
+
+        }
+
         addingItems = true;
         for (int i = 0; i < 20; i++)
         {
             m_TavernTradeInventory.AddItem(m_TavernTradeInventory.GenerateRandomItem(), 1, InventoryType.TRADE);
         }
 
+        GenerateRandomChest((int)Random.Range(1, 21));
+
         addingItems = false;
 
         confirmTradeButton.gameObject.SetActive(false);
         tradeBalance = 0;
         m_TavernTradeDisplay.HideInventory();
+        m_ChestLootDisplay.HideInventory();
         m_canvasPause.SetActive(false);
         gameIsPaused = false;
         Invoke("HideInventories", 0.02f);       
@@ -505,6 +517,7 @@ public class GameManager : MonoBehaviour
         m_SigfridEquipmentInventory.Clear();
         m_CombatLootInventory.Clear();
         m_TavernTradeInventory.Clear();
+        m_ChestInventory.Clear();
     }
 
 
@@ -618,6 +631,14 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void GenerateRandomChest(int itemsToAdd)
+    {
+        for (int i = 0; i < itemsToAdd; i++)
+        {
+            m_ChestInventory.AddItem(m_CombatLootInventory.GenerateRandomItem(), 1, InventoryType.CHEST);
+        }
+    }
+
     public void DisplayLoot() {
         m_CombatLootDisplay.ShowInventory();
         m_inventoryDisplay.ShowInventory();
@@ -674,4 +695,13 @@ public class GameManager : MonoBehaviour
     public void SetCurrentEnemyID(int ID) { currentEnemyID = ID; }
 
     public GameObject GetSpiderPrefab() { return m_spiderPrefab; }
+
+    public void OpenChestInventory() {
+        m_ChestLootDisplay.ShowInventory();
+    }
+
+    public void CloseChestInventory()
+    {
+        m_ChestLootDisplay.HideInventory();
+    }
 }

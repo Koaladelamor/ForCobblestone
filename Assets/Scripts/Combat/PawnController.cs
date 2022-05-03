@@ -54,6 +54,8 @@ public class PawnController : MonoBehaviour
 
     private Vector3 archerDirection;
 
+    public Transform[] playersMesh;
+
     protected virtual void Awake()
     {
         alive = true;
@@ -213,7 +215,10 @@ public class PawnController : MonoBehaviour
                             attackEnded = false;
                             m_state = PAWN_STATUS.RETURN;
                             gfxController.Move();
-                            gameObject.transform.localScale = new Vector3(-1, 1, 1);
+                            for (int i = 0; i < playersMesh.Length; i++)
+                            {
+                                playersMesh[i].localScale = new Vector3(-1, 1, 1);
+                            }
                         }
                     }
                     break;
@@ -228,7 +233,10 @@ public class PawnController : MonoBehaviour
                         myTurn = false;
                         m_state = PAWN_STATUS.IDLE;
                         gfxController.Idle();
-                        gameObject.transform.localScale = new Vector3(1, 1, 1);
+                        for (int i = 0; i < playersMesh.Length; i++)
+                        {
+                            playersMesh[i].localScale = new Vector3(1, 1, 1);
+                        }
                         break;
                     }
 

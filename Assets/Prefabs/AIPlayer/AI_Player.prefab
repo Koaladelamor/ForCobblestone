@@ -413,6 +413,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   character: 3
   m_type: 1
+  playersMesh:
+  - {fileID: 7366527345678478061}
+  - {fileID: 3619236468449450932}
+  - {fileID: 3635966325953454504}
 --- !u!50 &3635966324230708172
 Rigidbody2D:
   serializedVersion: 4

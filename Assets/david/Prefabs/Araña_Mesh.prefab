@@ -81,6 +81,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   character: 3
   m_type: 1
+  playersMesh:
+  - {fileID: 5690949739423482971}
 --- !u!1001 &6398356399777539832
 PrefabInstance:
   m_ObjectHideFlags: 0
