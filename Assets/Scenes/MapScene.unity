@@ -670,7 +670,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 13.582006, y: -28.187988}
+  m_AnchoredPosition: {x: 4.899994, y: -28.187988}
   m_SizeDelta: {x: -200.66399, y: -247.97641}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &118513222
@@ -700,7 +700,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 1
     m_MaxSize: 40
-    m_Alignment: 3
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -893,7 +893,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 10.126526, y: 11.000002}
+  m_AnchoredPosition: {x: 2.100006, y: 11}
   m_SizeDelta: {x: -200.66399, y: -247.97641}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &190195273
@@ -923,7 +923,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 1
     m_MaxSize: 40
-    m_Alignment: 3
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -1188,7 +1188,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 41.099854, y: 93.6}
+  m_AnchoredPosition: {x: 8.3, y: 93.6}
   m_SizeDelta: {x: -200.664, y: -247.97641}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &205617582
@@ -1218,7 +1218,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 1
     m_MaxSize: 40
-    m_Alignment: 3
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -3307,7 +3307,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 10.126648, y: -68.2}
+  m_AnchoredPosition: {x: 3.899994, y: -68.19998}
   m_SizeDelta: {x: -200.66399, y: -247.97641}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &464724633
@@ -3337,7 +3337,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 1
     m_MaxSize: 40
-    m_Alignment: 3
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -6744,7 +6744,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 1
     m_MaxSize: 40
-    m_Alignment: 3
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
