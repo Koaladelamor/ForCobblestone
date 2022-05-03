@@ -215,6 +215,46 @@ public class GameStats : MonoBehaviour
         return false;
     }
 
+    public void HealCharacters() {
+        int GrodnarMaxHP = 0;
+        int LanstarMaxHP = 0;
+        int SigfridMaxHP = 0;
+        for (int i = 0; i < Grodnar._stats.Count; i++)
+        {
+            if (Grodnar._stats[i].attribute == Attributes.MAX_HEALTH) {
+                GrodnarMaxHP = Grodnar._stats[i].value;            
+            }
+            if (Grodnar._stats[i].attribute == Attributes.CURR_HEALTH)
+            {
+                Grodnar._stats[i].value = GrodnarMaxHP;
+            }
+        }
+
+        for (int i = 0; i < Lanstar._stats.Count; i++)
+        {
+            if (Lanstar._stats[i].attribute == Attributes.MAX_HEALTH)
+            {
+                LanstarMaxHP = Lanstar._stats[i].value;
+            }
+            if (Lanstar._stats[i].attribute == Attributes.CURR_HEALTH)
+            {
+                Lanstar._stats[i].value = LanstarMaxHP;
+            }
+        }
+
+        for (int i = 0; i < Sigfrid._stats.Count; i++)
+        {
+            if (Sigfrid._stats[i].attribute == Attributes.MAX_HEALTH)
+            {
+                SigfridMaxHP = Sigfrid._stats[i].value;
+            }
+            if (Sigfrid._stats[i].attribute == Attributes.CURR_HEALTH)
+            {
+                Sigfrid._stats[i].value = SigfridMaxHP;
+            }
+        }
+    }
+
     public int GetCoins() { return coins; }
 
     public void SetCoins(int newAmount) { coins = newAmount; }

@@ -9,16 +9,25 @@ public class ChestControl : MonoBehaviour
     public GameObject ChestClosed;
     public GameObject E_;
     public bool Chest;
-   
+    private bool itemsPicked;
+
+    private void Start()
+    {
+        itemsPicked = false;
+    }
+
     void Update()
     {
         if (Chest==true)
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKeyDown(KeyCode.E) && !itemsPicked)
             {
+                GameManager.Instance.GenerateRandomChest((int)Random.Range(1, 16));
                 ChestClosed.SetActive(false);
                 ChestOpen.SetActive(true);
                 GameManager.Instance.OpenChestInventory();
+                GameManager.Instance.OpenMainInventory();
+                itemsPicked = true;
             }
         }
     }

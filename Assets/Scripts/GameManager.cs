@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviour
 
     public Button[] equipmentButtons;
     public Button confirmLootButton;
+    public Button confirmChestButton;
     public Button confirmTradeButton;
 
     public GameObject m_spiderPrefab;
@@ -99,6 +100,7 @@ public class GameManager : MonoBehaviour
         m_currentEquipmentInterface = m_GrodnarEquipmentDisplay;
 
         DisableCombatCanvas();
+        ClearInventories();
 
         for (int i = 0; i < m_GrodnarEquipmentInventory.GetSlots.Length; i++)
         {
@@ -144,17 +146,20 @@ public class GameManager : MonoBehaviour
             m_TavernTradeInventory.AddItem(m_TavernTradeInventory.GenerateRandomItem(), 1, InventoryType.TRADE);
         }
 
-        GenerateRandomChest((int)Random.Range(1, 21));
+        /*for (int i = 0; i < 7; i++)
+        {
+            m_ChestInventory.AddItem(m_ChestInventory.GenerateRandomItem(), 1, InventoryType.CHEST);
+        }*/
+        //GenerateRandomChest((int)Random.Range(1, 16));
 
         addingItems = false;
 
         confirmTradeButton.gameObject.SetActive(false);
         tradeBalance = 0;
         m_TavernTradeDisplay.HideInventory();
-        m_ChestLootDisplay.HideInventory();
         m_canvasPause.SetActive(false);
         gameIsPaused = false;
-        Invoke("HideInventories", 0.02f);       
+        Invoke("HideInventories", 0.2f);       
         SceneManager.sceneLoaded += OnSceneLoaded;
         
     }
@@ -422,9 +427,12 @@ public class GameManager : MonoBehaviour
         m_SigfridEquipmentDisplay.gameObject.SetActive(false);
         m_CombatLootDisplay.HideInventory();
         confirmLootButton.gameObject.SetActive(false);
+        confirmChestButton.gameObject.SetActive(false);
         m_inventoryDisplay.HideInventory();
         m_statsScreen.DisableStatButtons();
         m_statsScreen.HideDisplay();
+        m_ChestLootDisplay.HideInventory();
+        
         inventoryOnScreen = false;
 
         audioManager.PlayInstant(Audio_Manager.InstantAudios.BAGCLOSE);
@@ -511,6 +519,16 @@ public class GameManager : MonoBehaviour
     }
     private void OnApplicationQuit()
     {
+        m_inventory.Clear();
+        m_GrodnarEquipmentInventory.Clear();
+        m_LanstarEquipmentInventory.Clear();
+        m_SigfridEquipmentInventory.Clear();
+        m_CombatLootInventory.Clear();
+        m_TavernTradeInventory.Clear();
+        m_ChestInventory.Clear();
+    }
+
+    private void ClearInventories() {
         m_inventory.Clear();
         m_GrodnarEquipmentInventory.Clear();
         m_LanstarEquipmentInventory.Clear();
@@ -635,7 +653,7 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i < itemsToAdd; i++)
         {
-            m_ChestInventory.AddItem(m_CombatLootInventory.GenerateRandomItem(), 1, InventoryType.CHEST);
+            m_ChestInventory.AddItem(m_ChestInventory.GenerateRandomItem(), 1, InventoryType.CHEST);
         }
     }
 
@@ -650,6 +668,14 @@ public class GameManager : MonoBehaviour
         m_inventoryDisplay.HideInventory();
         m_CombatLootInventory.Clear();
         confirmLootButton.gameObject.SetActive(false);
+    }
+
+    public void ConfirmChestLoot()
+    {
+        m_ChestLootDisplay.HideInventory();
+        m_inventoryDisplay.HideInventory();
+        m_ChestInventory.Clear();
+        confirmChestButton.gameObject.SetActive(false);
     }
 
     public void ConfirmTrade() {
@@ -698,10 +724,22 @@ public class GameManager : MonoBehaviour
 
     public void OpenChestInventory() {
         m_ChestLootDisplay.ShowInventory();
+        confirmChestButton.gameObject.SetActive(true);
     }
 
     public void CloseChestInventory()
     {
         m_ChestLootDisplay.HideInventory();
     }
+
+    public void OpenMainInventory() {
+        m_inventoryDisplay.ShowInventory();
+    }
+
+    public void CloseMainInventory()
+    {
+        m_inventoryDisplay.HideInventory();
+    }
+
+
 }
