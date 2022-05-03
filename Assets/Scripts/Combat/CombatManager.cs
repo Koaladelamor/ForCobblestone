@@ -66,10 +66,10 @@ public class CombatManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.O)) {
             Invoke("SetCanvasActive", 1f);
         }
-        /*if (EnemiesDefeated())
+        if (EnemiesDefeated())
         {
             Invoke("SetCanvasActive", 1f);
-        }*/
+        }
 
         if (startCombat && !turnSet) {
 

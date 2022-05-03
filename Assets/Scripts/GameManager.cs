@@ -243,7 +243,7 @@ public class GameManager : MonoBehaviour
         {
             LoadMapScene();
 
-            GenerateRandomLoot((int)Random.Range(1, 21));
+            GenerateRandomLoot((int)Random.Range(1, 6));
             GameStats.Instance.AddCoins(500);
             GameStats.Instance.AddXpToGrodnar(800f);
             GameStats.Instance.AddXpToLanstar(800f);

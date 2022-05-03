@@ -25,9 +25,9 @@ MonoBehaviour:
       value: 0
       min: 1
       max: 10
-    - attribute: 1
+    - attribute: 3
       value: 0
       min: 1
-      max: 8
+      max: 10
     Holder: 7
     PreviousHolder: 7

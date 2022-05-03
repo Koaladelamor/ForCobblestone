@@ -213,6 +213,7 @@ public class PawnController : MonoBehaviour
                             attackEnded = false;
                             m_state = PAWN_STATUS.RETURN;
                             gfxController.Move();
+                            gameObject.transform.localScale = new Vector3(-1, 1, 1);
                         }
                     }
                     break;
@@ -227,6 +228,7 @@ public class PawnController : MonoBehaviour
                         myTurn = false;
                         m_state = PAWN_STATUS.IDLE;
                         gfxController.Idle();
+                        gameObject.transform.localScale = new Vector3(1, 1, 1);
                         break;
                     }
 

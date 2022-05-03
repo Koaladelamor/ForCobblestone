@@ -16,16 +16,19 @@ public class PlayerController : MonoBehaviour
     Vector2 currentPosition;
 
     public GFX_MapParty gfxController;
-    private SpriteRenderer[] sprites;
+
+    private bool partyFacingRight;
+    private bool partyFacingLeft;
 
     // Start is called before the first frame update
     void Start()
     {
+        partyFacingRight = true;
+        partyFacingLeft = false;
         movementAnimSet = false;
         m_gameManager = GameObject.FindGameObjectWithTag("GameManager");
         m_pointToGo = GameObject.FindGameObjectWithTag("PointToGo");
         engaged = false;
-        sprites = GetComponentsInChildren<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -35,7 +38,7 @@ public class PlayerController : MonoBehaviour
         previousPosition = currentPosition;
         currentPosition = transform.position;
         SetWalkingAnimation();
-        //FlipSprites();
+        FlipSprites();
 
         if (Input.GetKeyDown(KeyCode.E)) {
             GameManager.Instance.SetAddingItemsBool(true);
@@ -103,16 +106,17 @@ public class PlayerController : MonoBehaviour
     }
 
     public void FlipSprites() {
-        if (currentPosition.x > previousPosition.x) {
-            for (int i = 0; i < sprites.Length; i++) {
-                sprites[i].flipX = false;
-            }
+        if (currentPosition.x > previousPosition.x && !partyFacingRight) 
+        {
+            transform.localScale = new Vector3(1, 1, 1);
+            partyFacingRight = true;
+            partyFacingLeft = false;
         }
-        else if(currentPosition.x < previousPosition.x) {
-            for (int i = 0; i < sprites.Length; i++)
-            {
-                sprites[i].flipX = true;
-            }
+        else if(currentPosition.x < previousPosition.x && !partyFacingLeft) 
+        {
+            transform.localScale = new Vector3(-1, 1, 1);
+            partyFacingRight = false;
+            partyFacingLeft = true;
         }
     }
 

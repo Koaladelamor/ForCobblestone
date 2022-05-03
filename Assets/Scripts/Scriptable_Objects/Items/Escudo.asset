@@ -21,11 +21,11 @@ MonoBehaviour:
     Name: Escudo
     ID: 6
     Buffs:
-    - attribute: 3
+    - attribute: 1
       value: 0
       min: 1
-      max: 5
-    - attribute: 0
+      max: 10
+    - attribute: 4
       value: 0
       min: 1
       max: 10
