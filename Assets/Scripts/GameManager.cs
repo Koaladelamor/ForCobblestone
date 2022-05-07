@@ -15,8 +15,6 @@ public class GameManager : MonoBehaviour
         private set { }
     }
 
-    public Audio_Manager audioManager;
-
     public UserInterface m_inventoryDisplay;
     public UserInterface m_GrodnarEquipmentDisplay;
     public UserInterface m_LanstarEquipmentDisplay;
