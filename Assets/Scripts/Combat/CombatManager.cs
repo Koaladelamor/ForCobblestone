@@ -65,11 +65,11 @@ public class CombatManager : MonoBehaviour
     {
 
         if (Input.GetKeyDown(KeyCode.O)) {
-            Invoke("SetCanvasActive", 1f);
+            Invoke("SetCanvasActive", 0.5f);
         }
         if (EnemiesDefeated())
         {
-            Invoke("SetCanvasActive", 1f);
+            Invoke("SetCanvasActive", 2f);
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
@@ -123,11 +123,17 @@ public class CombatManager : MonoBehaviour
     private void CalculatePlayersTurn() {
 
         int[] pawnsAgility = new int[m_players_temp.Length];
-
+        PawnController pawnController;
         for (int i = 0; i < m_players_temp.Length; i++)
         {
-            pawnsAgility[i] = m_players_temp[i].GetComponent<PawnController>().GetAgility();
+            pawnController = m_players_temp[i].GetComponent<PawnController>();
+            if (pawnController == null) {
+                Debug.Log("ERROR PLAYER NULL");
+            }
+            pawnsAgility[i] = pawnController.GetAgility();
+            Debug.Log(pawnsAgility[i]);
         }
+
 
         //1st Turn
         if (pawnsAgility[0] > pawnsAgility[1] && pawnsAgility[0] > pawnsAgility[1])

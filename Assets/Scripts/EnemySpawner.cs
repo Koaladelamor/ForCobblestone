@@ -7,11 +7,6 @@ public class EnemySpawner : MonoBehaviour
     private GameObject enemyOnSpawn;
     private int spawnerID;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
 
     // Update is called once per frame
     void Update()
@@ -23,7 +18,6 @@ public class EnemySpawner : MonoBehaviour
                 Destroy(GetPatrolAI().patrolPoints[i]);
             }
             Destroy(enemyOnSpawn);
-            enemyOnSpawn = null;
         }
     }
 
@@ -33,6 +27,7 @@ public class EnemySpawner : MonoBehaviour
             RespawnEnemy(GameManager.Instance.GetSpiderPrefab(), transform.position, spawnerID);
         }
     }
+
     public GameObject RespawnEnemy(GameObject prefab, Vector3 enemySpawnPos, int ID)
     {
 

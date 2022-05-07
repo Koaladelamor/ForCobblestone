@@ -37,16 +37,17 @@ public class Audio_Manager : MonoBehaviour
     [SerializeField] private AudioClip LanstarDeathSound;
     [SerializeField] private AudioClip BellSound;
 
-
-
     [SerializeField] private AudioClip enemyHurt;
     [SerializeField] private AudioClip playerHurt;
 
     [SerializeField] private AudioClip lifeSound;
 
-    //AudioClip[] 
+    public enum AudioEffects { NONE, SELECT, PRESSED, LIFESOUND };
 
-    //Hacer enum de audio sources
+    public enum InstantAudios { NONE, ENEMYHURT, PLAYERHURT, BAGCLOSE, BAGOPEN, ARROWFLESH, ONGUARD, BIRD, CHESTOPEN, COIN, DRAMATICBIRD, OWL, WOLFHOWL, SWORDFLESH, SWORDOBJECT, SWORDMETAL, GRODNARDEATH, SIGFRIDDEATH, LANSTARDEATH, BELLSOUND };
+
+    private AudioEffects audioEffects;
+    private InstantAudios instantAudios;
 
     private void Awake()
     {
@@ -63,10 +64,6 @@ public class Audio_Manager : MonoBehaviour
         }
 
     }
-
-    public enum AudioEffects { NONE, SELECT, PRESSED, LIFESOUND };
-
-    public enum InstantAudios { NONE, ENEMYHURT, PLAYERHURT, BAGCLOSE, BAGOPEN, ARROWFLESH, ONGUARD, BIRD, CHESTOPEN, COIN, DRAMATICBIRD, OWL, WOLFHOWL, SWORDFLESH,SWORDOBJECT, SWORDMETAL, GRODNARDEATH, SIGFRIDDEATH, LANSTARDEATH, BELLSOUND };
 
     //*****************************************
     public void PlayOnce(AudioEffects effect) {
@@ -94,10 +91,11 @@ public class Audio_Manager : MonoBehaviour
 
     }
 
-    public void PlayInstant(InstantAudios effect) 
+    //public InstantAudios GetInstantAudio(InstantAudi)
+    public void PlayInstant(InstantAudios instantAudio) 
     {
-
-        switch (effect)
+        instantAudios = instantAudio;
+        switch (instantAudios)
         {
             case InstantAudios.NONE:
                 break;
@@ -215,6 +213,56 @@ public class Audio_Manager : MonoBehaviour
                 PlayInstant(InstantAudios.ARROWFLESH);
                 break;
             case PawnController.CHARACTER.LAST_NO_USE:
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void GetInstantAudio(InstantAudios instantAudio) 
+    {
+
+        switch (instantAudio)
+        {
+            case InstantAudios.NONE:
+                break;
+            case InstantAudios.ENEMYHURT:
+                break;
+            case InstantAudios.PLAYERHURT:
+                break;
+            case InstantAudios.BAGCLOSE:
+                break;
+            case InstantAudios.BAGOPEN:
+                break;
+            case InstantAudios.ARROWFLESH:
+                break;
+            case InstantAudios.ONGUARD:
+                break;
+            case InstantAudios.BIRD:
+                break;
+            case InstantAudios.CHESTOPEN:
+                break;
+            case InstantAudios.COIN:
+                break;
+            case InstantAudios.DRAMATICBIRD:
+                break;
+            case InstantAudios.OWL:
+                break;
+            case InstantAudios.WOLFHOWL:
+                break;
+            case InstantAudios.SWORDFLESH:
+                break;
+            case InstantAudios.SWORDOBJECT:
+                break;
+            case InstantAudios.SWORDMETAL:
+                break;
+            case InstantAudios.GRODNARDEATH:
+                break;
+            case InstantAudios.SIGFRIDDEATH:
+                break;
+            case InstantAudios.LANSTARDEATH:
+                break;
+            case InstantAudios.BELLSOUND:
                 break;
             default:
                 break;

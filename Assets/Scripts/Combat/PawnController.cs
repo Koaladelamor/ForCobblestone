@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum PAWN_STATUS { IDLE, ATTACK, MOVE, RETURN, GET_PAWN }
+public enum PAWN_STATUS { IDLE, ATTACK, MOVE, RETURN, GET_PAWN, SEARCH }
 public enum PAWN_TYPE { RANGED, MELEE, TANK }
 
 public class PawnController : MonoBehaviour
@@ -53,6 +53,7 @@ public class PawnController : MonoBehaviour
     protected bool alive;
 
     private Vector3 archerDirection;
+    private Vector3 repositionDirection;
 
     public Transform[] playersMesh;
 
@@ -319,9 +320,10 @@ public class PawnController : MonoBehaviour
                     GetPawnToAttack();
                     if (m_positionToGo == null)
                     {
-                        m_state = PAWN_STATUS.IDLE;
-                        combatManager.NextTurn();
-                        myTurn = false;
+                        PawnReposition();
+                        m_state = PAWN_STATUS.SEARCH;
+                        /*combatManager.NextTurn();
+                        myTurn = false;*/
                         break;
                     }
                     m_initialPosition = transform.position;
@@ -330,6 +332,46 @@ public class PawnController : MonoBehaviour
 
                     break;
 
+                case PAWN_STATUS.SEARCH:
+                    if (m_positionToGo == null)
+                    {
+                        m_state = PAWN_STATUS.IDLE;
+                        combatManager.NextTurn();
+                        myTurn = false;
+                        break;
+                    }
+
+                    if (transform.position.y < m_positionToGo.position.y)
+                    {
+                        repositionDirection = Vector3.up;
+                    }
+                    else
+                    {
+                        repositionDirection = Vector3.down;
+                    }
+
+                    transform.position += repositionDirection * speed * Time.deltaTime;
+
+                    if (repositionDirection == Vector3.up && transform.position.y >= m_positionToGo.position.y)
+                    {
+                        transform.position = m_positionToGo.position;
+                        positionReached = true;
+                        m_state = PAWN_STATUS.IDLE;
+                        combatManager.NextTurn();
+                        myTurn = false;
+                        break;
+                    }
+                    else if (repositionDirection == Vector3.down && transform.position.y <= m_positionToGo.position.y)
+                    {
+                        transform.position = m_positionToGo.position;
+                        positionReached = true;
+                        m_state = PAWN_STATUS.IDLE;
+                        combatManager.NextTurn();
+                        myTurn = false;
+                        break;
+                    }
+
+                    break;
             }
         }
         else if (myTurn && character == CHARACTER.LANSTAR) 
@@ -823,6 +865,43 @@ public class PawnController : MonoBehaviour
         }
     }
 
+    public void PawnReposition() 
+    {
+        Vector2 currentTilePosition = GridManager.Instance.ScreenToTilePosition(Camera.main.WorldToScreenPoint(GetCurrentTile().transform.position));
+
+        if (currentTilePosition.y < 2)
+        {
+
+            if (!GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(0, 1)) && !GridManager.Instance.OutOfGrid(currentTilePosition + new Vector2(0, 1)))
+            {
+                m_positionToGo = GridManager.Instance.GetTile(currentTilePosition + new Vector2(0, 1)).transform;
+            }
+            else if (!GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(0, 2)) && !GridManager.Instance.OutOfGrid(currentTilePosition + new Vector2(0, 2)))
+            {
+                m_positionToGo = GridManager.Instance.GetTile(currentTilePosition + new Vector2(0, 2)).transform;
+            }
+            else if (!GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(0, 3)) && !GridManager.Instance.OutOfGrid(currentTilePosition + new Vector2(0, 3)))
+            {
+                m_positionToGo = GridManager.Instance.GetTile(currentTilePosition + new Vector2(0, 3)).transform;
+            }
+        }
+        else 
+        {
+            if (!GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(0, -1)) && !GridManager.Instance.OutOfGrid(currentTilePosition + new Vector2(0, -1)))
+            {
+                m_positionToGo = GridManager.Instance.GetTile(currentTilePosition + new Vector2(0, -1)).transform;
+            }
+            else if (!GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(0, -2)) && !GridManager.Instance.OutOfGrid(currentTilePosition + new Vector2(0, -2)))
+            {
+                m_positionToGo = GridManager.Instance.GetTile(currentTilePosition + new Vector2(0, -2)).transform;
+            }
+            else if (!GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(0, -3)) && !GridManager.Instance.OutOfGrid(currentTilePosition + new Vector2(0, -3)))
+            {
+                m_positionToGo = GridManager.Instance.GetTile(currentTilePosition + new Vector2(0, -3)).transform;
+            }
+        }
+
+    }
     public void TakeDamage(int damage) {
         cur_hp -= damage;
     }

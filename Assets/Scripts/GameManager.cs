@@ -67,8 +67,10 @@ public class GameManager : MonoBehaviour
     public GameObject canvasMenu;
     public bool isMenuOnScreen;
 
+
     private void Awake()
     {
+
         //Singleton
         if (mInstance == null)
         {
@@ -435,8 +437,6 @@ public class GameManager : MonoBehaviour
         
         inventoryOnScreen = false;
 
-        audioManager.PlayInstant(Audio_Manager.InstantAudios.BAGCLOSE);
-
         if (GameStats.Instance.GetGrodnar()._attribute_points == 0 && GameStats.Instance.GetLanstar()._attribute_points == 0 && GameStats.Instance.GetSigfrid()._attribute_points == 0)
         {
             SetLvlUpWarning(false);
@@ -455,8 +455,6 @@ public class GameManager : MonoBehaviour
         m_inventoryDisplay.ShowInventory();
         m_statsScreen.ShowDisplay();
         inventoryOnScreen = true;
-
-        audioManager.PlayInstant(Audio_Manager.InstantAudios.BAGOPEN);
     }
 
     public void GrodnarEquipmentDisplay() {
@@ -558,7 +556,6 @@ public class GameManager : MonoBehaviour
             obj.SetActive(false);
         }
         SceneManager.LoadSceneAsync("CombatScene", LoadSceneMode.Additive);
-        SceneManager.SetActiveScene(SceneManager.GetSceneByName("CombatScene"));
     }
 
     public void LoadMapScene()
@@ -598,7 +595,7 @@ public class GameManager : MonoBehaviour
     public void EnableCombatCanvas()
     {
         m_canvasToCombat.SetActive(true);
-        audioManager.PlayInstant(Audio_Manager.InstantAudios.ONGUARD);
+        //Audio_Manager.Instance.PlayInstant(Audio_Manager.InstantAudios.BELLSOUND);
     }
 
     public UserInterface GetCurrentEquipmentInterface() { return m_currentEquipmentInterface; }
@@ -697,7 +694,17 @@ public class GameManager : MonoBehaviour
         confirmTradeButton.gameObject.SetActive(true);
         m_canvasTavern.SetActive(false);
     }
-
+    private void OnDestroy()
+    {
+        foreach (EnemySpawner spawner in enemySpawners)
+        {
+            if (spawner != null)
+            {
+                Destroy(spawner.GetEnemy());
+                Destroy(spawner.gameObject);
+            }
+        }
+    }
     public void TradingModeOFF()
     {
         m_inventoryDisplay.HideInventory();
