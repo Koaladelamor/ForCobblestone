@@ -116,6 +116,9 @@ public class CombatManager : MonoBehaviour
                 case 6:
                     turn = 0;
                     break;
+                case 7:
+                    turn = 0;
+                    break;
             }
         }
     }

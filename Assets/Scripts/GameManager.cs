@@ -84,7 +84,8 @@ public class GameManager : MonoBehaviour
         combatIsOver = false;
         enemyEngaged = false;
         currentEnemyID = -1;
-
+        gameIsPaused = false;
+        tradeBalance = 0;
     }
 
     // Start is called before the first frame update
@@ -97,10 +98,8 @@ public class GameManager : MonoBehaviour
             enemySpawners[i].RespawnEnemy(m_spiderPrefab, enemySpawners[i].transform.position, i);
         }
 
-        m_currentEquipmentInterface = m_GrodnarEquipmentDisplay;
-
-        DisableCombatCanvas();
         ClearInventories();
+        m_currentEquipmentInterface = m_GrodnarEquipmentDisplay;
 
         for (int i = 0; i < m_GrodnarEquipmentInventory.GetSlots.Length; i++)
         {
@@ -140,11 +139,12 @@ public class GameManager : MonoBehaviour
 
         }
 
-        addingItems = true;
-        for (int i = 0; i < 20; i++)
-        {
-            m_TavernTradeInventory.AddItem(m_TavernTradeInventory.GenerateRandomItem(), 1, InventoryType.TRADE);
-        }
+        Invoke("HideInventories", 0.1f);
+        Invoke("InitTavernLoot", 0.12f);
+        m_canvasPause.SetActive(false);
+        DisableCombatCanvas();
+
+        SceneManager.sceneLoaded += OnSceneLoaded;
 
         /*for (int i = 0; i < 7; i++)
         {
@@ -152,19 +152,8 @@ public class GameManager : MonoBehaviour
         }*/
         //GenerateRandomChest((int)Random.Range(1, 16));
 
-        addingItems = false;
-
-        confirmTradeButton.gameObject.SetActive(false);
-        tradeBalance = 0;
-        m_TavernTradeDisplay.HideInventory();
-        m_canvasPause.SetActive(false);
-        gameIsPaused = false;
-        Invoke("HideInventories", 0.2f);       
-        SceneManager.sceneLoaded += OnSceneLoaded;
-        
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (InputManager.Instance.PauseButtonPressed && !gameIsPaused)
@@ -497,6 +486,17 @@ public class GameManager : MonoBehaviour
         m_currentEquipmentInterface.gameObject.SetActive(true);
         if (GameStats.Instance.GetSigfrid()._attribute_points > 0) { m_statsScreen.EnableStatButtons(); }
         else m_statsScreen.DisableStatButtons();
+    }
+
+    public void InitTavernLoot() {
+        addingItems = true;
+        for (int i = 0; i < 20; i++)
+        {
+            m_TavernTradeInventory.AddItem(m_TavernTradeInventory.GenerateRandomItem(), 1, InventoryType.TRADE);
+        }
+        addingItems = false;
+        m_TavernTradeDisplay.HideInventory();
+        confirmTradeButton.gameObject.SetActive(false);
     }
 
     public void HideButtons() {

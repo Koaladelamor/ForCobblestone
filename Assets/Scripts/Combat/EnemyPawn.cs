@@ -76,9 +76,14 @@ public class EnemyPawn : PawnController
                     break;
 
                 case PAWN_STATUS.IDLE:
-                    if (myTurn)
+                    if (myTurn && alive)
                     {
                         m_state = PAWN_STATUS.GET_PAWN;
+                    }
+                    else if (myTurn && !alive)
+                    {
+                        combatManager.NextTurn();
+                        myTurn = false;
                     }
                     break;
 

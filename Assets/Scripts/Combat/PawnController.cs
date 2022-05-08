@@ -185,7 +185,7 @@ public class PawnController : MonoBehaviour
                     {
                         m_state = PAWN_STATUS.GET_PAWN;
                     }
-                    else 
+                    else if (myTurn && !alive)
                     {
                         combatManager.NextTurn();
                         myTurn = false;
@@ -354,8 +354,8 @@ public class PawnController : MonoBehaviour
 
                     if (repositionDirection == Vector3.up && transform.position.y >= m_positionToGo.position.y)
                     {
-                        transform.position = m_positionToGo.position;
-                        positionReached = true;
+                        Vector2 repositionTile = GridManager.Instance.ScreenToTilePosition(Camera.main.WorldToScreenPoint(transform.position));
+                        GridManager.Instance.AssignPawnToTile(this.gameObject, repositionTile);
                         m_state = PAWN_STATUS.IDLE;
                         combatManager.NextTurn();
                         myTurn = false;
@@ -363,8 +363,8 @@ public class PawnController : MonoBehaviour
                     }
                     else if (repositionDirection == Vector3.down && transform.position.y <= m_positionToGo.position.y)
                     {
-                        transform.position = m_positionToGo.position;
-                        positionReached = true;
+                        Vector2 repositionTile = GridManager.Instance.ScreenToTilePosition(Camera.main.WorldToScreenPoint(transform.position));
+                        GridManager.Instance.AssignPawnToTile(this.gameObject, repositionTile);
                         m_state = PAWN_STATUS.IDLE;
                         combatManager.NextTurn();
                         myTurn = false;
@@ -385,7 +385,7 @@ public class PawnController : MonoBehaviour
                     {
                         m_state = PAWN_STATUS.GET_PAWN;
                     }
-                    else
+                    else if (myTurn && !alive)
                     {
                         combatManager.NextTurn();
                         myTurn = false;
@@ -868,34 +868,35 @@ public class PawnController : MonoBehaviour
     public void PawnReposition() 
     {
         Vector2 currentTilePosition = GridManager.Instance.ScreenToTilePosition(Camera.main.WorldToScreenPoint(GetCurrentTile().transform.position));
+        GridManager.Instance.TakePawnFromTile(currentTilePosition);
 
         if (currentTilePosition.y < 2)
         {
 
-            if (!GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(0, 1)) && !GridManager.Instance.OutOfGrid(currentTilePosition + new Vector2(0, 1)))
+            if (GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(0, 1)) && !GridManager.Instance.OutOfGrid(currentTilePosition + new Vector2(0, 1)))
             {
                 m_positionToGo = GridManager.Instance.GetTile(currentTilePosition + new Vector2(0, 1)).transform;
             }
-            else if (!GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(0, 2)) && !GridManager.Instance.OutOfGrid(currentTilePosition + new Vector2(0, 2)))
+            else if (GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(0, 2)) && !GridManager.Instance.OutOfGrid(currentTilePosition + new Vector2(0, 2)))
             {
                 m_positionToGo = GridManager.Instance.GetTile(currentTilePosition + new Vector2(0, 2)).transform;
             }
-            else if (!GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(0, 3)) && !GridManager.Instance.OutOfGrid(currentTilePosition + new Vector2(0, 3)))
+            else if (GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(0, 3)) && !GridManager.Instance.OutOfGrid(currentTilePosition + new Vector2(0, 3)))
             {
                 m_positionToGo = GridManager.Instance.GetTile(currentTilePosition + new Vector2(0, 3)).transform;
             }
         }
         else 
         {
-            if (!GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(0, -1)) && !GridManager.Instance.OutOfGrid(currentTilePosition + new Vector2(0, -1)))
+            if (GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(0, -1)) && !GridManager.Instance.OutOfGrid(currentTilePosition + new Vector2(0, -1)))
             {
                 m_positionToGo = GridManager.Instance.GetTile(currentTilePosition + new Vector2(0, -1)).transform;
             }
-            else if (!GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(0, -2)) && !GridManager.Instance.OutOfGrid(currentTilePosition + new Vector2(0, -2)))
+            else if (GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(0, -2)) && !GridManager.Instance.OutOfGrid(currentTilePosition + new Vector2(0, -2)))
             {
                 m_positionToGo = GridManager.Instance.GetTile(currentTilePosition + new Vector2(0, -2)).transform;
             }
-            else if (!GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(0, -3)) && !GridManager.Instance.OutOfGrid(currentTilePosition + new Vector2(0, -3)))
+            else if (GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(0, -3)) && !GridManager.Instance.OutOfGrid(currentTilePosition + new Vector2(0, -3)))
             {
                 m_positionToGo = GridManager.Instance.GetTile(currentTilePosition + new Vector2(0, -3)).transform;
             }
