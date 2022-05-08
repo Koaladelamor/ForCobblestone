@@ -57,6 +57,8 @@ public class GameManager : MonoBehaviour
 
     public TextMeshProUGUI coinsAmount;
     public TextMeshProUGUI balanceAmount;
+    public TextMeshProUGUI payText;
+    public TextMeshProUGUI receiveText;
     private int tradeBalance;
     private bool addingItems;
 
@@ -635,7 +637,20 @@ public class GameManager : MonoBehaviour
 
     public void UpdateBalanceAmount()
     {
-        balanceAmount.text = tradeBalance.ToString();
+        if (tradeBalance < 0) 
+        {
+            payText.enabled = true;
+            receiveText.enabled = false;
+            int balance = tradeBalance * -1;
+            balanceAmount.text = balance.ToString() + " coins";
+        }
+        else if (tradeBalance > 0)
+        {
+            payText.enabled = false;
+            receiveText.enabled = true;
+            balanceAmount.text = tradeBalance.ToString() + " coins";
+        }
+        
     }
 
     public void GenerateRandomLoot(int itemsToAdd) {
@@ -691,6 +706,7 @@ public class GameManager : MonoBehaviour
         m_TavernTradeDisplay.ShowInventory();
         confirmTradeButton.gameObject.SetActive(true);
         m_canvasTavern.SetActive(false);
+        payText.enabled = false;
     }
     private void OnDestroy()
     {
