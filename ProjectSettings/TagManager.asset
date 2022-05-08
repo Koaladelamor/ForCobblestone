@@ -72,6 +72,9 @@ TagManager:
   - name: Top
     uniqueID: 2088475263
     locked: 0
+  - name: Trees
+    uniqueID: 2581699943
+    locked: 0
   - name: Combat Scenario
     uniqueID: 3033610409
     locked: 0
