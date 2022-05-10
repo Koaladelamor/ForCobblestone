@@ -96,10 +96,10 @@ public class GameManager : MonoBehaviour
     {
         if(this == null) { return; }
 
-        /*for (int i = 0; i < enemySpawners.Length; i++)
+        for (int i = 0; i < enemySpawners.Length; i++)
         {
             enemySpawners[i].RespawnEnemy(m_spiderPrefab, enemySpawners[i].transform.position, i);
-        }*/
+        }
 
         ClearInventories();
         m_currentEquipmentInterface = m_GrodnarEquipmentDisplay;
@@ -142,8 +142,8 @@ public class GameManager : MonoBehaviour
 
         }
 
-        Invoke("HideInventories", 0.1f);
-        Invoke("InitTavernLoot", 0.12f);
+        Invoke("HideInventories", 0.15f);
+        Invoke("InitTavernLoot", 0.2f);
         m_canvasPause.SetActive(false);
         DisableCombatCanvas();
 

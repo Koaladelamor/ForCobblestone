@@ -19,11 +19,11 @@ public class Ambience_Sounds_Manager : MonoBehaviour
 
         while (true)
         {
-            yield return new WaitForSeconds(Random.Range(5f, 8f));
+            yield return new WaitForSeconds(Random.Range(12f, 30f));
 
-            int r = Random.Range(1, 4);
+            int random = Random.Range(1, 4);
 
-            switch (r)
+            switch (random)
             {
                 case 1:
                     audioManager.PlayInstant(Audio_Manager.InstantAudios.OWL);
