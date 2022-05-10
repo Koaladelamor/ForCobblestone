@@ -96,10 +96,10 @@ public class GameManager : MonoBehaviour
     {
         if(this == null) { return; }
 
-        for (int i = 0; i < enemySpawners.Length; i++)
+        /*for (int i = 0; i < enemySpawners.Length; i++)
         {
             enemySpawners[i].RespawnEnemy(m_spiderPrefab, enemySpawners[i].transform.position, i);
-        }
+        }*/
 
         ClearInventories();
         m_currentEquipmentInterface = m_GrodnarEquipmentDisplay;
