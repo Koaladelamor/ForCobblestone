@@ -751,4 +751,8 @@ public class GameManager : MonoBehaviour
     public void EnablePartyMovement() { pointToGo.SetMovement(true); }
 
     public void DisablePartyMovement() { pointToGo.SetMovement(false); }
+
+    public void QuitGame() { Application.Quit(); }
+
+
 }

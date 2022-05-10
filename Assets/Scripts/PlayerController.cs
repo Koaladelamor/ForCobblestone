@@ -104,16 +104,15 @@ public class PlayerController : MonoBehaviour
     }
 
     public void FlipSprites() {
-        if (currentPosition.x > previousPosition.x)
+        float currentPos = Mathf.Round(currentPosition.x);
+        float previousPos = Mathf.Round(previousPosition.x);
+        if (currentPos > previousPos)
         {
             transform.localScale = new Vector3(1, 1, 1);
         }
-        else if (currentPosition.x < previousPosition.x)
+        else if (currentPos < previousPos)
         {
             transform.localScale = new Vector3(-1, 1, 1);
-        }
-        else {
-            transform.localScale = new Vector3(1, 1, 1);
         }
     }
 
