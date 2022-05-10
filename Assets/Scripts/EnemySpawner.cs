@@ -33,10 +33,6 @@ public class EnemySpawner : MonoBehaviour
 
         GameObject enemy = Instantiate(prefab, enemySpawnPos, transform.rotation);
         PatrolAI AI = enemy.GetComponent<PatrolAI>();
-        if (AI == null) {
-            Debug.Log("ERROR SPAWNER PATROL AI NULL");
-            return null;
-        }
 
         AI.patrolPoints[0] = AI.InstantiatePatrolPoint(50f, 50f);
         AI.patrolPoints[1] = AI.InstantiatePatrolPoint(-50f, 50f);

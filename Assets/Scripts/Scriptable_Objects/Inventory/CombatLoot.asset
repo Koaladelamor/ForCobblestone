@@ -177,3 +177,35 @@ MonoBehaviour:
         Holder: 7
         PreviousHolder: 7
       Amount: 0
+    - AllowedItems: 
+      Item:
+        Name: 
+        ID: -1
+        Buffs: []
+        Holder: 7
+        PreviousHolder: 7
+      Amount: 0
+    - AllowedItems: 
+      Item:
+        Name: 
+        ID: -1
+        Buffs: []
+        Holder: 7
+        PreviousHolder: 7
+      Amount: 0
+    - AllowedItems: 
+      Item:
+        Name: 
+        ID: -1
+        Buffs: []
+        Holder: 7
+        PreviousHolder: 7
+      Amount: 0
+    - AllowedItems: 
+      Item:
+        Name: 
+        ID: -1
+        Buffs: []
+        Holder: 7
+        PreviousHolder: 7
+      Amount: 0

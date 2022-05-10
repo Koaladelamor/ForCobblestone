@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour
     //private GameObject enemyOnCombat;
     public EnemySpawner[] enemySpawners;
 
-    private bool enemyEngaged;
+    public bool enemyEngaged;
     private bool combatIsOver;
 
     public GameObject m_canvasTavern;
@@ -57,8 +57,6 @@ public class GameManager : MonoBehaviour
 
     public TextMeshProUGUI coinsAmount;
     public TextMeshProUGUI balanceAmount;
-    public TextMeshProUGUI payText;
-    public TextMeshProUGUI receiveText;
     private int tradeBalance;
     private bool addingItems;
 
@@ -67,11 +65,10 @@ public class GameManager : MonoBehaviour
     public GameObject canvasMenu;
     public bool isMenuOnScreen;
 
-    public TargetPosition pointToGo;
-
 
     private void Awake()
     {
+
         //Singleton
         if (mInstance == null)
         {
@@ -537,6 +534,18 @@ public class GameManager : MonoBehaviour
         m_ChestInventory.Clear();
     }
 
+
+
+    /*void EnemiesRespawner() {
+        for (int i = 0; i < enemies.Length; i++)
+        {
+            if (enemyIsAlive[i])
+            {
+                RespawnEnemy(m_spiderPrefab, enemyRespawnPositions[i], i);
+            }
+        }
+    }*/
+
     public void LoadCombatScene() {
         GameObject[] gameObjectsOnScene;
         gameObjectsOnScene = SceneManager.GetActiveScene().GetRootGameObjects();
@@ -584,6 +593,7 @@ public class GameManager : MonoBehaviour
     public void EnableCombatCanvas()
     {
         m_canvasToCombat.SetActive(true);
+        //Audio_Manager.Instance.PlayInstant(Audio_Manager.InstantAudios.BELLSOUND);
     }
 
     public UserInterface GetCurrentEquipmentInterface() { return m_currentEquipmentInterface; }
@@ -625,20 +635,7 @@ public class GameManager : MonoBehaviour
 
     public void UpdateBalanceAmount()
     {
-        if (tradeBalance < 0) 
-        {
-            payText.enabled = true;
-            receiveText.enabled = false;
-            int balance = tradeBalance * -1;
-            balanceAmount.text = balance.ToString() + " coins";
-        }
-        else if (tradeBalance > 0)
-        {
-            payText.enabled = false;
-            receiveText.enabled = true;
-            balanceAmount.text = tradeBalance.ToString() + " coins";
-        }
-        
+        balanceAmount.text = tradeBalance.ToString();
     }
 
     public void GenerateRandomLoot(int itemsToAdd) {
@@ -667,7 +664,6 @@ public class GameManager : MonoBehaviour
         m_inventoryDisplay.HideInventory();
         m_CombatLootInventory.Clear();
         confirmLootButton.gameObject.SetActive(false);
-        pointToGo.SetMovement(true);
     }
 
     public void ConfirmChestLoot()
@@ -686,7 +682,7 @@ public class GameManager : MonoBehaviour
         m_inventoryDisplay.HideInventory();
         m_TavernTradeDisplay.HideInventory();
         confirmTradeButton.gameObject.SetActive(false);
-        m_canvasTavern.SetActive(true);
+        Time.timeScale = 1;
     }
 
     public void TradingModeON() {
@@ -695,7 +691,6 @@ public class GameManager : MonoBehaviour
         m_TavernTradeDisplay.ShowInventory();
         confirmTradeButton.gameObject.SetActive(true);
         m_canvasTavern.SetActive(false);
-        payText.enabled = false;
     }
     private void OnDestroy()
     {
@@ -713,11 +708,17 @@ public class GameManager : MonoBehaviour
         m_inventoryDisplay.HideInventory();
         m_TavernTradeDisplay.HideInventory();
         confirmTradeButton.gameObject.SetActive(false);
+        m_canvasTavern.SetActive(true);
+        Time.timeScale = 1;
     }
 
     public bool GetCombatIsOver() { return combatIsOver; }
 
     public void SetCombatIsOver(bool isCombatOver) { combatIsOver = isCombatOver; }
+
+    //public void SetEnemyOnCombat(GameObject enemy) { enemyOnCombat = enemy; }
+
+    //public GameObject GetEnemyOnCombat() { return enemyOnCombat; }
 
     public void SetAddingItemsBool(bool _addingItems) { addingItems = _addingItems; }
 
@@ -746,9 +747,5 @@ public class GameManager : MonoBehaviour
         m_inventoryDisplay.HideInventory();
     }
 
-    public void SetEnemyEngaged (bool engaged) { enemyEngaged = engaged; }
 
-    public void EnablePartyMovement() { pointToGo.SetMovement(true); }
-
-    public void DisablePartyMovement() { pointToGo.SetMovement(false); }
 }
