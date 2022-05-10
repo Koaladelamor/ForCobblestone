@@ -17,14 +17,9 @@ public class PlayerController : MonoBehaviour
 
     public GFX_MapParty gfxController;
 
-    private bool partyFacingRight;
-    private bool partyFacingLeft;
-
     // Start is called before the first frame update
     void Start()
     {
-        partyFacingRight = true;
-        partyFacingLeft = false;
         movementAnimSet = false;
         m_gameManager = GameObject.FindGameObjectWithTag("GameManager");
         m_pointToGo = GameObject.FindGameObjectWithTag("PointToGo");
@@ -38,9 +33,12 @@ public class PlayerController : MonoBehaviour
         previousPosition = currentPosition;
         currentPosition = transform.position;
         SetWalkingAnimation();
-        FlipSprites();
+        if (previousPosition != currentPosition)
+        {
+            FlipSprites();
+        }
 
-        if (Input.GetKeyDown(KeyCode.E)) {
+        if (Input.GetKeyDown(KeyCode.Q)) {
             GameManager.Instance.SetAddingItemsBool(true);
             foreach (GameObject _item in itemTest){
                 if (_item){
@@ -57,26 +55,26 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("EnemyMap")) {
-            //Debug.Log("entra");
-            engaged = true;
-            m_gameManager.GetComponent<GameManager>().enemyEngaged = true;
-
+        if (other.gameObject.CompareTag("EnemyMap")) 
+        {
+            m_gameManager.GetComponent<GameManager>().SetEnemyEngaged(true);
             GameManager.Instance.SetCurrentEnemyID(other.gameObject.GetComponent<PatrolAI>().GetEnemyID());
+
             //Debug.Log(other.gameObject.GetComponent<PatrolAI>().GetEnemyID());
-            other.gameObject.GetComponent<Collider2D>().enabled = false;
+            //other.gameObject.GetComponent<Collider2D>().enabled = false;
+            other.collider.enabled = false;
             m_pointToGo.transform.position = transform.position;
+            m_pointToGo.GetComponent<TargetPosition>().SetMovement(false);
         }
     }
 
-    private void OnCollisionExit2D(Collision2D other)
+    /*private void OnCollisionExit2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("EnemyMap"))
         {
-            engaged = false;
 
         }
-    }
+    }*/
 
     public bool PartyIsMoving()
     {
@@ -106,21 +104,22 @@ public class PlayerController : MonoBehaviour
     }
 
     public void FlipSprites() {
-        if (currentPosition.x > previousPosition.x && !partyFacingRight) 
+        if (currentPosition.x > previousPosition.x)
         {
             transform.localScale = new Vector3(1, 1, 1);
-            partyFacingRight = true;
-            partyFacingLeft = false;
         }
-        else if(currentPosition.x < previousPosition.x && !partyFacingLeft) 
+        else if (currentPosition.x < previousPosition.x)
         {
             transform.localScale = new Vector3(-1, 1, 1);
-            partyFacingRight = false;
-            partyFacingLeft = true;
+        }
+        else {
+            transform.localScale = new Vector3(1, 1, 1);
         }
     }
 
-
+    public void StopMovement() {
+        m_pointToGo.transform.position = transform.position;
+    }
 
 
 }

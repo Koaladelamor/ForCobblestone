@@ -222,6 +222,42 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 995340851273689363, guid: fa0df2bb7fa524b42a8f3662c70d4e34, type: 3}
+      propertyPath: m_Text
+      value: Enemies have been defeated!
+      objectReference: {fileID: 0}
+    - target: {fileID: 995340851273689363, guid: fa0df2bb7fa524b42a8f3662c70d4e34, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 995340851273689363, guid: fa0df2bb7fa524b42a8f3662c70d4e34, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 995340851273689363, guid: fa0df2bb7fa524b42a8f3662c70d4e34, type: 3}
+      propertyPath: m_Color.r
+      value: 0.6577053
+      objectReference: {fileID: 0}
+    - target: {fileID: 995340851273689363, guid: fa0df2bb7fa524b42a8f3662c70d4e34, type: 3}
+      propertyPath: m_FontData.m_MinSize
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 995340851273689363, guid: fa0df2bb7fa524b42a8f3662c70d4e34, type: 3}
+      propertyPath: m_FontData.m_FontSize
+      value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: 995340851273689363, guid: fa0df2bb7fa524b42a8f3662c70d4e34, type: 3}
+      propertyPath: m_FontData.m_Alignment
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 995340851273689364, guid: fa0df2bb7fa524b42a8f3662c70d4e34, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 995340851273689364, guid: fa0df2bb7fa524b42a8f3662c70d4e34, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 28.2
+      objectReference: {fileID: 0}
     - target: {fileID: 995340851640159571, guid: fa0df2bb7fa524b42a8f3662c70d4e34, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -253,6 +289,34 @@ PrefabInstance:
     - target: {fileID: 995340851643976659, guid: fa0df2bb7fa524b42a8f3662c70d4e34, type: 3}
       propertyPath: m_Name
       value: Loot
+      objectReference: {fileID: 0}
+    - target: {fileID: 995340851730994830, guid: fa0df2bb7fa524b42a8f3662c70d4e34, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 309b15ea851d44542915f5afc19fec31, type: 3}
+    - target: {fileID: 995340851730994830, guid: fa0df2bb7fa524b42a8f3662c70d4e34, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 995340851730994830, guid: fa0df2bb7fa524b42a8f3662c70d4e34, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 995340851730994830, guid: fa0df2bb7fa524b42a8f3662c70d4e34, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 995340851730994831, guid: fa0df2bb7fa524b42a8f3662c70d4e34, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 995340851730994831, guid: fa0df2bb7fa524b42a8f3662c70d4e34, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 995340851730994864, guid: fa0df2bb7fa524b42a8f3662c70d4e34, type: 3}
+      propertyPath: m_Name
+      value: Background
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fa0df2bb7fa524b42a8f3662c70d4e34, type: 3}
