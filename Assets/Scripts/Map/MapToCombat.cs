@@ -12,12 +12,12 @@ public class MapToCombat : MonoBehaviour
         this.gameObject.SetActive(false);
     }
 
-    private void Update()
+    /*private void Update()
     {
         if (gameManager.GetComponent<GameManager>().enemyEngaged == true) {
             this.gameObject.SetActive(true);
 
         }
-    }
+    }*/
 
 }
