@@ -43,7 +43,7 @@ public abstract class UserInterface : MonoBehaviour
 
     public void ShowInventory()
     {
-        //GetComponentInChildren<Text>().enabled = true;
+        GetComponentInChildren<Text>().enabled = true;
         GetComponent<Image>().enabled = true;
         Image[] imgs = GetComponentsInChildren<Image>();
         foreach (Image img in imgs)
@@ -60,7 +60,7 @@ public abstract class UserInterface : MonoBehaviour
     }
     public void HideInventory() 
     {
-        //GetComponentInChildren<Text>().enabled = false;
+        GetComponentInChildren<Text>().enabled = false;
         GetComponent<Image>().enabled = false;
         for (int i = 0; i < mInventory.GetSlots.Length; i++)
         {
