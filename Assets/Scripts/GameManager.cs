@@ -41,8 +41,6 @@ public class GameManager : MonoBehaviour
     public Button confirmChestButton;
     public Button confirmTradeButton;
 
-    public GameObject m_spiderPrefab;
-
     private int currentEnemyID;
     //private GameObject enemyOnCombat;
     public EnemySpawner[] enemySpawners;
@@ -98,7 +96,7 @@ public class GameManager : MonoBehaviour
 
         for (int i = 0; i < enemySpawners.Length; i++)
         {
-            enemySpawners[i].RespawnEnemy(m_spiderPrefab, enemySpawners[i].transform.position, i);
+            enemySpawners[i].RespawnEnemy(enemySpawners[i].transform.position, i);
         }
 
         ClearInventories();
@@ -724,8 +722,6 @@ public class GameManager : MonoBehaviour
     public void SetLvlUpWarning(bool lvlUp) { levelUpWarning.SetActive(lvlUp); }
 
     public void SetCurrentEnemyID(int ID) { currentEnemyID = ID; }
-
-    public GameObject GetSpiderPrefab() { return m_spiderPrefab; }
 
     public void OpenChestInventory() {
         m_ChestLootDisplay.ShowInventory();

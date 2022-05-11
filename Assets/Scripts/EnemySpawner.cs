@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
+    [SerializeField] GameObject enemyToSpawn;
     private GameObject enemyOnSpawn;
     private int spawnerID;
 
@@ -24,18 +25,17 @@ public class EnemySpawner : MonoBehaviour
     private void OnBecameInvisible()
     {
         if (enemyOnSpawn == null) {
-            RespawnEnemy(GameManager.Instance.GetSpiderPrefab(), transform.position, spawnerID);
+            RespawnEnemy(transform.position, spawnerID);
         }
     }
 
-    public GameObject RespawnEnemy(GameObject prefab, Vector3 enemySpawnPos, int ID)
+    public void RespawnEnemy(Vector3 enemySpawnPos, int ID)
     {
-
-        GameObject enemy = Instantiate(prefab, enemySpawnPos, transform.rotation);
+        GameObject enemy = Instantiate(enemyToSpawn, enemySpawnPos, transform.rotation);
         PatrolAI AI = enemy.GetComponent<PatrolAI>();
         if (AI == null) {
             Debug.Log("ERROR SPAWNER PATROL AI NULL");
-            return null;
+            return;
         }
 
         AI.patrolPoints[0] = AI.InstantiatePatrolPoint(50f, 50f);
@@ -49,8 +49,6 @@ public class EnemySpawner : MonoBehaviour
         enemy.name = "EnemyParty " + ID.ToString();
 
         SetEnemy(enemy);
-
-        return enemy;
     }
 
     public void SetEnemy(GameObject enemy) { enemyOnSpawn = enemy; }
@@ -62,4 +60,11 @@ public class EnemySpawner : MonoBehaviour
     public void SetSpawnerID(int ID) { spawnerID = ID; }
 
     public int GetSpawnerID() { return spawnerID; }
+
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, 50);
+    }
 }
