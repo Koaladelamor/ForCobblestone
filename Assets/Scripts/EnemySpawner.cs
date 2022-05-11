@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField] GameObject enemyToSpawn;
+    [SerializeField] private GameObject enemyToSpawn;
     private GameObject enemyOnSpawn;
     private int spawnerID;
 
