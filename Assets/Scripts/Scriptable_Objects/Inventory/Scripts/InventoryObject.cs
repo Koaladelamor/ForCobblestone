@@ -176,6 +176,7 @@ public class InventorySlot
         {
             if (Item.ID >= 0) 
             {
+                //if (parent == null) { return null; }
                 return parent.mInventory.Database.ItemObjects[Item.ID];
             }
             return null;

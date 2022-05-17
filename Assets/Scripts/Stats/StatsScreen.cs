@@ -13,11 +13,15 @@ public class StatsScreen : MonoBehaviour
     public Text intelligenceValue;
     Button[] statButtons;
 
+    private void Awake()
+    {
+        statButtons = GetComponentsInChildren<Button>();
+    }
     // Start is called before the first frame update
     void Start()
     {
         Invoke("DisplayGrodnarStats", 0.2f);
-        statButtons = GetComponentsInChildren<Button>();
+        
     }
 
     // Update is called once per frame

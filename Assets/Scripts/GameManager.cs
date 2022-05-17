@@ -140,8 +140,11 @@ public class GameManager : MonoBehaviour
 
         }
 
-        Invoke("HideInventories", 0.15f);
-        Invoke("InitTavernLoot", 0.2f);
+        HideInventories();
+        InitTavernLoot();
+
+        /*Invoke("HideInventories", 0.15f);
+        Invoke("InitTavernLoot", 0.2f);*/
         m_canvasPause.SetActive(false);
         DisableCombatCanvas();
 
