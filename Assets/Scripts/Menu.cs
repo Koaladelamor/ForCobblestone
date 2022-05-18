@@ -8,6 +8,7 @@ public class Menu : MonoBehaviour
 {
     public GameObject canvasMenu;
     public GameObject canvasSettings;
+    public GameObject canvasControls;
 
     private void Awake()
     {
@@ -19,7 +20,8 @@ public class Menu : MonoBehaviour
     }
 
     public void exitPlayMode() {
-        //EditorApplication.ExitPlaymode();
+        Debug.Log("Exit game");
+        Application.Quit();
     }
 
     public void EnableCanvasMenu() { canvasMenu.SetActive(true); }
@@ -38,5 +40,15 @@ public class Menu : MonoBehaviour
     public void ToCanvasMenu() {
         DisableCanvasSettings();
         EnableCanvasMenu();
+    }
+
+    public void showControls()
+    {
+        canvasControls.SetActive(true);
+    }
+
+    public void exitControls()
+    {
+        canvasControls.SetActive(false);
     }
 }
