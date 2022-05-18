@@ -27,6 +27,8 @@ public class ChestControl : MonoBehaviour
                 ChestOpen.SetActive(true);
                 GameManager.Instance.OpenChestInventory();
                 GameManager.Instance.OpenMainInventory();
+                GameManager.Instance.inventoryBlackScreen.SetActive(true);
+                GameManager.Instance.DisablePartyMovement();
                 itemsPicked = true;
             }
         }
@@ -39,7 +41,11 @@ public class ChestControl : MonoBehaviour
             E_.SetActive(true);
          
         }
-        else
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.tag == "PlayerMap")
         {
             Chest = false;
             E_.SetActive(false);

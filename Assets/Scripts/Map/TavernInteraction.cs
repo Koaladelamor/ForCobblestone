@@ -10,8 +10,6 @@ public class TavernInteraction : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
-        m_canvasHostal.SetActive(false);
         canInteract = true;
     }
     private void OnTriggerStay2D(Collider2D collision)
@@ -31,6 +29,7 @@ public class TavernInteraction : MonoBehaviour
             canInteract = true;
         }
     }
+
     /*private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("PlayerMap") && canInteract)
@@ -53,6 +52,7 @@ public class TavernInteraction : MonoBehaviour
     public void CloseTavernCanvas() {
         m_canvasHostal.SetActive(false);
         Time.timeScale = 1;
+        GameManager.Instance.inventoryBlackScreen.SetActive(false);
     }
 
 }

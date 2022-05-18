@@ -41,6 +41,8 @@ public class GameManager : MonoBehaviour
     public Button confirmChestButton;
     public Button confirmTradeButton;
 
+    public GameObject inventoryBlackScreen;
+
     private int currentEnemyID;
     //private GameObject enemyOnCombat;
     public EnemySpawner[] enemySpawners;
@@ -66,6 +68,7 @@ public class GameManager : MonoBehaviour
     public bool isMenuOnScreen;
 
     public TargetPosition pointToGo;
+    public GameObject party;
 
 
     private void Awake()
@@ -141,12 +144,12 @@ public class GameManager : MonoBehaviour
         }
 
         HideInventories();
-        //InitTavernLoot();
+        InitTavernLoot();
 
         /*Invoke("HideInventories", 0.15f);
         Invoke("InitTavernLoot", 0.2f);*/
-        m_canvasPause.SetActive(false);
-        DisableCombatCanvas();
+        //m_canvasPause.SetActive(false);
+        //DisableCombatCanvas();
 
         SceneManager.sceneLoaded += OnSceneLoaded;
 
@@ -163,17 +166,18 @@ public class GameManager : MonoBehaviour
         if (InputManager.Instance.PauseButtonPressed && !gameIsPaused)
         {
             PauseGame();
-
         }
         else if (InputManager.Instance.PauseButtonPressed && gameIsPaused)
         {
             NormalSpeed();
         }
 
-        if (InputManager.Instance.NormalSpeedButtonPressed) {
+        if (InputManager.Instance.NormalSpeedButtonPressed) 
+        {
             NormalSpeed();
         } 
-        else if (InputManager.Instance.FastSpeedButtonPressed) {
+        else if (InputManager.Instance.FastSpeedButtonPressed) 
+        {
             FastSpeed();
         }
 
@@ -181,11 +185,28 @@ public class GameManager : MonoBehaviour
         {
             canvasMenu.SetActive(false);
             isMenuOnScreen = false;
+            EnablePartyMovement();
         }
         else if (InputManager.Instance.MenuButtonPressed && !isMenuOnScreen)
         {
             canvasMenu.SetActive(true);
             isMenuOnScreen = true;
+            StopMovement();
+            DisablePartyMovement();
+        }
+
+        if (InputManager.Instance.InventoryButtonPressed && inventoryOnScreen)
+        {
+            HideInventories();
+            Audio_Manager.Instance.PlayInstant(Audio_Manager.InstantAudios.BAGCLOSE);
+            EnablePartyMovement();
+        }
+        else if (InputManager.Instance.InventoryButtonPressed && !inventoryOnScreen)
+        {
+            ShowInventories();
+            Audio_Manager.Instance.PlayInstant(Audio_Manager.InstantAudios.BAGOPEN);
+            StopMovement();
+            DisablePartyMovement();
         }
 
         if (Input.GetKeyDown(KeyCode.G))
@@ -224,17 +245,6 @@ public class GameManager : MonoBehaviour
             m_GrodnarEquipmentInventory.Load();
             m_LanstarEquipmentInventory.Load();
             m_SigfridEquipmentInventory.Load();
-        }
-
-        if (InputManager.Instance.InventoryButtonPressed && inventoryOnScreen)
-        {
-            HideInventories();
-            Audio_Manager.Instance.PlayInstant(Audio_Manager.InstantAudios.BAGCLOSE);
-        }
-        else if (InputManager.Instance.InventoryButtonPressed && !inventoryOnScreen)
-        {
-            ShowInventories();
-            Audio_Manager.Instance.PlayInstant(Audio_Manager.InstantAudios.BAGOPEN);
         }
 
         if (enemyEngaged)
@@ -432,6 +442,8 @@ public class GameManager : MonoBehaviour
         {
             SetLvlUpWarning(false);
         }
+
+        inventoryBlackScreen.SetActive(false);
     }
 
     public void ShowInventories() {
@@ -446,6 +458,8 @@ public class GameManager : MonoBehaviour
         m_inventoryDisplay.ShowInventory();
         m_statsScreen.ShowDisplay();
         inventoryOnScreen = true;
+
+        inventoryBlackScreen.SetActive(true);
     }
 
     public void GrodnarEquipmentDisplay() {
@@ -613,9 +627,32 @@ public class GameManager : MonoBehaviour
     public void InventoryButton() {
         if (inventoryOnScreen) {
             HideInventories();
+            inventoryOnScreen = false;
+            EnablePartyMovement();
         }
         else {
             ShowInventories();
+            inventoryOnScreen = true;
+            StopMovement();
+            DisablePartyMovement();
+        }
+
+    }
+
+    public void SettingsButton()
+    {
+        if (isMenuOnScreen)
+        {
+            canvasMenu.SetActive(false);
+            isMenuOnScreen = false;
+            EnablePartyMovement();
+        }
+        else
+        {
+            canvasMenu.SetActive(true);
+            isMenuOnScreen = true;
+            StopMovement();
+            DisablePartyMovement();
         }
 
     }
@@ -661,6 +698,8 @@ public class GameManager : MonoBehaviour
         m_CombatLootDisplay.ShowInventory();
         m_inventoryDisplay.ShowInventory();
         confirmLootButton.gameObject.SetActive(true);
+        inventoryBlackScreen.SetActive(true);
+        pointToGo.SetMovement(false);
     }
 
     public void ConfirmLoot() {
@@ -668,6 +707,7 @@ public class GameManager : MonoBehaviour
         m_inventoryDisplay.HideInventory();
         m_CombatLootInventory.Clear();
         confirmLootButton.gameObject.SetActive(false);
+        inventoryBlackScreen.SetActive(false);
         pointToGo.SetMovement(true);
     }
 
@@ -677,6 +717,8 @@ public class GameManager : MonoBehaviour
         m_inventoryDisplay.HideInventory();
         m_ChestInventory.Clear();
         confirmChestButton.gameObject.SetActive(false);
+        inventoryBlackScreen.SetActive(false);
+        pointToGo.SetMovement(true);
     }
 
     public void ConfirmTrade() {
@@ -696,6 +738,7 @@ public class GameManager : MonoBehaviour
         m_TavernTradeDisplay.ShowInventory();
         confirmTradeButton.gameObject.SetActive(true);
         m_canvasTavern.SetActive(false);
+        inventoryBlackScreen.SetActive(true);
         payText.enabled = false;
     }
     private void OnDestroy()
@@ -714,6 +757,7 @@ public class GameManager : MonoBehaviour
         m_inventoryDisplay.HideInventory();
         m_TavernTradeDisplay.HideInventory();
         confirmTradeButton.gameObject.SetActive(false);
+        inventoryBlackScreen.SetActive(false);
     }
 
     public bool GetCombatIsOver() { return combatIsOver; }
@@ -750,6 +794,10 @@ public class GameManager : MonoBehaviour
     public void EnablePartyMovement() { pointToGo.SetMovement(true); }
 
     public void DisablePartyMovement() { pointToGo.SetMovement(false); }
+
+    public void StopMovement() {
+        pointToGo.gameObject.transform.position = party.transform.position;
+    }
 
     public void QuitGame() { Application.Quit(); }
 

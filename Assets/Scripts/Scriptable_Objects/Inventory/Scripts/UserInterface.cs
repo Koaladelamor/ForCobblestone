@@ -142,6 +142,7 @@ public abstract class UserInterface : MonoBehaviour
 
         if (MouseData.interfaceMouseIsOver == null) {
             slotsOnInterface[obj].RemoveItem();
+            slotsOnInterface[obj].UpdateSlot(slotsOnInterface[obj].Item, 0);
             return;
         }
         if (MouseData.slotHoveredOver) {
@@ -149,7 +150,7 @@ public abstract class UserInterface : MonoBehaviour
             mInventory.SwapItems(mouseHoverSlotData, slotsOnInterface[obj]);
         }
     }
-    public void OnDrag(GameObject obj)
+    public void OnDrag()
     {
         if (MouseData.tempItemBeingDragged != null)
         {
