@@ -57,6 +57,12 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Grass
+    uniqueID: 2509954377
+    locked: 0
+  - name: Tree
+    uniqueID: 3267353755
+    locked: 0
   - name: Map
     uniqueID: 1583481367
     locked: 0
