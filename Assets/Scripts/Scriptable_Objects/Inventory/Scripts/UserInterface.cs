@@ -11,6 +11,7 @@ public abstract class UserInterface : MonoBehaviour
 {
     public InventoryObject mInventory;
     public Dictionary<GameObject, InventorySlot> slotsOnInterface = new Dictionary<GameObject, InventorySlot>();
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,8 +22,7 @@ public abstract class UserInterface : MonoBehaviour
         }
         CreateSlots();
         AddEvent(gameObject, EventTriggerType.PointerEnter, delegate { OnEnterInterface(gameObject); });
-        AddEvent(gameObject, EventTriggerType.PointerExit, delegate { OnExitInterface(gameObject); });
-
+        AddEvent(gameObject, EventTriggerType.PointerExit, delegate { OnExitInterface(); });
     }
 
     private void OnSlotUpdate(InventorySlot _slot)
@@ -141,8 +141,10 @@ public abstract class UserInterface : MonoBehaviour
         Destroy(MouseData.tempItemBeingDragged);
 
         if (MouseData.interfaceMouseIsOver == null) {
-            slotsOnInterface[obj].RemoveItem();
-            slotsOnInterface[obj].UpdateSlot(slotsOnInterface[obj].Item, 0);
+            GameManager.Instance.SetSlotSelected(slotsOnInterface[obj]);
+            GameManager.Instance.ShowDeleteItemScreen();
+            /*slotsOnInterface[obj].RemoveItem();
+            slotsOnInterface[obj].UpdateSlot(slotsOnInterface[obj].Item, 0);*/
             return;
         }
         if (MouseData.slotHoveredOver) {
@@ -172,7 +174,7 @@ public abstract class UserInterface : MonoBehaviour
         MouseData.interfaceMouseIsOver = obj.GetComponent<UserInterface>();
     }
 
-    public void OnExitInterface(GameObject obj)
+    public void OnExitInterface()
     {
         MouseData.interfaceMouseIsOver = null;
     }

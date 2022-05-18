@@ -70,6 +70,8 @@ public class GameManager : MonoBehaviour
     public TargetPosition pointToGo;
     public GameObject party;
 
+    private InventorySlot slotSelected;
+    public GameObject deleteItemScreen;
 
     private void Awake()
     {
@@ -90,6 +92,7 @@ public class GameManager : MonoBehaviour
         currentEnemyID = -1;
         gameIsPaused = false;
         tradeBalance = 0;
+        slotSelected = null;
     }
 
     // Start is called before the first frame update
@@ -801,5 +804,20 @@ public class GameManager : MonoBehaviour
 
     public void QuitGame() { Application.Quit(); }
 
+    public void SetSlotSelected(InventorySlot _slot) { slotSelected = _slot; }
 
+    public void RemoveItem() 
+    {
+        slotSelected.RemoveItem();
+        slotSelected.UpdateSlot(slotSelected.Item, 0);
+        deleteItemScreen.SetActive(false);
+    }
+
+    public void ShowDeleteItemScreen() {
+        deleteItemScreen.SetActive(true);
+    }
+    public void HideDeleteItemScreen()
+    {
+        deleteItemScreen.SetActive(false);
+    }
 }
