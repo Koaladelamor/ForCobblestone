@@ -11,12 +11,9 @@ public class StatsScreen : MonoBehaviour
     public Text staminaValue;
     public Text agilityValue;
     public Text intelligenceValue;
-    Button[] statButtons;
+    [SerializeField] Button[] statButtons;
 
-    private void Awake()
-    {
-        statButtons = GetComponentsInChildren<Button>();
-    }
+
     // Start is called before the first frame update
     void Start()
     {

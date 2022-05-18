@@ -141,7 +141,7 @@ public class GameManager : MonoBehaviour
         }
 
         HideInventories();
-        InitTavernLoot();
+        //InitTavernLoot();
 
         /*Invoke("HideInventories", 0.15f);
         Invoke("InitTavernLoot", 0.2f);*/

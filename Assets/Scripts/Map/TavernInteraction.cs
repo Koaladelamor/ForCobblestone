@@ -3,7 +3,7 @@ using UnityEngine;
 public class TavernInteraction : MonoBehaviour
 {
 
-    private GameObject m_canvasHostal;
+    [SerializeField] GameObject m_canvasHostal;
 
     private bool canInteract;
 
@@ -11,7 +11,6 @@ public class TavernInteraction : MonoBehaviour
     void Start()
     {
 
-        m_canvasHostal = GameObject.FindGameObjectWithTag("CanvasHostal");
         m_canvasHostal.SetActive(false);
         canInteract = true;
     }

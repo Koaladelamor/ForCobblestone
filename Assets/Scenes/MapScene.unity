@@ -2305,7 +2305,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &339078359
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12786,6 +12786,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b60d5b351fa75a4d8f5b317906b2645, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_canvasHostal: {fileID: 2249013716753973048}
 --- !u!222 &1345792255145060286
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -17594,7 +17595,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!222 &2249013717044389683
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -18478,7 +18479,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &3110106330582429618
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25050,7 +25051,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!223 &8643580489005075806
 Canvas:
   m_ObjectHideFlags: 0
@@ -26357,6 +26358,11 @@ MonoBehaviour:
   staminaValue: {fileID: 8643580488887073939}
   agilityValue: {fileID: 8643580488960404204}
   intelligenceValue: {fileID: 8643580489751297984}
+  statButtons:
+  - {fileID: 3288808518805091860}
+  - {fileID: 3288808518870069546}
+  - {fileID: 3288808517780237664}
+  - {fileID: 3288808517792738721}
 --- !u!210 &8643580489817654045
 SortingGroup:
   m_ObjectHideFlags: 0
