@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour
         }
 
         if (Input.GetKeyDown(KeyCode.Q)) {
-            GameManager.Instance.SetAddingItemsBool(true);
+            InventoryManager.Instance.SetAddingItemsBool(true);
             foreach (GameObject _item in itemTest){
                 if (_item){
                     ItemToPick item = _item.GetComponent<ItemToPick>();
@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour
                     }
                 }
             }
-            GameManager.Instance.SetAddingItemsBool(false);
+            InventoryManager.Instance.SetAddingItemsBool(false);
         }
 
     }

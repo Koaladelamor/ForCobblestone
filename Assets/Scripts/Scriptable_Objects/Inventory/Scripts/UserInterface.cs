@@ -113,10 +113,16 @@ public abstract class UserInterface : MonoBehaviour
     public void OnEnter(GameObject obj)
     {
         MouseData.slotHoveredOver = obj;
+        InventoryManager.Instance.itemInfo.SetActive(true);
+        InventoryManager.Instance.SetNameInfo(slotsOnInterface[obj].Item.Name);
+        InventoryManager.Instance.SetAttributesInfo(slotsOnInterface[obj].Item.Buffs);
     }
     public void OnExit(GameObject obj)
     {
         MouseData.slotHoveredOver = null;
+        InventoryManager.Instance.itemInfo.SetActive(false);
+        InventoryManager.Instance.ClearAttributesInfo();
+        InventoryManager.Instance.ClearNameInfo();
     }
     public void OnDragStart(GameObject obj)
     {
@@ -141,8 +147,8 @@ public abstract class UserInterface : MonoBehaviour
         Destroy(MouseData.tempItemBeingDragged);
 
         if (MouseData.interfaceMouseIsOver == null) {
-            GameManager.Instance.SetSlotSelected(slotsOnInterface[obj]);
-            GameManager.Instance.ShowDeleteItemScreen();
+            InventoryManager.Instance.SetSlotSelected(slotsOnInterface[obj]);
+            InventoryManager.Instance.ShowDeleteItemScreen();
             /*slotsOnInterface[obj].RemoveItem();
             slotsOnInterface[obj].UpdateSlot(slotsOnInterface[obj].Item, 0);*/
             return;

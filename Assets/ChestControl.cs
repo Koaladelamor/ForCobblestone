@@ -22,12 +22,12 @@ public class ChestControl : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.E) && !itemsPicked)
             {
-                GameManager.Instance.GenerateRandomChest((int)Random.Range(1, 16));
+                InventoryManager.Instance.GenerateRandomChest((int)Random.Range(1, 16));
                 ChestClosed.SetActive(false);
                 ChestOpen.SetActive(true);
-                GameManager.Instance.OpenChestInventory();
-                GameManager.Instance.OpenMainInventory();
-                GameManager.Instance.inventoryBlackScreen.SetActive(true);
+                InventoryManager.Instance.OpenChestInventory();
+                InventoryManager.Instance.OpenMainInventory();
+                InventoryManager.Instance.inventoryBlackScreen.SetActive(true);
                 GameManager.Instance.DisablePartyMovement();
                 itemsPicked = true;
             }

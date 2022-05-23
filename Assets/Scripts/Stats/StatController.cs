@@ -7,8 +7,8 @@ public class StatController : MonoBehaviour
 {
     public void IncreaseStat()
     {
-        StatsScreen statsScreen = GameManager.Instance.m_statsScreen;
-        UserInterface equipment = GameManager.Instance.GetCurrentEquipmentInterface();
+        StatsScreen statsScreen = InventoryManager.Instance.m_statsScreen;
+        UserInterface equipment = InventoryManager.Instance.GetCurrentEquipmentInterface();
         Attributes attr = Attributes.LAST_NO_USE;
         if (transform.parent.name == "Stamina") { attr = Attributes.STAMINA; }
         else if (transform.parent.name == "Strength") { attr = Attributes.STRENGHT; }

@@ -155,7 +155,7 @@ public class GameStats : MonoBehaviour
         Grodnar._current_xp += xpAdded;
         if (LvlUp(Grodnar))
         {
-            GameManager.Instance.SetLvlUpWarning(true);
+            InventoryManager.Instance.SetLvlUpWarning(true);
             Grodnar._level++;
             Grodnar._current_xp -= Grodnar._required_xp;
             Grodnar._required_xp += 700;
@@ -173,7 +173,7 @@ public class GameStats : MonoBehaviour
         Lanstar._current_xp += xpAdded;
         if (LvlUp(Lanstar))
         {
-            GameManager.Instance.SetLvlUpWarning(true);
+            InventoryManager.Instance.SetLvlUpWarning(true);
             Lanstar._level++;
             Lanstar._current_xp -= Lanstar._required_xp;
             Lanstar._required_xp += 700;
@@ -191,7 +191,7 @@ public class GameStats : MonoBehaviour
         Sigfrid._current_xp += xpAdded;
         if (LvlUp(Sigfrid))
         {
-            GameManager.Instance.SetLvlUpWarning(true);
+            InventoryManager.Instance.SetLvlUpWarning(true);
             Sigfrid._level++;
             Sigfrid._current_xp -= Sigfrid._required_xp;
             Sigfrid._required_xp += 700;

@@ -52,7 +52,7 @@ public class TavernInteraction : MonoBehaviour
     public void CloseTavernCanvas() {
         m_canvasHostal.SetActive(false);
         Time.timeScale = 1;
-        GameManager.Instance.inventoryBlackScreen.SetActive(false);
+        InventoryManager.Instance.inventoryBlackScreen.SetActive(false);
     }
 
 }
