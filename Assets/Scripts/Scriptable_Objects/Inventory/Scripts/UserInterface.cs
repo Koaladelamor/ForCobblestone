@@ -113,6 +113,7 @@ public abstract class UserInterface : MonoBehaviour
     public void OnEnter(GameObject obj)
     {
         MouseData.slotHoveredOver = obj;
+        if (slotsOnInterface[obj].Item.Buffs == null) { return; }
         InventoryManager.Instance.itemInfo.SetActive(true);
         InventoryManager.Instance.SetNameInfo(slotsOnInterface[obj].Item.Name);
         InventoryManager.Instance.SetAttributesInfo(slotsOnInterface[obj].Item.Buffs);
