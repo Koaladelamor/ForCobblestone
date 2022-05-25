@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
 
     public bool engaged;
     private bool movementAnimSet;
+    private bool footstepsPlaying;
 
     Vector2 previousPosition;
     Vector2 currentPosition;
@@ -24,6 +25,7 @@ public class PlayerController : MonoBehaviour
         m_gameManager = GameObject.FindGameObjectWithTag("GameManager");
         m_pointToGo = GameObject.FindGameObjectWithTag("PointToGo");
         engaged = false;
+        footstepsPlaying = false;
     }
 
     // Update is called once per frame
@@ -32,7 +34,19 @@ public class PlayerController : MonoBehaviour
 
         previousPosition = currentPosition;
         currentPosition = transform.position;
+
+        if (PartyIsMoving() && !footstepsPlaying)
+        {
+            AudioManager.Instance.PlayPartyFootsteps();
+            footstepsPlaying = true;
+        }
+        else if (!PartyIsMoving()) {
+            AudioManager.Instance.partyFX.Stop();
+            footstepsPlaying = false;
+        }
+
         SetWalkingAnimation();
+
         if (previousPosition != currentPosition)
         {
             FlipSprites();

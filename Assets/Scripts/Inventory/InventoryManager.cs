@@ -132,13 +132,13 @@ public class InventoryManager : MonoBehaviour
         if (InputManager.Instance.InventoryButtonPressed && inventoryOnScreen)
         {
             HideInventories();
-            Audio_Manager.Instance.PlayInstant(Audio_Manager.InstantAudios.BAGCLOSE);
+            AudioManager.Instance.PlayInstant(AudioManager.InstantAudios.BAGCLOSE);
             GameManager.Instance.EnablePartyMovement();
         }
         else if (InputManager.Instance.InventoryButtonPressed && !inventoryOnScreen)
         {
             ShowInventories();
-            Audio_Manager.Instance.PlayInstant(Audio_Manager.InstantAudios.BAGOPEN);
+            AudioManager.Instance.PlayInstant(AudioManager.InstantAudios.BAGOPEN);
             GameManager.Instance.StopMovement();
             GameManager.Instance.DisablePartyMovement();
         }

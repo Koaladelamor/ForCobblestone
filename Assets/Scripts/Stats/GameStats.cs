@@ -43,11 +43,11 @@ public class GameStats : MonoBehaviour
             return;
         }
 
-        Grodnar = InitStats("Grodnar", 150, 5, 15, 10, 18, 2, 1);
-        Lanstar = InitStats("Lanstar", 100, 20, 35, 16, 10, 10, 5);
-        Sigfrid = InitStats("Sigfrid", 80, 15, 30, 12, 5, 20, 15);
+        Grodnar = InitStats("Grodnar", 150, 5, 15, 10, 18, 2);
+        Lanstar = InitStats("Lanstar", 100, 20, 35, 16, 10, 10);
+        Sigfrid = InitStats("Sigfrid", 80, 15, 30, 12, 5, 20);
 
-        Minotaur = InitStats("Minotaur", 75, 10, 20, 15, 10, 5, 1);
+        Minotaur = InitStats("Minotaur", 75, 10, 20, 15, 10, 5);
 
         coins = 0;
     }
@@ -62,11 +62,11 @@ public class GameStats : MonoBehaviour
 
     public List<Stat> GetMinotaurStats() { return Minotaur._stats; }
 
-    public Stadistics InitStats(string name, int health, int min_damage, int max_damage, int strenght, int stamina, int agility, int intelligence)
+    public Stadistics InitStats(string name, int health, int min_damage, int max_damage, int strenght, int stamina, int agility)
     {
         Stadistics player = new Stadistics();
         player._name = name;
-        player._stats = SetPlayerStats(health, min_damage, max_damage, strenght, stamina, agility, intelligence);
+        player._stats = SetPlayerStats(health, min_damage, max_damage, strenght, stamina, agility);
         player._level = 1;
         player._attribute_points = 0;
         player._required_xp = 500;
@@ -75,18 +75,17 @@ public class GameStats : MonoBehaviour
         return player;
     }
 
-    public List<Stat> SetPlayerStats(int health, int min_damage, int max_damage, int strenght, int stamina, int agility, int intelligence)
+    public List<Stat> SetPlayerStats(int health, int min_damage, int max_damage, int strenght, int stamina, int agility)
     {
         List<Stat> statsList = new List<Stat>
         {
-            new Stat(Attributes.MAX_HEALTH, health),
             new Stat(Attributes.CURR_HEALTH, health),
+            new Stat(Attributes.MAX_HEALTH, health),
             new Stat(Attributes.MIN_DAMAGE, min_damage),
             new Stat(Attributes.MAX_DAMAGE, max_damage),
             new Stat(Attributes.STRENGHT, strenght),
             new Stat(Attributes.STAMINA, stamina),
-            new Stat(Attributes.AGILITY, agility),
-            new Stat(Attributes.INTELLIGENCE, intelligence)
+            new Stat(Attributes.AGILITY, agility)
         };
         return statsList;
     }

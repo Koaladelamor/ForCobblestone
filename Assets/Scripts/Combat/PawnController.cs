@@ -961,7 +961,7 @@ public class PawnController : MonoBehaviour
         if (cur_hp < 1)
         {
             alive = false;
-            Audio_Manager.Instance.PlayDeathSound(character);
+            AudioManager.Instance.PlayDeathSound(character);
             if (m_state == PAWN_STATUS.MOVE || m_state == PAWN_STATUS.GET_PAWN)
             {
                 m_state = PAWN_STATUS.IDLE;

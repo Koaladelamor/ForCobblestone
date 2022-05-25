@@ -14,7 +14,7 @@ public class StaticInterface : UserInterface
 
         for (int i = 0; i < mInventory.GetSlots.Length; i++)
         {
-            var obj = slots[i];
+            GameObject obj = slots[i];
 
             AddEvent(obj, EventTriggerType.PointerEnter, delegate { OnEnter(obj); });
             AddEvent(obj, EventTriggerType.PointerExit, delegate { OnExit(obj); });

@@ -10,7 +10,6 @@ public class StatsScreen : MonoBehaviour
     public Text strengthValue;
     public Text staminaValue;
     public Text agilityValue;
-    public Text intelligenceValue;
     [SerializeField] Button[] statButtons;
 
 
@@ -82,8 +81,14 @@ public class StatsScreen : MonoBehaviour
         {
             switch (characterStat[i].attribute)
             {
+                case Attributes.CURR_HEALTH:
+                    UpdateText(healthValue, characterStat[i]);
+                    break;
                 case Attributes.MAX_HEALTH:
                     UpdateText(healthValue, characterStat[i]);
+                    break;
+                case Attributes.MIN_DAMAGE:
+                    UpdateText(damageValue, characterStat[i]);
                     break;
                 case Attributes.MAX_DAMAGE:
                     UpdateText(damageValue, characterStat[i]);
@@ -96,9 +101,6 @@ public class StatsScreen : MonoBehaviour
                     break;
                 case Attributes.AGILITY:
                     UpdateText(agilityValue, characterStat[i]);
-                    break;
-                case Attributes.INTELLIGENCE:
-                    UpdateText(intelligenceValue, characterStat[i]);
                     break;
                 case Attributes.LAST_NO_USE:
                     break;
@@ -113,8 +115,17 @@ public class StatsScreen : MonoBehaviour
             Debug.Log(string.Concat("ERROR Failed to update ", _stat.attribute));
             return; 
         }
+        if(_stat.attribute == Attributes.MAX_HEALTH) {
+            _text.text += " / " + _stat.value.ToString();
+            return;
+        }
+        else if (_stat.attribute == Attributes.MAX_DAMAGE)
+        {
+            _text.text += " - " + _stat.value.ToString();
+            return;
+        }
+
         _text.text = _stat.value.ToString();
     }
-
 
 }

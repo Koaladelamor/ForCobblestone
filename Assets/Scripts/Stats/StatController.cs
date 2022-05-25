@@ -13,7 +13,6 @@ public class StatController : MonoBehaviour
         if (transform.parent.name == "Stamina") { attr = Attributes.STAMINA; }
         else if (transform.parent.name == "Strength") { attr = Attributes.STRENGHT; }
         else if (transform.parent.name == "Agility") { attr = Attributes.AGILITY; }
-        else if (transform.parent.name == "Intelligence") { attr = Attributes.INTELLIGENCE; }
 
         if (attr == Attributes.LAST_NO_USE) {
             Debug.Log("ERROR attribute not set.");

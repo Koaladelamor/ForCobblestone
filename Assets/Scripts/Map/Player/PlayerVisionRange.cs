@@ -7,7 +7,7 @@ public class PlayerVisionRange : MonoBehaviour
     {
         if (other.gameObject.CompareTag("EnemyMap"))
         {
-            Audio_Manager.Instance.PlayInstant(Audio_Manager.InstantAudios.BELLSOUND);
+            AudioManager.Instance.PlayInstant(AudioManager.InstantAudios.BELLSOUND);
             //other.gameObject.GetComponent<SpriteRenderer>().enabled = true;
             SpriteRenderer[] sprites = other.gameObject.GetComponentsInChildren<SpriteRenderer>();
             foreach (SpriteRenderer sprite in sprites)
