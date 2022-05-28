@@ -26,7 +26,10 @@ public class InventoryObject : ScriptableObject {
 
     public bool AddItem(Item _item, int _amount, InventoryType _invType)
     {
-        if (EmptySlotCount <= 0) { return false; }
+        if (EmptySlotCount <= 0) {
+            Debug.Log("Inventory is full");
+            return false;
+        }
         InventorySlot slot = FindItemOnInventory(_item);
         _item.PreviousHolder = _invType;
         _item.Holder = _invType;
@@ -70,6 +73,19 @@ public class InventoryObject : ScriptableObject {
             if (GetSlots[i].Item.ID <= -1)
             {
                 GetSlots[i].UpdateSlot(_item, _amount);
+                return GetSlots[i];
+            }
+        }
+        //inventory is full
+        return null;
+    }
+
+    public InventorySlot GetEmptySlot()
+    {
+        for (int i = 0; i < GetSlots.Length; i++)
+        {
+            if (GetSlots[i].Item.ID <= -1)
+            {
                 return GetSlots[i];
             }
         }

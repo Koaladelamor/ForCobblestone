@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
 
     public TargetPosition pointToGo;
     public GameObject party;
+    private Vector3 newGamePosition;
 
 
     private void Awake()
@@ -40,7 +41,7 @@ public class GameManager : MonoBehaviour
         combatIsOver = false;
         enemyEngaged = false;
         currentEnemyID = -1;
-        
+        newGamePosition = new Vector3(-720, 271, 0);
     }
 
     // Start is called before the first frame update
@@ -138,9 +139,25 @@ public class GameManager : MonoBehaviour
         SetActiveScene(scene.name);
     }
 
+    public void ContinueGame() {
+        LoadMapScene();
+        party.transform.position = newGamePosition;
+        StopMovement();
+        EnablePartyMovement();
+        GameStats.Instance.SetCoins(GameStats.Instance.GetCoins()/2);
+        //Eliminar objetos de inventario también?
+    }
 
-
-
+    public void RestartGame() {
+        LoadMapScene();
+        party.transform.position = newGamePosition;
+        StopMovement();
+        EnablePartyMovement();
+        GameStats.Instance.SetCoins(0);
+        InventoryManager.Instance.ClearInventories();
+        InventoryManager.Instance.InitTavernLoot();
+        //reset stats
+    }
 
     /*private void OnDestroy()
     {
@@ -171,5 +188,6 @@ public class GameManager : MonoBehaviour
 
     public void QuitGame() { Application.Quit(); }
 
+    public void DestroyInstance() { Destroy(this.gameObject); }
 
 }

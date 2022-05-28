@@ -36,6 +36,7 @@ public class InventoryManager : MonoBehaviour
 
     public Button[] equipmentButtons;
     public Button confirmLootButton;
+    public Button takeLootButton;
     public Button confirmChestButton;
     public Button confirmTradeButton;
 
@@ -321,16 +322,10 @@ public class InventoryManager : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        m_inventory.Clear();
-        m_GrodnarEquipmentInventory.Clear();
-        m_LanstarEquipmentInventory.Clear();
-        m_SigfridEquipmentInventory.Clear();
-        m_CombatLootInventory.Clear();
-        m_TavernTradeInventory.Clear();
-        m_ChestInventory.Clear();
+        ClearInventories();
     }
 
-    private void ClearInventories()
+    public void ClearInventories()
     {
         m_inventory.Clear();
         m_GrodnarEquipmentInventory.Clear();
@@ -349,6 +344,7 @@ public class InventoryManager : MonoBehaviour
         m_SigfridEquipmentDisplay.gameObject.SetActive(false);
         m_CombatLootDisplay.HideInventory();
         confirmLootButton.gameObject.SetActive(false);
+        takeLootButton.gameObject.SetActive(false);
         confirmChestButton.gameObject.SetActive(false);
         m_inventoryDisplay.HideInventory();
         m_statsScreen.DisableStatButtons();
@@ -502,8 +498,19 @@ public class InventoryManager : MonoBehaviour
         m_CombatLootDisplay.ShowInventory();
         m_inventoryDisplay.ShowInventory();
         confirmLootButton.gameObject.SetActive(true);
+        takeLootButton.gameObject.SetActive(true);
         inventoryBlackScreen.SetActive(true);
         GameManager.Instance.pointToGo.SetMovement(false);
+    }
+
+    public void TakeAllLoot() {
+        for (int i = 0; i < m_CombatLootInventory.GetSlots.Length; i++)
+        {
+            if (m_CombatLootInventory.GetSlots[i].Item.ID != -1) {
+                //slot contiene item
+                m_CombatLootInventory.SwapItems(m_CombatLootInventory.GetSlots[i], m_inventory.GetEmptySlot());
+            }
+        }
     }
 
     public void ConfirmLoot()
@@ -512,6 +519,7 @@ public class InventoryManager : MonoBehaviour
         m_inventoryDisplay.HideInventory();
         m_CombatLootInventory.Clear();
         confirmLootButton.gameObject.SetActive(false);
+        takeLootButton.gameObject.SetActive(false);
         inventoryBlackScreen.SetActive(false);
         GameManager.Instance.pointToGo.SetMovement(true);
     }

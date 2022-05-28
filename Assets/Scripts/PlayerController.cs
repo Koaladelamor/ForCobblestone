@@ -35,6 +35,8 @@ public class PlayerController : MonoBehaviour
         previousPosition = currentPosition;
         currentPosition = transform.position;
 
+        if (!AudioManager.Instance.partyFX.isPlaying) { footstepsPlaying = false; }
+
         if (PartyIsMoving() && !footstepsPlaying)
         {
             AudioManager.Instance.PlayPartyFootsteps();

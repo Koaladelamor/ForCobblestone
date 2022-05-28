@@ -17,7 +17,8 @@ public class GameStats : MonoBehaviour
     public Stadistics Lanstar;
     public Stadistics Sigfrid;
 
-    public Stadistics Minotaur;
+    public Stadistics Spider;
+    public Stadistics Worm;
 
     private int coins;
 
@@ -47,7 +48,8 @@ public class GameStats : MonoBehaviour
         Lanstar = InitStats("Lanstar", 100, 20, 35, 16, 10, 10);
         Sigfrid = InitStats("Sigfrid", 80, 15, 30, 12, 5, 20);
 
-        Minotaur = InitStats("Minotaur", 75, 10, 20, 15, 10, 5);
+        Spider = InitStats("Spider", 75, 10, 20, 15, 10, 5);
+        Worm = InitStats("Worm", 75, 10, 20, 15, 10, 5);
 
         coins = 0;
     }
@@ -60,7 +62,8 @@ public class GameStats : MonoBehaviour
     public List<Stat> GetLanstarStats() { return Lanstar._stats; }
     public List<Stat> GetSigfridStats() { return Sigfrid._stats; }
 
-    public List<Stat> GetMinotaurStats() { return Minotaur._stats; }
+    public List<Stat> GetSpiderStats() { return Spider._stats; }
+    public List<Stat> GetWormStats() { return Worm._stats; }
 
     public Stadistics InitStats(string name, int health, int min_damage, int max_damage, int strenght, int stamina, int agility)
     {
@@ -215,43 +218,52 @@ public class GameStats : MonoBehaviour
     }
 
     public void HealCharacters() {
-        int GrodnarMaxHP = 0;
-        int LanstarMaxHP = 0;
-        int SigfridMaxHP = 0;
         for (int i = 0; i < Grodnar._stats.Count; i++)
         {
-            if (Grodnar._stats[i].attribute == Attributes.MAX_HEALTH) {
-                GrodnarMaxHP = Grodnar._stats[i].value;            
-            }
             if (Grodnar._stats[i].attribute == Attributes.CURR_HEALTH)
             {
-                Grodnar._stats[i].value = GrodnarMaxHP;
+                Grodnar._stats[i].value = GetMaxHP(Grodnar._stats);
             }
         }
 
         for (int i = 0; i < Lanstar._stats.Count; i++)
         {
-            if (Lanstar._stats[i].attribute == Attributes.MAX_HEALTH)
-            {
-                LanstarMaxHP = Lanstar._stats[i].value;
-            }
             if (Lanstar._stats[i].attribute == Attributes.CURR_HEALTH)
             {
-                Lanstar._stats[i].value = LanstarMaxHP;
+                Lanstar._stats[i].value = GetMaxHP(Lanstar._stats);
             }
         }
 
         for (int i = 0; i < Sigfrid._stats.Count; i++)
         {
-            if (Sigfrid._stats[i].attribute == Attributes.MAX_HEALTH)
-            {
-                SigfridMaxHP = Sigfrid._stats[i].value;
-            }
             if (Sigfrid._stats[i].attribute == Attributes.CURR_HEALTH)
             {
-                Sigfrid._stats[i].value = SigfridMaxHP;
+                Sigfrid._stats[i].value = GetMaxHP(Sigfrid._stats);
             }
         }
+    }
+
+    public void SetCurrentHP(List<Stat> stats, int newValue)
+    {
+        for (int i = 0; i < stats.Count; i++)
+        {
+            if (stats[i].attribute == Attributes.CURR_HEALTH)
+            {
+                stats[i].value = newValue;
+            }
+        }
+    }
+
+    public int GetMaxHP(List<Stat> stats)
+    {
+        for (int i = 0; i < stats.Count; i++)
+        {
+            if (stats[i].attribute == Attributes.MAX_HEALTH)
+            {
+                return stats[i].value;
+            }
+        }
+        return -1;
     }
 
     public int GetCoins() { return coins; }
@@ -262,5 +274,7 @@ public class GameStats : MonoBehaviour
 
     public void SubtractCoins(int coinsToSubtract) { coins -= coinsToSubtract; }
 
+
+    public void DestroyInstance() { Destroy(this.gameObject); }
 
 }

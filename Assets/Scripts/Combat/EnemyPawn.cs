@@ -34,32 +34,56 @@ public class EnemyPawn : PawnController
         switch (character)
         {
             case CHARACTER.SPIDER:
-                List<Stat> MinotaurStats = GameStats.Instance.GetMinotaurStats();
-                for (int g = 0; g < MinotaurStats.Count; g++)
+                List<Stat> SpiderStats = GameStats.Instance.GetSpiderStats();
+                for (int g = 0; g < SpiderStats.Count; g++)
                 {
-                    if (MinotaurStats[g].attribute == Attributes.MIN_DAMAGE)
+                    if (SpiderStats[g].attribute == Attributes.MIN_DAMAGE)
                     {
-                        min_damage = MinotaurStats[g].value;
+                        min_damage = SpiderStats[g].value;
                     }
-                    else if (MinotaurStats[g].attribute == Attributes.MAX_DAMAGE)
+                    else if (SpiderStats[g].attribute == Attributes.MAX_DAMAGE)
                     {
-                        max_damage = MinotaurStats[g].value;
+                        max_damage = SpiderStats[g].value;
                     }
-                    else if (MinotaurStats[g].attribute == Attributes.MAX_HEALTH)
+                    else if (SpiderStats[g].attribute == Attributes.MAX_HEALTH)
                     {
-                        MAX_HP = MinotaurStats[g].value;
+                        MAX_HP = SpiderStats[g].value;
                     }
-                    else if (MinotaurStats[g].attribute == Attributes.CURR_HEALTH)
+                    else if (SpiderStats[g].attribute == Attributes.CURR_HEALTH)
                     {
-                        cur_hp = MinotaurStats[g].value;
+                        cur_hp = SpiderStats[g].value;
                     }
-                    else if (MinotaurStats[g].attribute == Attributes.AGILITY)
+                    else if (SpiderStats[g].attribute == Attributes.AGILITY)
                     {
-                        agility = MinotaurStats[g].value;
+                        agility = SpiderStats[g].value;
                     }
                 }
                 break;
             case CHARACTER.WORM:
+                List<Stat> WormStats = GameStats.Instance.GetWormStats();
+                for (int g = 0; g < WormStats.Count; g++)
+                {
+                    if (WormStats[g].attribute == Attributes.MIN_DAMAGE)
+                    {
+                        min_damage = WormStats[g].value;
+                    }
+                    else if (WormStats[g].attribute == Attributes.MAX_DAMAGE)
+                    {
+                        max_damage = WormStats[g].value;
+                    }
+                    else if (WormStats[g].attribute == Attributes.MAX_HEALTH)
+                    {
+                        MAX_HP = WormStats[g].value;
+                    }
+                    else if (WormStats[g].attribute == Attributes.CURR_HEALTH)
+                    {
+                        cur_hp = WormStats[g].value;
+                    }
+                    else if (WormStats[g].attribute == Attributes.AGILITY)
+                    {
+                        agility = WormStats[g].value;
+                    }
+                }
                 break;
             default:
                 break;

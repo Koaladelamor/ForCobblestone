@@ -285,13 +285,7 @@ public class AudioManager : MonoBehaviour
                 partyFX.PlayOneShot(grassFootsteps[1]);
                 break;
             case 2:
-                partyFX.PlayOneShot(grassFootsteps[2]);
-                break;
-            case 3:
-                partyFX.PlayOneShot(grassFootsteps[3]);
-                break;
-            case 4:
-                partyFX.PlayOneShot(grassFootsteps[3]);
+                partyFX.PlayOneShot(grassFootsteps[1]);
                 break;
         }
         partyFX.Play();

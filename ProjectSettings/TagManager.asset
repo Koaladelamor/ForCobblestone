@@ -60,6 +60,9 @@ TagManager:
   - name: Grass
     uniqueID: 2509954377
     locked: 0
+  - name: River
+    uniqueID: 2840587927
+    locked: 0
   - name: Tree
     uniqueID: 3267353755
     locked: 0
@@ -89,6 +92,9 @@ TagManager:
     locked: 0
   - name: Combat Pawns
     uniqueID: 2822374805
+    locked: 0
+  - name: TreeFirst
+    uniqueID: 3947944283
     locked: 0
   - name: UI
     uniqueID: 439815287

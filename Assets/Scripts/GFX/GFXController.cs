@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class GFXController : MonoBehaviour
 {
-    public GameObject warrior, archer, tank, spider;
-    public Animator warriorAnim, archerAnim, tankAnim, spiderAnim;
+    public GameObject warrior, archer, tank, spider, worm;
+    public Animator warriorAnim, archerAnim, tankAnim, spiderAnim, wormAnim;
 
     private bool attackDone;
 
@@ -77,7 +77,7 @@ public class GFXController : MonoBehaviour
                 spiderAnim.SetTrigger("Attack");
                 break;
             case PawnController.CHARACTER.WORM:
-
+                wormAnim.SetTrigger("Attack");
                 break;
             case PawnController.CHARACTER.LAST_NO_USE:
                 break;
@@ -103,7 +103,7 @@ public class GFXController : MonoBehaviour
                 spiderAnim.SetTrigger("Hurt");
                 break;
             case PawnController.CHARACTER.WORM:
-
+                wormAnim.SetTrigger("Hurt");
                 break;
             case PawnController.CHARACTER.LAST_NO_USE:
                 break;
@@ -129,7 +129,7 @@ public class GFXController : MonoBehaviour
                 spiderAnim.SetBool("IsDead", true);
                 break;
             case PawnController.CHARACTER.WORM:
-
+                wormAnim.SetBool("IsDead", true);
                 break;
             case PawnController.CHARACTER.LAST_NO_USE:
                 break;
@@ -155,7 +155,7 @@ public class GFXController : MonoBehaviour
                 spiderAnim.SetBool("IsRunning", true);
                 break;
             case PawnController.CHARACTER.WORM:
-
+                wormAnim.SetBool("IsRunning", true);
                 break;
             case PawnController.CHARACTER.LAST_NO_USE:
                 break;
@@ -181,7 +181,7 @@ public class GFXController : MonoBehaviour
                 spiderAnim.SetBool("IsRunning", false);
                 break;
             case PawnController.CHARACTER.WORM:
-
+                wormAnim.SetBool("IsRunning", false);
                 break;
             case PawnController.CHARACTER.LAST_NO_USE:
                 break;

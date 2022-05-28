@@ -7,8 +7,10 @@ public class CombatManager : MonoBehaviour
     private GameObject[] m_enemies;
 
     public GameObject m_spiderPrefab;
+    public GameObject m_wormPrefab;
 
     public GameObject m_canvasToMap;
+    public GameObject m_gameOverCanvas;
 
     Vector2 EnemySpawnTile1;
     Vector2 EnemySpawnTile2;
@@ -49,12 +51,12 @@ public class CombatManager : MonoBehaviour
 
         m_canvasToMap.SetActive(false);
 
-        m_enemies[0] = Instantiate(m_spiderPrefab, transform.position, transform.rotation);
-        m_enemies[1] = Instantiate(m_spiderPrefab, transform.position, transform.rotation);
-        m_enemies[2] = Instantiate(m_spiderPrefab, transform.position, transform.rotation);
+        m_enemies[0] = Instantiate(m_spiderPrefab, new Vector3(190, 38, 0), transform.rotation);
+        m_enemies[1] = Instantiate(m_wormPrefab, new Vector3(190, -14, 0), transform.rotation);
+        m_enemies[2] = Instantiate(m_spiderPrefab, new Vector3(190, -60, 0), transform.rotation);
 
 
-        Invoke("AssignEnemies", 0.1f);
+        Invoke("AssignEnemies", 0.8f);
 
         turn = 0;
         CalculatePlayersTurn();
@@ -65,11 +67,18 @@ public class CombatManager : MonoBehaviour
     {
 
         if (Input.GetKeyDown(KeyCode.O)) {
-            Invoke("SetCanvasActive", 0.5f);
+            Invoke("VictoryCanvas", 1f);
         }
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            Invoke("GameOverCanvas", 1f);
+        }
+
+
         if (EnemiesDefeated())
         {
-            Invoke("SetCanvasActive", 2f);
+            UpdateCurrentHP();
+            Invoke("VictoryCanvas", 1f);
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
@@ -218,6 +227,27 @@ public class CombatManager : MonoBehaviour
         return false;
     }
 
+    bool PlayersDefeated()
+    {
+
+        int playersDead = 0;
+        int players = m_players.Length;
+        for (int i = 0; i < players; i++)
+        {
+            if (!m_players[i].GetComponent<PawnController>().IsAlive())
+            {
+                playersDead++;
+            }
+        }
+
+        if (playersDead == players)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
     public void AssignEnemies() {
         GridManager.Instance.AssignPawnToTile(m_enemies[0], EnemySpawnTile1);
         GridManager.Instance.AssignPawnToTile(m_enemies[1], EnemySpawnTile2);
@@ -228,8 +258,13 @@ public class CombatManager : MonoBehaviour
         GameManager.Instance.SetCombatIsOver(true);
     }
 
-    public void SetCanvasActive() {
+    public void VictoryCanvas() {
         m_canvasToMap.SetActive(true);
+    }
+
+    public void GameOverCanvas()
+    {
+        m_gameOverCanvas.SetActive(true);
     }
 
     public void SetBoolCombatToTrue() {
@@ -256,4 +291,29 @@ public class CombatManager : MonoBehaviour
     }
 
     public void StartCombat() { startCombat = true; }
+
+    public void UpdateCurrentHP() {
+        for (int i = 0; i < m_players.Length; i++)
+        {
+            if (m_players[i].GetComponent<PawnController>().GetCharacterType() == PawnController.CHARACTER.GRODNAR) {
+                GameStats.Instance.SetCurrentHP(GameStats.Instance.GetGrodnarStats(), m_players[i].GetComponent<PawnController>().GetCurrentHP());
+            }
+            else if (m_players[i].GetComponent<PawnController>().GetCharacterType() == PawnController.CHARACTER.LANSTAR)
+            {
+                GameStats.Instance.SetCurrentHP(GameStats.Instance.GetLanstarStats(), m_players[i].GetComponent<PawnController>().GetCurrentHP());
+            }
+            else if (m_players[i].GetComponent<PawnController>().GetCharacterType() == PawnController.CHARACTER.SIGFRID)
+            {
+                GameStats.Instance.SetCurrentHP(GameStats.Instance.GetSigfridStats(), m_players[i].GetComponent<PawnController>().GetCurrentHP());
+            }
+        }
+    }
+
+    public void ContinueGame() {
+        GameManager.Instance.ContinueGame();
+    }
+
+    public void RestartGame() {
+        GameManager.Instance.RestartGame();
+    }
 }
