@@ -4,10 +4,20 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField] private GameObject enemyToSpawn;
+    [SerializeField] private GameObject spiderPrefab;
+    [SerializeField] private GameObject wormPrefab;
+    private GameObject enemyToSpawn;
     private GameObject enemyOnSpawn;
     private int spawnerID;
+    [SerializeField] private bool linearPatrol;
 
+    private void Awake()
+    {
+        enemyToSpawn = null;
+        enemyOnSpawn = null;
+        //linearPatrol = false;
+        spawnerID = -1;
+    }
 
     // Update is called once per frame
     void Update()
@@ -31,6 +41,18 @@ public class EnemySpawner : MonoBehaviour
 
     public void RespawnEnemy(Vector3 enemySpawnPos, int ID)
     {
+        int randomInt = Random.Range(0, 2);
+        if (randomInt == 0)
+        {
+            enemyToSpawn = spiderPrefab;
+        }
+        else if (randomInt == 1)
+        {
+            enemyToSpawn = wormPrefab;
+        }
+        else { Debug.Log("randomInt > 1"); }
+
+
         GameObject enemy = Instantiate(enemyToSpawn, enemySpawnPos, transform.rotation);
         PatrolAI AI = enemy.GetComponent<PatrolAI>();
         if (AI == null) {
@@ -38,10 +60,20 @@ public class EnemySpawner : MonoBehaviour
             return;
         }
 
-        AI.patrolPoints[0] = AI.InstantiatePatrolPoint(50f, 50f);
-        AI.patrolPoints[1] = AI.InstantiatePatrolPoint(-50f, 50f);
-        AI.patrolPoints[2] = AI.InstantiatePatrolPoint(-50f, -50f);
-        AI.patrolPoints[3] = AI.InstantiatePatrolPoint(50f, -50f);
+
+        if (!linearPatrol)
+        {
+            AI.patrolPoints[0] = AI.InstantiatePatrolPoint(75f, 75f);
+            AI.patrolPoints[1] = AI.InstantiatePatrolPoint(-75f, 75f);
+            AI.patrolPoints[2] = AI.InstantiatePatrolPoint(-75f, -75f);
+            AI.patrolPoints[3] = AI.InstantiatePatrolPoint(75f, -75f);
+        }
+        else {
+            AI.patrolPoints[0] = AI.InstantiatePatrolPoint(75f, 75f);
+            AI.patrolPoints[1] = AI.InstantiatePatrolPoint(-75f, 75f);
+            AI.patrolPoints[2] = AI.InstantiatePatrolPoint(125f, 75f);
+            AI.patrolPoints[3] = AI.InstantiatePatrolPoint(-125f, 75f);
+        }
 
         enemy.GetComponent<PatrolAI>().SetEnemyID(ID);
         spawnerID = ID;

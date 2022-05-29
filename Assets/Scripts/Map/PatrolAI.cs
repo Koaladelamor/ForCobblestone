@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum EnemyType { NONE, SPIDER, WORM }
 public class PatrolAI : MonoBehaviour
 {
     public float speed;
@@ -41,7 +42,6 @@ public class PatrolAI : MonoBehaviour
         {
             FlipSprites();
         }*/
-
     }
 
     void FixedUpdate()
@@ -51,7 +51,7 @@ public class PatrolAI : MonoBehaviour
     }
 
     void MoveTowardsPlayer() {
-        if (GetComponentInChildren<VisionRange>().playerDetected == true)
+        if (GetComponentInChildren<VisionRange>().GetPlayerDetected())
         {
             patrolling = false;
             transform.position = Vector3.MoveTowards(transform.position, m_player.transform.position, speed * 1.2f *Time.fixedDeltaTime);
@@ -102,6 +102,8 @@ public class PatrolAI : MonoBehaviour
     public void SetEnemyID(int ID) { enemyID = ID; }
 
     public int GetEnemyID() { return enemyID; }
+
+    public EnemyType GetEnemyType() { return enemyType; }
 
     public bool IsAlive() { return alive; }
 

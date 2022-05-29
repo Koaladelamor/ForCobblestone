@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class VisionRange : MonoBehaviour
 {
-    public bool playerDetected;
+    private bool playerDetected;
     // Start is called before the first frame update
     void Start()
     {
@@ -31,4 +31,6 @@ public class VisionRange : MonoBehaviour
             playerDetected = false;
         }
     }
+
+    public bool GetPlayerDetected() { return playerDetected; }
 }

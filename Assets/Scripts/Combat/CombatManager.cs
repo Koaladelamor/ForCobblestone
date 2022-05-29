@@ -51,9 +51,26 @@ public class CombatManager : MonoBehaviour
 
         m_canvasToMap.SetActive(false);
 
-        m_enemies[0] = Instantiate(m_spiderPrefab, new Vector3(190, 38, 0), transform.rotation);
-        m_enemies[1] = Instantiate(m_wormPrefab, new Vector3(190, -14, 0), transform.rotation);
-        m_enemies[2] = Instantiate(m_spiderPrefab, new Vector3(190, -60, 0), transform.rotation);
+        EnemyType enemyType = GameManager.Instance.GetCurrentEnemyType();
+        switch (enemyType)
+        {
+            case EnemyType.NONE:
+                Debug.Log("EnemyType set to none");
+                break;
+            case EnemyType.SPIDER:
+                m_enemies[0] = Instantiate(m_spiderPrefab, new Vector3(190, 38, 0), transform.rotation);
+                m_enemies[1] = Instantiate(m_spiderPrefab, new Vector3(190, -14, 0), transform.rotation);
+                m_enemies[2] = Instantiate(m_spiderPrefab, new Vector3(190, -60, 0), transform.rotation);
+                break;
+            case EnemyType.WORM:
+                m_enemies[0] = Instantiate(m_wormPrefab, new Vector3(190, 38, 0), transform.rotation);
+                m_enemies[1] = Instantiate(m_wormPrefab, new Vector3(190, -14, 0), transform.rotation);
+                m_enemies[2] = Instantiate(m_wormPrefab, new Vector3(190, -60, 0), transform.rotation);
+                break;
+            default:
+                break;
+        }
+
 
 
         Invoke("AssignEnemies", 0.8f);

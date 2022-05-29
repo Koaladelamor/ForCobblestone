@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public enum EnemyType  { MINOTAUR, WOLF, WORM }
 public class GameManager : MonoBehaviour
 {
     static GameManager mInstance;
@@ -13,6 +12,7 @@ public class GameManager : MonoBehaviour
         private set { }
     }
 
+    private EnemyType currentEnemyType;
     private int currentEnemyID;
     public EnemySpawner[] enemySpawners;
 
@@ -41,6 +41,7 @@ public class GameManager : MonoBehaviour
         combatIsOver = false;
         enemyEngaged = false;
         currentEnemyID = -1;
+        currentEnemyType = EnemyType.NONE;
         newGamePosition = new Vector3(-720, 271, 0);
     }
 
@@ -177,6 +178,10 @@ public class GameManager : MonoBehaviour
     public void SetCombatIsOver(bool isCombatOver) { combatIsOver = isCombatOver; }
 
     public void SetCurrentEnemyID(int ID) { currentEnemyID = ID; }
+
+    public void SetCurrentEnemyType(EnemyType type) { currentEnemyType = type; }
+
+    public EnemyType GetCurrentEnemyType() { return currentEnemyType; }
 
     public void SetEnemyEngaged (bool engaged) { enemyEngaged = engaged; }
 

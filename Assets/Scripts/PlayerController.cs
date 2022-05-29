@@ -75,6 +75,7 @@ public class PlayerController : MonoBehaviour
         {
             m_gameManager.GetComponent<GameManager>().SetEnemyEngaged(true);
             GameManager.Instance.SetCurrentEnemyID(other.gameObject.GetComponent<PatrolAI>().GetEnemyID());
+            GameManager.Instance.SetCurrentEnemyType(other.gameObject.GetComponent<PatrolAI>().GetEnemyType());
 
             //Debug.Log(other.gameObject.GetComponent<PatrolAI>().GetEnemyID());
             //other.gameObject.GetComponent<Collider2D>().enabled = false;
