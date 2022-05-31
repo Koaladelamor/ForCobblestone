@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     public GameObject party;
     private Vector3 newGamePosition;
 
+    public GameObject arrowPrefab;
 
     private void Awake()
     {

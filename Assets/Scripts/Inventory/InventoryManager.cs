@@ -622,8 +622,26 @@ public class InventoryManager : MonoBehaviour
     public void SetAttributesInfo(ItemBuff[] buffs) {
         for (int i = 0; i < buffs.Length; i++)
         {
-            attributesInfo[i].text = buffs[i].attribute.ToString() + " " + buffs[i].value.ToString();
+            if (buffs[i].attribute == Attributes.MAX_DAMAGE) {
+                attributesInfo[i].text = "MAX DAMAGE  " + buffs[i].value.ToString();
+                continue;
+            }
+            else if (buffs[i].attribute == Attributes.MIN_DAMAGE)
+            {
+                attributesInfo[i].text = "MIN DAMAGE  " + buffs[i].value.ToString();
+                continue;
+            }
+            attributesInfo[i].text = buffs[i].attribute.ToString() + "  " + buffs[i].value.ToString();
         }
+    }
+
+    public void SetValueInfo(int value) {
+        attributesInfo[0].text = "Value  " + value.ToString();
+    }
+
+    public void SetHealInfo(int heal)
+    {
+        attributesInfo[0].text = "Heals " + heal.ToString() + " HP";
     }
 
     public void ClearAttributesInfo() {
@@ -633,4 +651,11 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
+    public void SetInfoPosition(Vector3 mousePos) {
+        itemInfo.GetComponent<RectTransform>().position = mousePos;
+    }
+    public Vector3 GetInfoPosition()
+    {
+        return itemInfo.GetComponent<RectTransform>().position;
+    }
 }

@@ -907,6 +907,7 @@ GameObject:
   - component: {fileID: 6904670649098708597}
   - component: {fileID: 1140241440987461668}
   - component: {fileID: 7216322277551277856}
+  - component: {fileID: 2511161251309805777}
   m_Layer: 0
   m_Name: Worm_Mesh
   m_TagString: Enemy
@@ -968,6 +969,32 @@ MonoBehaviour:
   m_type: 1
   playersMesh:
   - {fileID: 6904670649098708597}
+--- !u!61 &2511161251309805777
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6904670649098708598}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -2, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 25, y: 20}
+  m_EdgeRadius: 0
 --- !u!1 &6904670649125803715
 GameObject:
   m_ObjectHideFlags: 0

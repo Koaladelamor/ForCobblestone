@@ -333,4 +333,6 @@ public class CombatManager : MonoBehaviour
     public void RestartGame() {
         GameManager.Instance.RestartGame();
     }
+
+    public GameObject[] GetPlayers() { return m_players; }
 }

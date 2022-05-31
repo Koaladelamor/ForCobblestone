@@ -114,9 +114,28 @@ public abstract class UserInterface : MonoBehaviour
     {
         MouseData.slotHoveredOver = obj;
         if (slotsOnInterface[obj].Item.Buffs == null) { return; }
+        
         InventoryManager.Instance.itemInfo.SetActive(true);
+
+        if (slotsOnInterface[obj].parent.mInventory.type == InventoryType.MAIN)
+        {
+            InventoryManager.Instance.SetInfoPosition(Input.mousePosition + new Vector3(200, 0, 0));
+        }
+        else if (slotsOnInterface[obj].parent.mInventory.type != InventoryType.MAIN)
+        {
+            InventoryManager.Instance.SetInfoPosition(Input.mousePosition + new Vector3(-200, 0, 0));
+        }
+
         InventoryManager.Instance.SetNameInfo(slotsOnInterface[obj].Item.Name);
         InventoryManager.Instance.SetAttributesInfo(slotsOnInterface[obj].Item.Buffs);
+
+        if (slotsOnInterface[obj].ItemObject.Type == ItemType.CONSUMABLE) {
+            InventoryManager.Instance.SetHealInfo(100);
+        }
+        else if (slotsOnInterface[obj].ItemObject.Type == ItemType.TRADE)
+        {
+            InventoryManager.Instance.SetValueInfo(slotsOnInterface[obj].ItemObject.Value);
+        }
     }
     public void OnExit(GameObject obj)
     {

@@ -57,6 +57,8 @@ public class PawnController : MonoBehaviour
 
     public Transform[] playersMesh;
 
+    private GameObject tempArrow;
+
     protected virtual void Awake()
     {
         alive = true;
@@ -80,6 +82,7 @@ public class PawnController : MonoBehaviour
         combatManager = GameObject.FindGameObjectWithTag("CombatManager").GetComponent<CombatManager>();
         gfxController = GetComponent<GFXController>();
         //OnHurtAnimEnd += OnHurtAnimDone;
+        tempArrow = null;
     }
 
     protected virtual void Start()
@@ -374,6 +377,7 @@ public class PawnController : MonoBehaviour
                     break;
             }
         }
+        //ARCHER
         else if (myTurn && character == CHARACTER.LANSTAR) 
         {
 
@@ -978,4 +982,12 @@ public class PawnController : MonoBehaviour
     }
 
     public bool IsAlive() { return alive; }
+
+    public void SpawnArrow() {
+        tempArrow = Instantiate(GameManager.Instance.arrowPrefab, transform.position, transform.rotation);
+    }
+
+    public void ShootArrow() {
+        tempArrow.GetComponent<Arrow>().SetShoot(true);
+    }
 }

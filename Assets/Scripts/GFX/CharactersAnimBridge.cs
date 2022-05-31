@@ -15,6 +15,15 @@ public class CharactersAnimBridge : MonoBehaviour
         gfxController.GetComponent<PawnController>().HurtAnimDone();
     }
 
+    public void SpawnArrow() {
+        gfxController.GetComponent<PawnController>().SpawnArrow();
+    }
+
+    public void ShootArrow()
+    {
+        gfxController.GetComponent<PawnController>().ShootArrow();
+    }
+
     public void HurtStartSound() {
         PawnController pawnController = gfxController.GetComponent<PawnController>();
 

@@ -23,6 +23,7 @@ TagManager:
   - Item
   - EventSystem
   - PatrolPoint
+  - Arrow
   layers:
   - Default
   - TransparentFX
