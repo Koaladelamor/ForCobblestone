@@ -38,6 +38,7 @@ public class InventoryManager : MonoBehaviour
     public Button confirmLootButton;
     public Button takeLootButton;
     public Button confirmChestButton;
+    public Button takeChestLootButton;
     public Button confirmTradeButton;
 
     public GameObject inventoryBlackScreen;
@@ -84,6 +85,7 @@ public class InventoryManager : MonoBehaviour
 
         ClearInventories();
         m_currentEquipmentInterface = m_GrodnarEquipmentDisplay;
+        equipmentButtons[2].Select();
 
         for (int i = 0; i < m_GrodnarEquipmentInventory.GetSlots.Length; i++)
         {
@@ -346,6 +348,7 @@ public class InventoryManager : MonoBehaviour
         confirmLootButton.gameObject.SetActive(false);
         takeLootButton.gameObject.SetActive(false);
         confirmChestButton.gameObject.SetActive(false);
+        takeChestLootButton.gameObject.SetActive(false);
         m_inventoryDisplay.HideInventory();
         m_statsScreen.DisableStatButtons();
         m_statsScreen.HideDisplay();
@@ -376,6 +379,10 @@ public class InventoryManager : MonoBehaviour
         inventoryOnScreen = true;
 
         inventoryBlackScreen.SetActive(true);
+
+        m_currentEquipmentInterface = m_GrodnarEquipmentDisplay;
+        equipmentButtons[2].Select();
+        
     }
 
     public void GrodnarEquipmentDisplay()
@@ -503,12 +510,24 @@ public class InventoryManager : MonoBehaviour
         GameManager.Instance.pointToGo.SetMovement(false);
     }
 
-    public void TakeAllLoot() {
+    public void TakeCombatLoot() {
         for (int i = 0; i < m_CombatLootInventory.GetSlots.Length; i++)
         {
-            if (m_CombatLootInventory.GetSlots[i].Item.ID != -1) {
+            if (m_CombatLootInventory.GetSlots[i].Item.ID >= 0) {
                 //slot contiene item
                 m_CombatLootInventory.SwapItems(m_CombatLootInventory.GetSlots[i], m_inventory.GetEmptySlot());
+            }
+        }
+    }
+
+    public void TakeChestLoot()
+    {
+        for (int i = 0; i < m_ChestInventory.GetSlots.Length; i++)
+        {
+            if (m_ChestInventory.GetSlots[i].Item.ID >= 0)
+            {
+                //slot contiene item
+                m_ChestInventory.SwapItems(m_ChestInventory.GetSlots[i], m_inventory.GetEmptySlot());
             }
         }
     }
@@ -530,6 +549,7 @@ public class InventoryManager : MonoBehaviour
         m_inventoryDisplay.HideInventory();
         m_ChestInventory.Clear();
         confirmChestButton.gameObject.SetActive(false);
+        takeChestLootButton.gameObject.SetActive(false);
         inventoryBlackScreen.SetActive(false);
         GameManager.Instance.pointToGo.SetMovement(true);
     }
@@ -587,6 +607,7 @@ public class InventoryManager : MonoBehaviour
     {
         m_ChestLootDisplay.ShowInventory();
         confirmChestButton.gameObject.SetActive(true);
+        takeChestLootButton.gameObject.SetActive(true);
     }
 
 

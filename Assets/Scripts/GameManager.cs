@@ -194,6 +194,23 @@ public class GameManager : MonoBehaviour
 
     public void QuitGame() { Application.Quit(); }
 
+    public void MainMenu() {
+        SceneManager.LoadScene("MenuScene", LoadSceneMode.Single);
+        Destroy(GameManager.Instance.gameObject);
+        GameStats.Instance.DestroyInstance();
+    }
+
     public void DestroyInstance() { Destroy(this.gameObject); }
+
+    public void RestartButton() {
+        party.transform.position = newGamePosition;
+        StopMovement();
+        EnablePartyMovement();
+        GameStats.Instance.SetCoins(0);
+        InventoryManager.Instance.ClearInventories();
+        InventoryManager.Instance.InitTavernLoot();
+        CanvasManager.Instance.ContinueButton();
+        //reset stats
+    }
 
 }

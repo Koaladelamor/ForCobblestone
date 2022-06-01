@@ -120,4 +120,10 @@ public class CanvasManager : MonoBehaviour
 
     public void EnableCombatCanvas() { m_canvasToCombat.SetActive(true); }
 
+    public void ContinueButton() {
+        canvasMenu.SetActive(false);
+        isMenuOnScreen = false;
+        GameManager.Instance.EnablePartyMovement();
+    }
+
 }
