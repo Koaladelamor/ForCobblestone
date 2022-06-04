@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4417765538601910360}
   - component: {fileID: 1437466157684183760}
   - component: {fileID: 5057610564435817873}
+  - component: {fileID: 7979128971252737313}
   m_Layer: 0
   m_Name: Arrow
   m_TagString: Arrow
@@ -94,7 +95,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -122,4 +123,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae19c1a66a756d848b0dc84d8f1230cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  archer: {fileID: 0}
+--- !u!50 &7979128971252737313
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4417765538601910695}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4

@@ -36,6 +36,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip SigfridDeathSound;
     [SerializeField] private AudioClip LanstarDeathSound;
     [SerializeField] private AudioClip BellSound;
+    [SerializeField] private AudioClip snore1;
+    [SerializeField] private AudioClip yawn;
 
     [SerializeField] private AudioClip[] grassFootsteps;
     [SerializeField] private AudioClip[] stoneFootsteps;
@@ -49,7 +51,7 @@ public class AudioManager : MonoBehaviour
 
     public enum UIEffects { NONE, SELECT, PRESSED, LIFESOUND };
 
-    public enum InstantAudios { NONE, ENEMYHURT, PLAYERHURT, BAGCLOSE, BAGOPEN, ARROWFLESH, ONGUARD, BIRD, CHESTOPEN, COIN, DRAMATICBIRD, OWL, WOLFHOWL, SWORDFLESH, SWORDOBJECT, SWORDMETAL, GRODNARDEATH, SIGFRIDDEATH, LANSTARDEATH, BELLSOUND, ALERT };
+    public enum InstantAudios { NONE, ENEMYHURT, PLAYERHURT, BAGCLOSE, BAGOPEN, ARROWFLESH, ONGUARD, BIRD, CHESTOPEN, COIN, DRAMATICBIRD, OWL, WOLFHOWL, SWORDFLESH, SWORDOBJECT, SWORDMETAL, GRODNARDEATH, SIGFRIDDEATH, LANSTARDEATH, BELLSOUND, ALERT, SNORE1, YAWN };
 
     public enum Footsteps { NONE, WOOD, STONE, SAND };
 
@@ -158,6 +160,12 @@ public class AudioManager : MonoBehaviour
                 break;
             case InstantAudios.BELLSOUND:
                 effectsSounds.PlayOneShot(BellSound);
+                break;
+            case InstantAudios.SNORE1:
+                effectsSounds.PlayOneShot(snore1);
+                break;
+            case InstantAudios.YAWN:
+                effectsSounds.PlayOneShot(yawn);
                 break;
             default:
                 break;
@@ -290,6 +298,10 @@ public class AudioManager : MonoBehaviour
         }
         partyFX.Play();
     }
+
+    public void StopMusic() { BackgroundMusic.Stop(); }
+
+    public void PlayMusic() { BackgroundMusic.Play(); }
 
     //public enum BackgroundSongs { NONE, MENUAUDIO, EXPLOREAUDIO, BATTLEAUDIO };
 

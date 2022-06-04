@@ -24,14 +24,14 @@ MonoBehaviour:
     - attribute: 4
       value: 0
       min: 1
-      max: 10
+      max: 20
     - attribute: 5
       value: 0
       min: 1
-      max: 10
-    - attribute: 1
+      max: 20
+    - attribute: 6
       value: 0
       min: 1
-      max: 20
+      max: 5
     Holder: 7
     PreviousHolder: 7

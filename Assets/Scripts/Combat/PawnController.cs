@@ -407,12 +407,12 @@ public class PawnController : MonoBehaviour
                     }
                     else
                     {
-                        attackCurrentTimer += Time.deltaTime;
+                        /*attackCurrentTimer += Time.deltaTime;
                         if (attackCurrentTimer >= attackTimer)
                         {
                             attackEnded = true;
                             attackCurrentTimer = 0;
-                        }
+                        }*/
                         if (attackEnded)
                         {
                             attackPerformed = false;
@@ -981,10 +981,12 @@ public class PawnController : MonoBehaviour
         }
     }
 
+    public void AttackEnded(bool attack) { attackEnded = attack; }
+
     public bool IsAlive() { return alive; }
 
     public void SpawnArrow() {
-        tempArrow = Instantiate(GameManager.Instance.arrowPrefab, transform.position, transform.rotation);
+        tempArrow = Instantiate(GameManager.Instance.arrowPrefab, transform.position + new Vector3(10, 7, 0), GameManager.Instance.arrowPrefab.transform.rotation);
     }
 
     public void ShootArrow() {

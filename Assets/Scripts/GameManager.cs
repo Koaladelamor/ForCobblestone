@@ -81,10 +81,10 @@ public class GameManager : MonoBehaviour
             LoadMapScene();
 
             InventoryManager.Instance.GenerateRandomLoot((int)Random.Range(1, 6));
-            GameStats.Instance.AddCoins(500);
-            GameStats.Instance.AddXpToGrodnar(800f);
-            GameStats.Instance.AddXpToLanstar(800f);
-            GameStats.Instance.AddXpToSigfrid(800f);
+            GameStats.Instance.AddCoins(50);
+            GameStats.Instance.AddXpToGrodnar(500f);
+            GameStats.Instance.AddXpToLanstar(500f);
+            GameStats.Instance.AddXpToSigfrid(500f);
 
             for (int i = 0; i < enemySpawners.Length; i++)
             {
@@ -93,10 +93,45 @@ public class GameManager : MonoBehaviour
                     enemySpawners[i].GetEnemy().GetComponent<PatrolAI>().SetAlive(false);
                 }
             }
+
+            List<Stat> grodnarStats = GameStats.Instance.GetGrodnarStats();
+            List<Stat> lanstarStats = GameStats.Instance.GetLanstarStats();
+            List<Stat> sigfridStats = GameStats.Instance.GetSigfridStats();
+            for (int i = 0; i < grodnarStats.Count; i++)
+            {
+                if (grodnarStats[i].attribute == Attributes.CURR_HEALTH) {
+                    if (grodnarStats[i].value <= 0) {
+                        InventoryManager.Instance.InteractableGrodnarButton(false);
+                    }
+                }
+            }
+            for (int i = 0; i < lanstarStats.Count; i++)
+            {
+                if (lanstarStats[i].attribute == Attributes.CURR_HEALTH)
+                {
+                    if (lanstarStats[i].value <= 0)
+                    {
+                        InventoryManager.Instance.InteractableLanstarButton(false);
+                    }
+                }
+            }
+            for (int i = 0; i < sigfridStats.Count; i++)
+            {
+                if (sigfridStats[i].attribute == Attributes.CURR_HEALTH)
+                {
+                    if (sigfridStats[i].value <= 0)
+                    {
+                        InventoryManager.Instance.InteractableSigfridButton(false);
+                    }
+                }
+            }
+
             CanvasManager.Instance.NormalSpeed();
 
             InventoryManager.Instance.UpdateCoinsAmount();
             InventoryManager.Instance.DisplayLoot();
+
+
 
         }
     }
@@ -123,12 +158,13 @@ public class GameManager : MonoBehaviour
         }
 
         InventoryManager.Instance.HideInventories();
-        GameObject canvasHostal = GameObject.FindGameObjectWithTag("CanvasHostal");
-        canvasHostal.SetActive(false);
+        /*GameObject canvasTavern = GameObject.FindGameObjectWithTag("CanvasHostal");
+        canvasTavern.SetActive(false);
         GameObject canvasPause = GameObject.FindGameObjectWithTag("CanvasPause");
-        canvasPause.SetActive(false);
-        CanvasManager.Instance.DisableCombatCanvas();
-        CanvasManager.Instance.canvasMenu.SetActive(false);
+        canvasPause.SetActive(false);*/
+        CanvasManager.Instance.m_canvasToCombat.SetActive(false);
+        CanvasManager.Instance.m_canvasMenu.SetActive(false);
+        CanvasManager.Instance.m_canvasPause.SetActive(false);
 
     }
 
@@ -137,7 +173,7 @@ public class GameManager : MonoBehaviour
     }
 
     public void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
-        Debug.Log("OnSceneLoad: "+scene.name);
+        //Debug.Log("OnSceneLoad: "+scene.name);
         SetActiveScene(scene.name);
     }
 

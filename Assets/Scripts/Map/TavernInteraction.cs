@@ -3,7 +3,7 @@ using UnityEngine;
 public class TavernInteraction : MonoBehaviour
 {
 
-    [SerializeField] GameObject m_canvasHostal;
+    [SerializeField] private GameObject m_canvasTavern;
 
     private bool canInteract;
 
@@ -16,7 +16,7 @@ public class TavernInteraction : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("PlayerMap") && canInteract)
         {
-            m_canvasHostal.SetActive(true);
+            m_canvasTavern.SetActive(true);
             GameManager.Instance.DisablePartyMovement();
             collision.gameObject.GetComponent<PlayerController>().StopMovement();
             canInteract = false;
@@ -50,9 +50,7 @@ public class TavernInteraction : MonoBehaviour
     }*/
 
     public void CloseTavernCanvas() {
-        m_canvasHostal.SetActive(false);
-        Time.timeScale = 1;
-        InventoryManager.Instance.inventoryBlackScreen.SetActive(false);
+        m_canvasTavern.SetActive(false);
     }
 
 }

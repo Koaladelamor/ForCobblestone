@@ -44,12 +44,12 @@ public class GameStats : MonoBehaviour
             return;
         }
 
-        Grodnar = InitStats("Grodnar", 150, 5, 15, 10, 18, 2);
-        Lanstar = InitStats("Lanstar", 100, 20, 35, 16, 10, 10);
-        Sigfrid = InitStats("Sigfrid", 80, 15, 30, 12, 5, 20);
+        Grodnar = InitStats("Grodnar", 160, 5, 15, 20, 20, 2);
+        Lanstar = InitStats("Lanstar", 75, 20, 35, 4, 6, 10);
+        Sigfrid = InitStats("Sigfrid", 124, 15, 30, 16, 14, 20);
 
-        Spider = InitStats("Spider", 75, 10, 20, 15, 10, 5);
-        Worm = InitStats("Worm", 75, 10, 20, 15, 10, 5);
+        Spider = InitStats("Spider", 75, 5, 15, 14, 10, 5);
+        Worm = InitStats("Worm", 50, 5, 15, 8, 10, 5);
 
         coins = 0;
     }
@@ -82,6 +82,7 @@ public class GameStats : MonoBehaviour
     {
         List<Stat> statsList = new List<Stat>
         {
+
             new Stat(Attributes.CURR_HEALTH, health),
             new Stat(Attributes.MAX_HEALTH, health),
             new Stat(Attributes.MIN_DAMAGE, min_damage),
@@ -89,8 +90,66 @@ public class GameStats : MonoBehaviour
             new Stat(Attributes.STRENGHT, strenght),
             new Stat(Attributes.STAMINA, stamina),
             new Stat(Attributes.AGILITY, agility)
+
         };
+        CalculateHealth(statsList, GetStamina(statsList));
+        CalculateDamage(statsList, GetStrength(statsList));
         return statsList;
+    }
+
+    public void CalculateHealth(List<Stat> _stats, int _stamina) 
+    {
+        for (int i = 0; i < _stats.Count; i++)
+        {
+            if (_stats[i].attribute == Attributes.MAX_HEALTH) {
+                _stats[i].mods = Mathf.RoundToInt(_stamina / 2);
+                _stats[i].value = _stats[i].baseValue + _stats[i].mods;
+            }
+            else if (_stats[i].attribute == Attributes.CURR_HEALTH)
+            {
+                _stats[i].mods = Mathf.RoundToInt(_stamina / 2);
+                _stats[i].value = _stats[i].baseValue + _stats[i].mods;
+            }
+        }
+    }
+
+    public void CalculateDamage(List<Stat> _stats, int _strength) {
+        for (int i = 0; i < _stats.Count; i++)
+        {
+            if (_stats[i].attribute == Attributes.MIN_DAMAGE)
+            {
+                _stats[i].mods = Mathf.RoundToInt(_strength / 2);
+                _stats[i].value = _stats[i].baseValue + _stats[i].mods;
+            }
+            else if (_stats[i].attribute == Attributes.MAX_DAMAGE)
+            {
+                _stats[i].mods = Mathf.RoundToInt(_strength / 2);
+                _stats[i].value = _stats[i].baseValue + _stats[i].mods;
+            }
+        }
+    }
+
+    public int GetStamina(List<Stat> _stats) {
+        for (int i = 0; i < _stats.Count; i++)
+        {
+            if (_stats[i].attribute == Attributes.STAMINA)
+            {
+                return _stats[i].value;
+            }
+        }
+        return 0;
+    }
+
+    public int GetStrength(List<Stat> _stats)
+    {
+        for (int i = 0; i < _stats.Count; i++)
+        {
+            if (_stats[i].attribute == Attributes.STRENGHT)
+            {
+                return _stats[i].value;
+            }
+        }
+        return 0;
     }
 
     public void IncreaseStat(string name, Attributes attr, int addValue) {
@@ -109,9 +168,19 @@ public class GameStats : MonoBehaviour
                 {
                     if (Grodnar._stats[i].attribute == attr)
                     {
-                        Grodnar._stats[i].value += addValue;
+                        Grodnar._stats[i].mods += addValue;
+                        Grodnar._stats[i].value = Grodnar._stats[i].baseValue + Grodnar._stats[i].mods;
                         Grodnar._attribute_points += -1;
-                        Debug.Log(Grodnar._attribute_points);
+                        //Debug.Log(Grodnar._attribute_points);
+
+                        if (Grodnar._stats[i].attribute == Attributes.STAMINA)
+                        {
+                            CalculateHealth(Grodnar._stats, GetStamina(Grodnar._stats));
+                        }
+                        else if (Grodnar._stats[i].attribute == Attributes.STRENGHT)
+                        {
+                            CalculateDamage(Grodnar._stats, GetStrength(Grodnar._stats));
+                        }
                     }
                 }
                 break;
@@ -126,9 +195,19 @@ public class GameStats : MonoBehaviour
                 {
                     if (Lanstar._stats[i].attribute == attr)
                     {
-                        Lanstar._stats[i].value += addValue;
+                        Lanstar._stats[i].mods += addValue;
+                        Lanstar._stats[i].value = Lanstar._stats[i].baseValue + Lanstar._stats[i].mods;
                         Lanstar._attribute_points += -1;
-                        Debug.Log(Lanstar._attribute_points);
+                        //Debug.Log(Lanstar._attribute_points);
+
+                        if (Lanstar._stats[i].attribute == Attributes.STAMINA)
+                        {
+                            CalculateHealth(Lanstar._stats, GetStamina(Lanstar._stats));
+                        }
+                        else if (Lanstar._stats[i].attribute == Attributes.STRENGHT)
+                        {
+                            CalculateDamage(Lanstar._stats, GetStrength(Lanstar._stats));
+                        }
                     }
                 }
                 break;
@@ -143,9 +222,19 @@ public class GameStats : MonoBehaviour
                 {
                     if (Sigfrid._stats[i].attribute == attr)
                     {
-                        Sigfrid._stats[i].value += addValue;
+                        Sigfrid._stats[i].mods += addValue;
+                        Sigfrid._stats[i].value = Sigfrid._stats[i].baseValue + Sigfrid._stats[i].mods;
                         Sigfrid._attribute_points += -1;
-                        Debug.Log(Sigfrid._attribute_points);
+                        //Debug.Log(Sigfrid._attribute_points);
+
+                        if (Sigfrid._stats[i].attribute == Attributes.STAMINA)
+                        {
+                            CalculateHealth(Sigfrid._stats, GetStamina(Sigfrid._stats));
+                        }
+                        else if (Sigfrid._stats[i].attribute == Attributes.STRENGHT)
+                        {
+                            CalculateDamage(Sigfrid._stats, GetStrength(Sigfrid._stats));
+                        }
                     }
                 }
                 break;

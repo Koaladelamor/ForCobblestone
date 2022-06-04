@@ -7,21 +7,29 @@ public class Stat
 {
     public Attributes attribute;
     public int baseValue;
+    public int mods;
     public int value;
 
-    public Stat(Attributes _attribute, int _baseValue) {
+    public Stat(Attributes _attribute, int _baseValue, int _mods) {
         attribute = _attribute;
         baseValue = _baseValue;
-        value = _baseValue;
+        mods = _mods;
+        value = _baseValue + _mods;
     }
 
-    public Stat(Attributes _attribute, int _baseValue, int _value)
+    public Stat(Attributes _attribute, int _baseValue)
     {
         attribute = _attribute;
         baseValue = _baseValue;
-        value = _value;
+        mods = 0;
+        value = _baseValue;
     }
 
+    public Stat AddStatMods(Stat _stat, int _mods) {
+        _stat.mods = _mods;
+        _stat.value = _stat.baseValue + _stat.mods;
+        return _stat;
+    }
 
     public int CalculateFinalValue(InventoryObject _inventory, Stat _stat) 
     {

@@ -51,6 +51,9 @@ public class GFXController : MonoBehaviour
                 SpawnDamageText();
                 pawnToAttack.GetComponentInChildren<HealthBar>().HealthChangeEvent();
                 pawnToAttack.GetGFXController().Hurt();
+                if (pawnController.character == PawnController.CHARACTER.LANSTAR) {
+                    pawnController.AttackEnded(true);
+                }
             }
             else Debug.Log("NO PAWN TO ATTACK DETECTED");
         }
@@ -196,5 +199,9 @@ public class GFXController : MonoBehaviour
     }
 
     public void AttackIsDone() { attackDone = true; }
+
+    public void InstantiateArrow() { pawnController.SpawnArrow(); }
+
+    public void ShootArrow() { pawnController.ShootArrow(); }
 
 }

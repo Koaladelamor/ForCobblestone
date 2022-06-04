@@ -322,6 +322,8 @@ MonoBehaviour:
   SigfridDeathSound: {fileID: 8300000, guid: 70df6fc7464acfd48b9688f9d08a24b7, type: 3}
   LanstarDeathSound: {fileID: 8300000, guid: 0d27194be782f72449a68bbee08cb9f7, type: 3}
   BellSound: {fileID: 8300000, guid: e826dc757e8fdde4e8e0971649028f09, type: 3}
+  snore1: {fileID: 8300000, guid: df7a0abee618d9c4a8f2786e42a70ace, type: 3}
+  yawn: {fileID: 8300000, guid: a8c9c01b2c02ecd4a8b55b08afb08426, type: 3}
   grassFootsteps:
   - {fileID: 8300000, guid: c6699427e1444704a8d6fb99c6d1f15f, type: 3}
   - {fileID: 8300000, guid: 60aecc4808e6e4648a3e0cc4dc754cd7, type: 3}

@@ -137,6 +137,19 @@ public abstract class UserInterface : MonoBehaviour
             InventoryManager.Instance.SetValueInfo(slotsOnInterface[obj].ItemObject.Value);
         }
     }
+
+    public void OnClick(GameObject obj)
+    {
+        obj = MouseData.slotHoveredOver;
+        if (slotsOnInterface[obj] == null) { return; }
+
+        InventoryManager.Instance.itemInfo.SetActive(false);
+
+        if (slotsOnInterface[obj].ItemObject.Type == ItemType.CONSUMABLE) { 
+            
+        }
+    }
+
     public void OnExit(GameObject obj)
     {
         MouseData.slotHoveredOver = null;

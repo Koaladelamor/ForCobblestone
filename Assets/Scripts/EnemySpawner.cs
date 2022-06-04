@@ -10,6 +10,8 @@ public class EnemySpawner : MonoBehaviour
     private GameObject enemyOnSpawn;
     private int spawnerID;
     [SerializeField] private bool linearPatrol;
+    [SerializeField] private bool horizontal;
+    [SerializeField] private bool vertical;
 
     private void Awake()
     {
@@ -69,10 +71,20 @@ public class EnemySpawner : MonoBehaviour
             AI.patrolPoints[3] = AI.InstantiatePatrolPoint(75f, -75f);
         }
         else {
-            AI.patrolPoints[0] = AI.InstantiatePatrolPoint(75f, 75f);
-            AI.patrolPoints[1] = AI.InstantiatePatrolPoint(-75f, 75f);
-            AI.patrolPoints[2] = AI.InstantiatePatrolPoint(125f, 75f);
-            AI.patrolPoints[3] = AI.InstantiatePatrolPoint(-125f, 75f);
+            if (horizontal)
+            {
+                AI.patrolPoints[0] = AI.InstantiatePatrolPoint(75f, 0);
+                AI.patrolPoints[1] = AI.InstantiatePatrolPoint(-75f, 0);
+                AI.patrolPoints[2] = AI.InstantiatePatrolPoint(125f, 0);
+                AI.patrolPoints[3] = AI.InstantiatePatrolPoint(-125f, 0);
+            }
+            else if (vertical)
+            {
+                AI.patrolPoints[0] = AI.InstantiatePatrolPoint(0, 75f);
+                AI.patrolPoints[1] = AI.InstantiatePatrolPoint(0, -75f);
+                AI.patrolPoints[2] = AI.InstantiatePatrolPoint(0, 125f);
+                AI.patrolPoints[3] = AI.InstantiatePatrolPoint(0, -125f);
+            }
         }
 
         enemy.GetComponent<PatrolAI>().SetEnemyID(ID);

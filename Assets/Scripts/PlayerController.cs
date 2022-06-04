@@ -76,22 +76,13 @@ public class PlayerController : MonoBehaviour
             m_gameManager.GetComponent<GameManager>().SetEnemyEngaged(true);
             GameManager.Instance.SetCurrentEnemyID(other.gameObject.GetComponent<PatrolAI>().GetEnemyID());
             GameManager.Instance.SetCurrentEnemyType(other.gameObject.GetComponent<PatrolAI>().GetEnemyType());
-
             //Debug.Log(other.gameObject.GetComponent<PatrolAI>().GetEnemyID());
-            //other.gameObject.GetComponent<Collider2D>().enabled = false;
+
             other.collider.enabled = false;
             m_pointToGo.transform.position = transform.position;
             m_pointToGo.GetComponent<TargetPosition>().SetMovement(false);
         }
     }
-
-    /*private void OnCollisionExit2D(Collision2D other)
-    {
-        if (other.gameObject.CompareTag("EnemyMap"))
-        {
-
-        }
-    }*/
 
     public bool PartyIsMoving()
     {

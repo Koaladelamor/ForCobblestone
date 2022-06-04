@@ -15,12 +15,23 @@ public class CanvasManager : MonoBehaviour
     }
 
     public GameObject m_canvasTavern;
+    public GameObject m_canvasTown;
     public GameObject m_canvasToCombat;
     public GameObject m_canvasPause;
-    public GameObject canvasMenu;
+    public GameObject m_canvasMenu;
+    public GameObject blackScreen;
 
     private bool isMenuOnScreen;
     private bool gameIsPaused;
+
+    public GameObject sleepAnimation;
+
+    private bool yawnSoundStarted;
+    private float sleepTimer;
+    private float sleepMaxTimer;
+
+    public GameObject wellRested;
+    private bool wellRestedTextShown;
 
 
     private void Awake()
@@ -39,7 +50,10 @@ public class CanvasManager : MonoBehaviour
 
         gameIsPaused = false;
         isMenuOnScreen = false;
-
+        yawnSoundStarted = false;
+        sleepTimer = 0;
+        sleepMaxTimer = 2.5f;
+        wellRestedTextShown = false;
     }
 
     private void Update()
@@ -64,21 +78,44 @@ public class CanvasManager : MonoBehaviour
 
         if (InputManager.Instance.MenuButtonPressed && isMenuOnScreen)
         {
-            canvasMenu.SetActive(false);
+            m_canvasMenu.SetActive(false);
             isMenuOnScreen = false;
             GameManager.Instance.EnablePartyMovement();
         }
         else if (InputManager.Instance.MenuButtonPressed && !isMenuOnScreen)
         {
-            canvasMenu.SetActive(true);
+            m_canvasMenu.SetActive(true);
             isMenuOnScreen = true;
             GameManager.Instance.StopMovement();
             GameManager.Instance.DisablePartyMovement();
+        }
+
+        if (yawnSoundStarted) {
+            sleepTimer += Time.deltaTime;
+            if (sleepTimer >= sleepMaxTimer) {
+                sleepTimer = 0;
+                yawnSoundStarted = false;
+                sleepAnimation.SetActive(false);
+                AudioManager.Instance.PlayMusic();
+            }
+        }
+
+        if (wellRestedTextShown) {
+            sleepTimer += Time.deltaTime;
+            if (sleepTimer >= sleepMaxTimer)
+            {
+                sleepTimer = 0;
+                wellRestedTextShown = false;
+                wellRested.SetActive(false);
+            }
         }
     }
 
     public void PauseGame()
     {
+        AudioManager.Instance.partyFX.Stop();
+        GameManager.Instance.StopMovement();
+        GameManager.Instance.DisablePartyMovement();
         m_canvasPause.SetActive(true);
         gameIsPaused = true;
         Time.timeScale = 0;
@@ -86,6 +123,7 @@ public class CanvasManager : MonoBehaviour
 
     public void NormalSpeed()
     {
+        GameManager.Instance.EnablePartyMovement();
         Time.timeScale = 1;
         m_canvasPause.SetActive(false);
         gameIsPaused = false;
@@ -93,6 +131,7 @@ public class CanvasManager : MonoBehaviour
 
     public void FastSpeed()
     {
+        GameManager.Instance.EnablePartyMovement();
         Time.timeScale = 2;
         m_canvasPause.SetActive(false);
         gameIsPaused = false;
@@ -102,13 +141,13 @@ public class CanvasManager : MonoBehaviour
     {
         if (isMenuOnScreen)
         {
-            canvasMenu.SetActive(false);
+            m_canvasMenu.SetActive(false);
             isMenuOnScreen = false;
             GameManager.Instance.EnablePartyMovement();
         }
         else
         {
-            canvasMenu.SetActive(true);
+            m_canvasMenu.SetActive(true);
             isMenuOnScreen = true;
             GameManager.Instance.StopMovement();
             GameManager.Instance.DisablePartyMovement();
@@ -121,9 +160,56 @@ public class CanvasManager : MonoBehaviour
     public void EnableCombatCanvas() { m_canvasToCombat.SetActive(true); }
 
     public void ContinueButton() {
-        canvasMenu.SetActive(false);
+        m_canvasMenu.SetActive(false);
         isMenuOnScreen = false;
         GameManager.Instance.EnablePartyMovement();
     }
 
+    public void SleepButton() {
+        List<Stat> grodnarStats = GameStats.Instance.GetGrodnarStats();
+        List<Stat> lanstarStats = GameStats.Instance.GetLanstarStats();
+        List<Stat> sigfridStats = GameStats.Instance.GetSigfridStats();
+        int playersFullHealth = 0;
+        for (int i = 0; i < grodnarStats.Count; i++)
+        {
+            if (grodnarStats[i].attribute == Attributes.CURR_HEALTH)
+            {
+                if (grodnarStats[i].value == GameStats.Instance.GetMaxHP(grodnarStats))
+                {
+                    playersFullHealth++;
+                }
+            }
+        }
+        for (int i = 0; i < lanstarStats.Count; i++)
+        {
+            if (lanstarStats[i].attribute == Attributes.CURR_HEALTH)
+            {
+                if (lanstarStats[i].value == GameStats.Instance.GetMaxHP(lanstarStats))
+                {
+                    playersFullHealth++;
+                }
+            }
+        }
+        for (int i = 0; i < sigfridStats.Count; i++)
+        {
+            if (sigfridStats[i].attribute == Attributes.CURR_HEALTH)
+            {
+                if (sigfridStats[i].value == GameStats.Instance.GetMaxHP(sigfridStats))
+                {
+                    playersFullHealth++;
+                }
+            }
+        }
+        if (playersFullHealth == 3) {
+            wellRested.SetActive(true);
+            wellRestedTextShown = true;
+            return;
+        }
+
+        AudioManager.Instance.StopMusic();
+        AudioManager.Instance.PlayInstant(AudioManager.InstantAudios.SNORE1);
+        sleepAnimation.SetActive(true);
+    }
+
+    public void SetYawnSoundBool(bool yawn) { yawnSoundStarted = yawn; }
 }

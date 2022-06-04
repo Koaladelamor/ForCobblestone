@@ -85,7 +85,6 @@ public class InventoryManager : MonoBehaviour
 
         ClearInventories();
         m_currentEquipmentInterface = m_GrodnarEquipmentDisplay;
-        equipmentButtons[2].Select();
 
         for (int i = 0; i < m_GrodnarEquipmentInventory.GetSlots.Length; i++)
         {
@@ -189,31 +188,32 @@ public class InventoryManager : MonoBehaviour
         {
             case InventoryType.MAIN:
                 _slot.Item.PreviousHolder = _slot.parent.mInventory.type;
-                print(string.Concat("Removed ", _slot.ItemObject, " on ", _slot.parent.mInventory.type));
+                //print(string.Concat("Removed ", _slot.ItemObject, " on ", _slot.parent.mInventory.type));
                 break;
             case InventoryType.GRODNAR:
                 _slot.Item.PreviousHolder = _slot.parent.mInventory.type;
-                print(string.Concat("Removed ", _slot.ItemObject, " on ", _slot.parent.mInventory.type));
+                //print(string.Concat("Removed ", _slot.ItemObject, " on ", _slot.parent.mInventory.type));
                 RemoveItemModifier(_slot.Item, GameStats.Instance.Grodnar._stats);
                 m_statsScreen.DisplayGrodnarStats();
                 break;
             case InventoryType.LANSTAR:
                 _slot.Item.PreviousHolder = _slot.parent.mInventory.type;
-                print(string.Concat("Removed ", _slot.ItemObject, " on ", _slot.parent.mInventory.type));
+                //print(string.Concat("Removed ", _slot.ItemObject, " on ", _slot.parent.mInventory.type));
                 RemoveItemModifier(_slot.Item, GameStats.Instance.Lanstar._stats);
                 m_statsScreen.DisplayLanstarStats();
                 break;
             case InventoryType.SIGFRID:
                 _slot.Item.PreviousHolder = _slot.parent.mInventory.type;
-                print(string.Concat("Removed ", _slot.ItemObject, " on ", _slot.parent.mInventory.type));
+                //print(string.Concat("Removed ", _slot.ItemObject, " on ", _slot.parent.mInventory.type));
                 RemoveItemModifier(_slot.Item, GameStats.Instance.Sigfrid._stats);
                 m_statsScreen.DisplaySigfridStats();
                 break;
             case InventoryType.TRADE:
                 _slot.Item.PreviousHolder = _slot.parent.mInventory.type;
-                print(string.Concat("Removed ", _slot.ItemObject, " on ", _slot.parent.mInventory.type));
+                //print(string.Concat("Removed ", _slot.ItemObject, " on ", _slot.parent.mInventory.type));
                 break;
             case InventoryType.CHEST:
+                _slot.Item.PreviousHolder = _slot.parent.mInventory.type;
                 break;
             case InventoryType.LAST_NO_USE:
                 break;
@@ -238,23 +238,23 @@ public class InventoryManager : MonoBehaviour
                     tradeBalance -= _slot.ItemObject.Value;
                     UpdateBalanceAmount();
                 }
-                print(string.Concat("Placed ", _slot.ItemObject, " on ", _slot.parent.mInventory.type));
+                //print(string.Concat("Placed ", _slot.ItemObject, " on ", _slot.parent.mInventory.type));
                 _slot.Item.Holder = InventoryType.MAIN;
                 break;
             case InventoryType.GRODNAR:
-                print(string.Concat("Placed ", _slot.ItemObject, " on ", _slot.parent.mInventory.type));
+                //print(string.Concat("Placed ", _slot.ItemObject, " on ", _slot.parent.mInventory.type));
                 AddItemModifier(_slot.Item, GameStats.Instance.Grodnar._stats);
                 m_statsScreen.DisplayGrodnarStats();
                 _slot.Item.Holder = InventoryType.GRODNAR;
                 break;
             case InventoryType.LANSTAR:
-                print(string.Concat("Placed ", _slot.ItemObject, " on ", _slot.parent.mInventory.type));
+                //print(string.Concat("Placed ", _slot.ItemObject, " on ", _slot.parent.mInventory.type));
                 AddItemModifier(_slot.Item, GameStats.Instance.Lanstar._stats);
                 m_statsScreen.DisplayLanstarStats();
                 _slot.Item.Holder = InventoryType.LANSTAR;
                 break;
             case InventoryType.SIGFRID:
-                print(string.Concat("Placed ", _slot.ItemObject, " on ", _slot.parent.mInventory.type));
+                //print(string.Concat("Placed ", _slot.ItemObject, " on ", _slot.parent.mInventory.type));
                 AddItemModifier(_slot.Item, GameStats.Instance.Sigfrid._stats);
                 m_statsScreen.DisplaySigfridStats();
                 _slot.Item.Holder = InventoryType.SIGFRID;
@@ -265,10 +265,11 @@ public class InventoryManager : MonoBehaviour
                     tradeBalance += _slot.ItemObject.Value;
                     UpdateBalanceAmount();
                 }
-                print(string.Concat("Placed ", _slot.ItemObject, " on ", _slot.parent.mInventory.type));
+                //print(string.Concat("Placed ", _slot.ItemObject, " on ", _slot.parent.mInventory.type));
                 _slot.Item.Holder = InventoryType.TRADE;
                 break;
             case InventoryType.CHEST:
+                _slot.Item.Holder = InventoryType.CHEST;
                 break;
             case InventoryType.LAST_NO_USE:
                 break;
@@ -298,8 +299,18 @@ public class InventoryManager : MonoBehaviour
             {
                 if (_stat[i].attribute == _item.Buffs[j].attribute)
                 {
-                    _stat[i].value += _item.Buffs[j].value;
+                    _stat[i].mods += _item.Buffs[j].value;
+                    _stat[i].value = _stat[i].baseValue + _stat[i].mods;
+
                     AttributeModified(_stat[i]);
+
+                    if (_stat[i].attribute == Attributes.STAMINA) {
+                        GameStats.Instance.CalculateHealth(_stat, GameStats.Instance.GetStamina(_stat));
+                    }
+                    else if (_stat[i].attribute == Attributes.STRENGHT)
+                    {
+                        GameStats.Instance.CalculateDamage(_stat, GameStats.Instance.GetStrength(_stat));
+                    }
                 }
             }
         }
@@ -315,7 +326,8 @@ public class InventoryManager : MonoBehaviour
             {
                 if (_stat[i].attribute == _item.Buffs[j].attribute)
                 {
-                    _stat[i].value -= _item.Buffs[j].value;
+                    _stat[i].mods -= _item.Buffs[j].value;
+                    _stat[i].value = _stat[i].baseValue + _stat[i].mods;
                     AttributeModified(_stat[i]);
                 }
             }
@@ -340,6 +352,7 @@ public class InventoryManager : MonoBehaviour
 
     public void HideInventories()
     {
+        equipmentButtons[1].Select();
         HideButtons();
         m_GrodnarEquipmentDisplay.gameObject.SetActive(false);
         m_LanstarEquipmentDisplay.gameObject.SetActive(false);
@@ -367,22 +380,22 @@ public class InventoryManager : MonoBehaviour
     public void ShowInventories()
     {
         ShowButtons();
+        m_currentEquipmentInterface = m_GrodnarEquipmentDisplay;
         m_currentEquipmentInterface.gameObject.SetActive(true);
 
         if (m_currentEquipmentInterface.mInventory.type == InventoryType.GRODNAR && GameStats.Instance.GetGrodnar()._attribute_points > 0) { m_statsScreen.EnableStatButtons(); }
-
         else if (m_currentEquipmentInterface.mInventory.type == InventoryType.LANSTAR && GameStats.Instance.GetLanstar()._attribute_points > 0) { m_statsScreen.EnableStatButtons(); }
         else if (m_currentEquipmentInterface.mInventory.type == InventoryType.SIGFRID && GameStats.Instance.GetSigfrid()._attribute_points > 0) { m_statsScreen.EnableStatButtons(); }
 
         m_inventoryDisplay.ShowInventory();
         m_statsScreen.ShowDisplay();
+        m_statsScreen.DisplayGrodnarStats();
         inventoryOnScreen = true;
 
         inventoryBlackScreen.SetActive(true);
 
-        m_currentEquipmentInterface = m_GrodnarEquipmentDisplay;
         equipmentButtons[2].Select();
-        
+
     }
 
     public void GrodnarEquipmentDisplay()
@@ -564,6 +577,7 @@ public class InventoryManager : MonoBehaviour
         m_TavernTradeDisplay.HideInventory();
         confirmTradeButton.gameObject.SetActive(false);
         CanvasManager.Instance.m_canvasTavern.SetActive(true);
+        inventoryBlackScreen.SetActive(false);
     }
 
     public void TradingModeOFF()
@@ -679,4 +693,10 @@ public class InventoryManager : MonoBehaviour
     {
         return itemInfo.GetComponent<RectTransform>().position;
     }
+
+    public void InteractableGrodnarButton(bool interactable) { equipmentButtons[2].interactable = interactable; }
+
+    public void InteractableSigfridButton(bool interactable) { equipmentButtons[1].interactable = interactable; }
+
+    public void InteractableLanstarButton(bool interactable) { equipmentButtons[0].interactable = interactable; }
 }
