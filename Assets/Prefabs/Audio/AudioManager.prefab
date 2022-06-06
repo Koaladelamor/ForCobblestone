@@ -341,6 +341,9 @@ MonoBehaviour:
   enemyHurt: {fileID: 8300000, guid: bc236d3a6013e0d4aab7d14ed7f2fb60, type: 3}
   playerHurt: {fileID: 8300000, guid: c87d9c894bf1c15439dd98728334080a, type: 3}
   lifeSound: {fileID: 8300000, guid: 4140a61bedbba264eaf01685b6e51760, type: 3}
+  menuMusic: {fileID: 8300000, guid: 7d0dbf8c246964c4383777ae58a9c0aa, type: 3}
+  combatMusic: {fileID: 8300000, guid: 78b1c5cc6799f7943be5822022c4ace7, type: 3}
+  mapMusic: {fileID: 8300000, guid: 1d3554ae33d087c49b23075aaca92566, type: 3}
 --- !u!114 &7930205016058839706
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -17,6 +17,9 @@ public class Menu : MonoBehaviour
 
     public void loadNewGame() {
         SceneManager.LoadScene("MapScene", LoadSceneMode.Single);
+        AudioManager.Instance.StopMusic();
+        AudioManager.Instance.ChangeBackgroundMusic(AudioManager.Instance.mapMusic);
+        AudioManager.Instance.PlayMusic();
     }
 
     public void exitPlayMode() {

@@ -140,13 +140,26 @@ public abstract class UserInterface : MonoBehaviour
 
     public void OnClick(GameObject obj)
     {
-        obj = MouseData.slotHoveredOver;
-        if (slotsOnInterface[obj] == null) { return; }
+        if (MouseData.slotHoveredOver != null) {
+            obj = MouseData.slotHoveredOver;
+        }
+        
+        if (slotsOnInterface[obj].Item.ID == -1) {
+            InventoryManager.Instance.usePotion.SetActive(false);
+            InventoryManager.Instance.DisablePotionButtons();
+            return; 
+        }
 
         InventoryManager.Instance.itemInfo.SetActive(false);
 
-        if (slotsOnInterface[obj].ItemObject.Type == ItemType.CONSUMABLE) { 
-            
+        if (slotsOnInterface[obj].ItemObject.Type == ItemType.CONSUMABLE)
+        {
+            InventoryManager.Instance.SetPotionMenuPosition(Input.mousePosition + new Vector3(70, 0, 0));
+            InventoryManager.Instance.usePotion.SetActive(true);
+        }
+        else {
+            InventoryManager.Instance.usePotion.SetActive(false);
+            InventoryManager.Instance.DisablePotionButtons();
         }
     }
 

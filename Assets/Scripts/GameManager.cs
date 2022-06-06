@@ -54,6 +54,7 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < enemySpawners.Length; i++)
         {
             enemySpawners[i].RespawnEnemy(enemySpawners[i].transform.position, i);
+            if (enemySpawners[i].GetEnemy() == null) { Debug.LogError("Enemy didn't spawn"); }
         }
 
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -144,6 +145,10 @@ public class GameManager : MonoBehaviour
             obj.SetActive(false);
         }
         SceneManager.LoadSceneAsync("CombatScene", LoadSceneMode.Additive);
+
+        AudioManager.Instance.StopMusic();
+        AudioManager.Instance.ChangeBackgroundMusic(AudioManager.Instance.combatMusic);
+        AudioManager.Instance.PlayMusic();
     }
 
     public void LoadMapScene()
@@ -158,13 +163,13 @@ public class GameManager : MonoBehaviour
         }
 
         InventoryManager.Instance.HideInventories();
-        /*GameObject canvasTavern = GameObject.FindGameObjectWithTag("CanvasHostal");
-        canvasTavern.SetActive(false);
-        GameObject canvasPause = GameObject.FindGameObjectWithTag("CanvasPause");
-        canvasPause.SetActive(false);*/
         CanvasManager.Instance.m_canvasToCombat.SetActive(false);
         CanvasManager.Instance.m_canvasMenu.SetActive(false);
         CanvasManager.Instance.m_canvasPause.SetActive(false);
+
+        AudioManager.Instance.StopMusic();
+        AudioManager.Instance.ChangeBackgroundMusic(AudioManager.Instance.mapMusic);
+        AudioManager.Instance.PlayMusic();
 
     }
 

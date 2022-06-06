@@ -23,6 +23,7 @@ public class InventoryManager : MonoBehaviour
     public UserInterface m_CombatLootDisplay;
     public UserInterface m_ChestLootDisplay;
     public UserInterface m_TavernTradeDisplay;
+    public UserInterface m_TownTradeDisplay;
 
     public StatsScreen m_statsScreen;
 
@@ -33,6 +34,7 @@ public class InventoryManager : MonoBehaviour
     public InventoryObject m_CombatLootInventory;
     public InventoryObject m_ChestInventory;
     public InventoryObject m_TavernTradeInventory;
+    public InventoryObject m_TownTradeInventory;
 
     public Button[] equipmentButtons;
     public Button confirmLootButton;
@@ -40,6 +42,10 @@ public class InventoryManager : MonoBehaviour
     public Button confirmChestButton;
     public Button takeChestLootButton;
     public Button confirmTradeButton;
+    public Button confirmTownTradeButton;
+    public Button closeInventoryButton;
+
+    public GameObject tradeInfo;
 
     public GameObject inventoryBlackScreen;
 
@@ -60,6 +66,10 @@ public class InventoryManager : MonoBehaviour
     public GameObject itemInfo;
     public Text nameInfo;
     public Text[] attributesInfo;
+
+    public GameObject potionMenu;
+    public GameObject usePotion;
+    public GameObject[] healCharacters;
 
     private void Awake()
     {
@@ -124,8 +134,16 @@ public class InventoryManager : MonoBehaviour
 
         }
 
+        for (int i = 0; i < m_TownTradeInventory.GetSlots.Length; i++)
+        {
+            m_TownTradeInventory.GetSlots[i].OnBeforeUpdate += OnBeforeSlotUpdate;
+            m_TownTradeInventory.GetSlots[i].OnAfterUpdate += OnAfterSlotUpdate;
+
+        }
+
         HideInventories();
         InitTavernLoot();
+        InitTownLoot();
 
     }
 
@@ -348,6 +366,7 @@ public class InventoryManager : MonoBehaviour
         m_CombatLootInventory.Clear();
         m_TavernTradeInventory.Clear();
         m_ChestInventory.Clear();
+        m_TownTradeInventory.Clear();
     }
 
     public void HideInventories()
@@ -366,7 +385,7 @@ public class InventoryManager : MonoBehaviour
         m_statsScreen.DisableStatButtons();
         m_statsScreen.HideDisplay();
         m_ChestLootDisplay.HideInventory();
-
+        closeInventoryButton.gameObject.SetActive(false);
         inventoryOnScreen = false;
 
         if (GameStats.Instance.GetGrodnar()._attribute_points == 0 && GameStats.Instance.GetLanstar()._attribute_points == 0 && GameStats.Instance.GetSigfrid()._attribute_points == 0)
@@ -393,7 +412,7 @@ public class InventoryManager : MonoBehaviour
         inventoryOnScreen = true;
 
         inventoryBlackScreen.SetActive(true);
-
+        closeInventoryButton.gameObject.SetActive(true);
         equipmentButtons[2].Select();
 
     }
@@ -455,6 +474,18 @@ public class InventoryManager : MonoBehaviour
         }
         addingItems = false;
         m_TavernTradeDisplay.HideInventory();
+        confirmTradeButton.gameObject.SetActive(false);
+    }
+
+    public void InitTownLoot()
+    {
+        addingItems = true;
+        for (int i = 0; i < 20; i++)
+        {
+            m_TownTradeInventory.AddItem(m_TownTradeInventory.GenerateRandomItem(), 1, InventoryType.TRADE);
+        }
+        addingItems = false;
+        m_TownTradeDisplay.HideInventory();
         confirmTradeButton.gameObject.SetActive(false);
     }
 
@@ -578,6 +609,21 @@ public class InventoryManager : MonoBehaviour
         confirmTradeButton.gameObject.SetActive(false);
         CanvasManager.Instance.m_canvasTavern.SetActive(true);
         inventoryBlackScreen.SetActive(false);
+        tradeInfo.SetActive(false);
+    }
+
+    public void ConfirmTownTrade()
+    {
+        GameStats.Instance.AddCoins(tradeBalance);
+        tradeBalance = 0;
+        UpdateBalanceAmount();
+        UpdateCoinsAmount();
+        m_inventoryDisplay.HideInventory();
+        m_TownTradeDisplay.HideInventory();
+        confirmTownTradeButton.gameObject.SetActive(false);
+        CanvasManager.Instance.m_canvasTavern.SetActive(true);
+        inventoryBlackScreen.SetActive(false);
+        tradeInfo.SetActive(false);
     }
 
     public void TradingModeOFF()
@@ -586,6 +632,7 @@ public class InventoryManager : MonoBehaviour
         m_TavernTradeDisplay.HideInventory();
         confirmTradeButton.gameObject.SetActive(false);
         inventoryBlackScreen.SetActive(false);
+        tradeInfo.SetActive(false);
     }
 
     public void TradingModeON()
@@ -593,8 +640,21 @@ public class InventoryManager : MonoBehaviour
         tradeBalance = 0;
         m_inventoryDisplay.ShowInventory();
         m_TavernTradeDisplay.ShowInventory();
+        tradeInfo.SetActive(true);
         confirmTradeButton.gameObject.SetActive(true);
         CanvasManager.Instance.m_canvasTavern.SetActive(false);
+        inventoryBlackScreen.SetActive(true);
+        payText.enabled = false;
+    }
+
+    public void TownTradingModeON()
+    {
+        tradeBalance = 0;
+        m_inventoryDisplay.ShowInventory();
+        m_TownTradeDisplay.ShowInventory();
+        tradeInfo.SetActive(true);
+        confirmTownTradeButton.gameObject.SetActive(true);
+        CanvasManager.Instance.m_canvasTown.SetActive(false);
         inventoryBlackScreen.SetActive(true);
         payText.enabled = false;
     }
@@ -689,9 +749,63 @@ public class InventoryManager : MonoBehaviour
     public void SetInfoPosition(Vector3 mousePos) {
         itemInfo.GetComponent<RectTransform>().position = mousePos;
     }
-    public Vector3 GetInfoPosition()
+    public void SetPotionMenuPosition(Vector3 mousePos)
     {
-        return itemInfo.GetComponent<RectTransform>().position;
+        potionMenu.GetComponent<RectTransform>().position = mousePos;
+    }
+
+    public void EnablePotionButtons() {
+        for (int i = 0; i < healCharacters.Length; i++)
+        {
+            healCharacters[i].SetActive(true);
+        }
+    }
+
+    public void DisablePotionButtons()
+    {
+        for (int i = 0; i < healCharacters.Length; i++)
+        {
+            healCharacters[i].SetActive(false);
+        }
+    }
+
+    public void PotionHealingDone() {
+        for (int i = 0; i < healCharacters.Length; i++)
+        {
+            healCharacters[i].SetActive(false);
+        }
+        usePotion.SetActive(false);
+
+        InventorySlot[] slots = InventoryManager.Instance.m_inventory.GetSlots;
+        for (int i = 0; i < slots.Length; i++)
+        {
+            if (slots[i].ItemObject.Type == ItemType.CONSUMABLE)
+            {
+                if (slots[i].Amount > 1)
+                {
+                    slots[i].Amount--;
+                }
+                else if (slots[i].Amount == 1)
+                {
+                    slots[i].UpdateSlot(new Item(), 0);
+                }
+                break;
+            }
+        }
+
+        /*for (int i = 0; i < InventoryManager.Instance.m_inventory.GetSlots.Length; i++)
+        {
+            if (InventoryManager.Instance.m_inventory.GetSlots[i].ItemObject.Type == ItemType.CONSUMABLE) {
+                if (InventoryManager.Instance.m_inventory.GetSlots[i].Amount > 1) {
+                    InventoryManager.Instance.m_inventory.GetSlots[i].Amount--;
+                }
+                else if (InventoryManager.Instance.m_inventory.GetSlots[i].Amount == 1)
+                {
+                    InventoryManager.Instance.m_inventory.GetSlots[i].UpdateSlot(new Item(), 0);
+                }
+                break;
+            }
+        }*/
     }
 
     public void InteractableGrodnarButton(bool interactable) { equipmentButtons[2].interactable = interactable; }

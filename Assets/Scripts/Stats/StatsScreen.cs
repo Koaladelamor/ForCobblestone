@@ -20,12 +20,6 @@ public class StatsScreen : MonoBehaviour
         
     }
 
-    // Update is called once per frame
-    /*void Update()
-    {
-        
-    }*/
-
     public void DisableStatButtons() {
 
         for (int i = 0; i < statButtons.Length; i++)

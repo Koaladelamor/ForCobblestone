@@ -81,13 +81,16 @@ public class CanvasManager : MonoBehaviour
             m_canvasMenu.SetActive(false);
             isMenuOnScreen = false;
             GameManager.Instance.EnablePartyMovement();
+            Time.timeScale = 1;
         }
         else if (InputManager.Instance.MenuButtonPressed && !isMenuOnScreen)
         {
             m_canvasMenu.SetActive(true);
             isMenuOnScreen = true;
+            AudioManager.Instance.partyFX.Stop();
             GameManager.Instance.StopMovement();
             GameManager.Instance.DisablePartyMovement();
+            Time.timeScale = 0;
         }
 
         if (yawnSoundStarted) {

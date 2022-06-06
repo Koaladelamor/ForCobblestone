@@ -49,6 +49,10 @@ public class AudioManager : MonoBehaviour
 
     [SerializeField] private AudioClip lifeSound;
 
+    public AudioClip menuMusic;
+    public AudioClip combatMusic;
+    public AudioClip mapMusic;
+
     public enum UIEffects { NONE, SELECT, PRESSED, LIFESOUND };
 
     public enum InstantAudios { NONE, ENEMYHURT, PLAYERHURT, BAGCLOSE, BAGOPEN, ARROWFLESH, ONGUARD, BIRD, CHESTOPEN, COIN, DRAMATICBIRD, OWL, WOLFHOWL, SWORDFLESH, SWORDOBJECT, SWORDMETAL, GRODNARDEATH, SIGFRIDDEATH, LANSTARDEATH, BELLSOUND, ALERT, SNORE1, YAWN };
@@ -298,6 +302,8 @@ public class AudioManager : MonoBehaviour
         }
         partyFX.Play();
     }
+
+    public void ChangeBackgroundMusic(AudioClip music) { BackgroundMusic.clip = music; }
 
     public void StopMusic() { BackgroundMusic.Stop(); }
 

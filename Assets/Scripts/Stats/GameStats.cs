@@ -312,7 +312,9 @@ public class GameStats : MonoBehaviour
             if (Grodnar._stats[i].attribute == Attributes.CURR_HEALTH)
             {
                 Grodnar._stats[i].value = GetMaxHP(Grodnar._stats);
+                break;
             }
+
         }
 
         for (int i = 0; i < Lanstar._stats.Count; i++)
@@ -320,6 +322,7 @@ public class GameStats : MonoBehaviour
             if (Lanstar._stats[i].attribute == Attributes.CURR_HEALTH)
             {
                 Lanstar._stats[i].value = GetMaxHP(Lanstar._stats);
+                break;
             }
         }
 
@@ -328,6 +331,70 @@ public class GameStats : MonoBehaviour
             if (Sigfrid._stats[i].attribute == Attributes.CURR_HEALTH)
             {
                 Sigfrid._stats[i].value = GetMaxHP(Sigfrid._stats);
+                break;
+            }
+        }
+    }
+
+    public void PotionHealGrodnar() {
+        for (int i = 0; i < Grodnar._stats.Count; i++)
+        {
+            if (Grodnar._stats[i].attribute == Attributes.CURR_HEALTH)
+            {
+                if (Grodnar._stats[i].value < 1)
+                {
+                    InventoryManager.Instance.InteractableGrodnarButton(true);
+                }
+                Grodnar._stats[i].value += 100;
+                if (Grodnar._stats[i].value > GetMaxHP(Grodnar._stats)) {
+                    Grodnar._stats[i].value = GetMaxHP(Grodnar._stats);
+                }
+                InventoryManager.Instance.GrodnarEquipmentDisplay();
+                InventoryManager.Instance.m_statsScreen.DisplayGrodnarStats();
+                break;
+            }
+        }
+    }
+
+    public void PotionHealLanstar()
+    {
+        for (int i = 0; i < Lanstar._stats.Count; i++)
+        {
+            if (Lanstar._stats[i].attribute == Attributes.CURR_HEALTH)
+            {
+                if (Lanstar._stats[i].value < 1) {
+                    InventoryManager.Instance.InteractableLanstarButton(true);
+                }
+                Lanstar._stats[i].value += 100;
+                if (Lanstar._stats[i].value > GetMaxHP(Lanstar._stats))
+                {
+                    Lanstar._stats[i].value = GetMaxHP(Lanstar._stats);
+                }
+                InventoryManager.Instance.LanstarEquipmentDisplay();
+                InventoryManager.Instance.m_statsScreen.DisplayLanstarStats();
+                break;
+            }
+        }
+    }
+
+    public void PotionHealSigfrid()
+    {
+        for (int i = 0; i < Sigfrid._stats.Count; i++)
+        {
+            if (Sigfrid._stats[i].attribute == Attributes.CURR_HEALTH)
+            {
+                if (Sigfrid._stats[i].value < 1)
+                {
+                    InventoryManager.Instance.InteractableSigfridButton(true);
+                }
+                Sigfrid._stats[i].value += 100;
+                if (Sigfrid._stats[i].value > GetMaxHP(Sigfrid._stats))
+                {
+                    Sigfrid._stats[i].value = GetMaxHP(Sigfrid._stats);
+                }
+                InventoryManager.Instance.SigfridEquipmentDisplay();
+                InventoryManager.Instance.m_statsScreen.DisplaySigfridStats();
+                break;
             }
         }
     }

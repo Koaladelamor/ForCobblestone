@@ -73,7 +73,7 @@ public class CombatManager : MonoBehaviour
 
 
 
-        Invoke("AssignEnemies", 0.8f);
+        Invoke("AssignEnemies", 0.5f);
 
         turn = 0;
         CalculatePlayersTurn();
@@ -307,7 +307,13 @@ public class CombatManager : MonoBehaviour
         turnSet = false;
     }
 
-    public void StartCombat() { startCombat = true; }
+    public void StartCombat() { 
+        startCombat = true;
+        for (int i = 0; i < m_players.Length; i++)
+        {
+            m_players[i].GetComponent<PawnController>().SetDraggable(false);
+        }
+    }
 
     public void UpdateCurrentHP() {
         for (int i = 0; i < m_players.Length; i++)
@@ -335,4 +341,5 @@ public class CombatManager : MonoBehaviour
     }
 
     public GameObject[] GetPlayers() { return m_players; }
+
 }

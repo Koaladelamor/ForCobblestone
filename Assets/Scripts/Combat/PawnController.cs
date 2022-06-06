@@ -992,4 +992,6 @@ public class PawnController : MonoBehaviour
     public void ShootArrow() {
         tempArrow.GetComponent<Arrow>().SetShoot(true);
     }
+
+    public void SetDraggable(bool _draggable) { draggable = _draggable;  } 
 }
