@@ -82,7 +82,17 @@ public class PlayerController : MonoBehaviour
             m_pointToGo.transform.position = transform.position;
             m_pointToGo.GetComponent<TargetPosition>().SetMovement(false);
         }
+
+
     }
+
+    /*private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Gate"))
+        {
+            collision.gameObject.GetComponent<Animator>().enabled = true;
+        }
+    }*/
 
     public bool PartyIsMoving()
     {

@@ -225,7 +225,7 @@ PrefabInstance:
     - target: {fileID: 995340851640159571, guid: fa0df2bb7fa524b42a8f3662c70d4e34, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1292432835}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fa0df2bb7fa524b42a8f3662c70d4e34, type: 3}
 --- !u!1 &115699079
@@ -2057,7 +2057,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MAX_FILAS: 4
-  MAX_COLUMNAS: 5
+  MAX_COLUMNAS: 7
   m_initialPosition: {fileID: 1335560374}
   m_tile: {fileID: 5405940655249670595, guid: a3945c42935380d43afca8e9e353a5b4, type: 3}
   m_directions: []
@@ -2110,8 +2110,10 @@ MonoBehaviour:
   - {fileID: 853513981}
   - {fileID: 1206265903}
   - {fileID: 365312303}
-  m_spiderPrefab: {fileID: 5690949739578322072, guid: 876ab42971beb034ca4f07172fd19011, type: 3}
-  m_wormPrefab: {fileID: 6904670649098708598, guid: 37959d53d2be7b64396f643ff253c93f, type: 3}
+  m_spiderPrefab: {fileID: 0}
+  m_wormPrefab: {fileID: 0}
+  m_bossPrefab: {fileID: 3745054492848453152, guid: e9f0ea34abc3a414492bb2edc1360894, type: 3}
+  bossCombat: 1
   m_canvasToMap: {fileID: 253444218}
   m_gameOverCanvas: {fileID: 3374012254711864146}
 --- !u!4 &1292432836
@@ -2300,7 +2302,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1292432835}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: CombatManager, Assembly-CSharp
         m_MethodName: RestartGame
         m_Mode: 1
@@ -3458,7 +3460,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1292432835}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: CombatManager, Assembly-CSharp
         m_MethodName: ContinueGame
         m_Mode: 1

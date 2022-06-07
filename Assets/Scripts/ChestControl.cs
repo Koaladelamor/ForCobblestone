@@ -22,7 +22,8 @@ public class ChestControl : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.E) && !itemsPicked)
             {
-                InventoryManager.Instance.GenerateRandomChest((int)Random.Range(1, 16));
+                InventoryManager.Instance.m_ChestInventory.Clear();
+                InventoryManager.Instance.GenerateRandomChest((int)Random.Range(1, 14));
                 ChestClosed.SetActive(false);
                 ChestOpen.SetActive(true);
                 InventoryManager.Instance.OpenChestInventory();
@@ -30,12 +31,13 @@ public class ChestControl : MonoBehaviour
                 InventoryManager.Instance.inventoryBlackScreen.SetActive(true);
                 GameManager.Instance.DisablePartyMovement();
                 itemsPicked = true;
+                E_.SetActive(false);
             }
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "PlayerMap")
+        if (collision.tag == "PlayerMap" && !itemsPicked)
         {
             Chest = true;
             E_.SetActive(true);
@@ -52,10 +54,6 @@ public class ChestControl : MonoBehaviour
         }
     }
 
-    public void GetItem()
-    {
-        //aqui va lo del inventario
-    }
 }
 
     

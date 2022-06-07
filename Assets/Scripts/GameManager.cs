@@ -151,6 +151,21 @@ public class GameManager : MonoBehaviour
         AudioManager.Instance.PlayMusic();
     }
 
+    public void LoadBossScene()
+    {
+        GameObject[] gameObjectsOnScene;
+        gameObjectsOnScene = SceneManager.GetActiveScene().GetRootGameObjects();
+        foreach (GameObject obj in gameObjectsOnScene)
+        {
+            obj.SetActive(false);
+        }
+        SceneManager.LoadSceneAsync("BossCombat", LoadSceneMode.Additive);
+
+        AudioManager.Instance.StopMusic();
+        AudioManager.Instance.ChangeBackgroundMusic(AudioManager.Instance.combatMusic);
+        AudioManager.Instance.PlayMusic();
+    }
+
     public void LoadMapScene()
     {
         SceneManager.UnloadSceneAsync(SceneManager.GetSceneByName("CombatScene"));

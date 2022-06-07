@@ -4,7 +4,7 @@ using UnityEngine;
 public class GFXController : MonoBehaviour
 {
     public GameObject warrior, archer, tank, spider, worm;
-    public Animator warriorAnim, archerAnim, tankAnim, spiderAnim, wormAnim;
+    public Animator warriorAnim, archerAnim, tankAnim, spiderAnim, wormAnim, bossAnim;
 
     private bool attackDone;
 
@@ -82,6 +82,9 @@ public class GFXController : MonoBehaviour
             case PawnController.CHARACTER.WORM:
                 wormAnim.SetTrigger("Attack");
                 break;
+            case PawnController.CHARACTER.BOSS:
+                bossAnim.SetTrigger("Attack");
+                break;
             case PawnController.CHARACTER.LAST_NO_USE:
                 break;
         }
@@ -107,6 +110,9 @@ public class GFXController : MonoBehaviour
                 break;
             case PawnController.CHARACTER.WORM:
                 wormAnim.SetTrigger("Hurt");
+                break;
+            case PawnController.CHARACTER.BOSS:
+                bossAnim.SetTrigger("Hurt");
                 break;
             case PawnController.CHARACTER.LAST_NO_USE:
                 break;
@@ -134,6 +140,9 @@ public class GFXController : MonoBehaviour
             case PawnController.CHARACTER.WORM:
                 wormAnim.SetBool("IsDead", true);
                 break;
+            case PawnController.CHARACTER.BOSS:
+                bossAnim.SetBool("IsDead", true);
+                break;
             case PawnController.CHARACTER.LAST_NO_USE:
                 break;
         }
@@ -159,6 +168,9 @@ public class GFXController : MonoBehaviour
                 break;
             case PawnController.CHARACTER.WORM:
                 wormAnim.SetBool("IsRunning", true);
+                break;
+            case PawnController.CHARACTER.BOSS:
+                bossAnim.SetBool("IsRunning", true);
                 break;
             case PawnController.CHARACTER.LAST_NO_USE:
                 break;
@@ -186,6 +198,9 @@ public class GFXController : MonoBehaviour
             case PawnController.CHARACTER.WORM:
                 wormAnim.SetBool("IsRunning", false);
                 break;
+            case PawnController.CHARACTER.BOSS:
+                bossAnim.SetBool("IsRunning", false);
+                break;
             case PawnController.CHARACTER.LAST_NO_USE:
                 break;
         }
@@ -194,6 +209,7 @@ public class GFXController : MonoBehaviour
     public void SpawnDamageText()
     {
         Vector3 targetPosition = GetComponent<PawnController>().GetCurrentTarget().transform.position;
+
         DamagePopUp damageText = combatManager.GetComponent<DamagePopUp>().Create(new Vector3(targetPosition.x, targetPosition.y + 10, 0), GetComponent<PawnController>().GetDamage());
         damageText.gameObject.GetComponent<TextMeshPro>().color = new Color(255, 50, 50);
     }

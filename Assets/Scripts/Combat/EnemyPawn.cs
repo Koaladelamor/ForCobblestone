@@ -85,6 +85,32 @@ public class EnemyPawn : PawnController
                     }
                 }
                 break;
+            case CHARACTER.BOSS:
+                List<Stat> BossStats = GameStats.Instance.GetBossStats();
+                for (int g = 0; g < BossStats.Count; g++)
+                {
+                    if (BossStats[g].attribute == Attributes.MIN_DAMAGE)
+                    {
+                        min_damage = BossStats[g].value;
+                    }
+                    else if (BossStats[g].attribute == Attributes.MAX_DAMAGE)
+                    {
+                        max_damage = BossStats[g].value;
+                    }
+                    else if (BossStats[g].attribute == Attributes.MAX_HEALTH)
+                    {
+                        MAX_HP = BossStats[g].value;
+                    }
+                    else if (BossStats[g].attribute == Attributes.CURR_HEALTH)
+                    {
+                        cur_hp = BossStats[g].value;
+                    }
+                    else if (BossStats[g].attribute == Attributes.AGILITY)
+                    {
+                        agility = BossStats[g].value;
+                    }
+                }
+                break;
             default:
                 break;
         }
@@ -358,6 +384,12 @@ public class EnemyPawn : PawnController
                     combatManager.NextTurn();
                     Debug.Log("NO ENEMY TO ATTACK");
                 }
+
+                if (character == CHARACTER.BOSS && m_positionToGo != null) {
+                    Vector2 positionToGo = GridManager.Instance.ScreenToTilePosition(Camera.main.WorldToScreenPoint(m_positionToGo.position));
+                    m_positionToGo = GridManager.Instance.GetTile(positionToGo + new Vector2(1, 0)).transform;
+                }
+
                 break;
 
             case PAWN_TYPE.TANK:

@@ -103,6 +103,16 @@ public class GridManager : MonoBehaviour
 
     }
 
+    public bool AssignBossToTile(GameObject p_pawn, Vector2 p_tilePosition)
+    {
+        TileManager currentTile = m_tiles[(int)p_tilePosition.y, (int)p_tilePosition.x].GetComponent<TileManager>();
+
+        //Debug.Log(p_tilePosition.x + " | " + p_tilePosition.y);
+
+        return currentTile.AddBoss(p_pawn);
+
+    }
+
     public void TakePawnFromTile(Vector2 p_tilePosition)
     {
         TileManager currentTile = m_tiles[(int)p_tilePosition.y, (int)p_tilePosition.x].GetComponent<TileManager>();

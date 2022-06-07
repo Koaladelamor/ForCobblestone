@@ -20,6 +20,8 @@ public class GameStats : MonoBehaviour
     public Stadistics Spider;
     public Stadistics Worm;
 
+    public Stadistics Boss;
+
     private int coins;
 
     static GameStats mInstance;
@@ -51,6 +53,8 @@ public class GameStats : MonoBehaviour
         Spider = InitStats("Spider", 75, 5, 15, 14, 10, 5);
         Worm = InitStats("Worm", 50, 5, 15, 8, 10, 5);
 
+        Boss = InitStats("Boss", 300, 20, 45, 38, 50, 20);
+
         coins = 0;
     }
     
@@ -64,6 +68,8 @@ public class GameStats : MonoBehaviour
 
     public List<Stat> GetSpiderStats() { return Spider._stats; }
     public List<Stat> GetWormStats() { return Worm._stats; }
+
+    public List<Stat> GetBossStats() { return Boss._stats; }
 
     public Stadistics InitStats(string name, int health, int min_damage, int max_damage, int strenght, int stamina, int agility)
     {

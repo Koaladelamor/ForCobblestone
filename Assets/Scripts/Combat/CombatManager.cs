@@ -9,6 +9,11 @@ public class CombatManager : MonoBehaviour
     public GameObject m_spiderPrefab;
     public GameObject m_wormPrefab;
 
+    private GameObject m_boss;
+    public GameObject m_bossPrefab;
+
+    public bool bossCombat;
+
     public GameObject m_canvasToMap;
     public GameObject m_gameOverCanvas;
 
@@ -51,25 +56,33 @@ public class CombatManager : MonoBehaviour
 
         m_canvasToMap.SetActive(false);
 
-        EnemyType enemyType = GameManager.Instance.GetCurrentEnemyType();
-        switch (enemyType)
+        if (bossCombat)
         {
-            case EnemyType.NONE:
-                Debug.Log("EnemyType set to none");
-                break;
-            case EnemyType.SPIDER:
-                m_enemies[0] = Instantiate(m_spiderPrefab, new Vector3(190, 38, 0), transform.rotation);
-                m_enemies[1] = Instantiate(m_spiderPrefab, new Vector3(190, -14, 0), transform.rotation);
-                m_enemies[2] = Instantiate(m_spiderPrefab, new Vector3(190, -60, 0), transform.rotation);
-                break;
-            case EnemyType.WORM:
-                m_enemies[0] = Instantiate(m_wormPrefab, new Vector3(190, 38, 0), transform.rotation);
-                m_enemies[1] = Instantiate(m_wormPrefab, new Vector3(190, -14, 0), transform.rotation);
-                m_enemies[2] = Instantiate(m_wormPrefab, new Vector3(190, -60, 0), transform.rotation);
-                break;
-            default:
-                break;
+            m_boss = Instantiate(m_bossPrefab, new Vector3(190, 38, 0), transform.rotation);
         }
+        else {
+            EnemyType enemyType = GameManager.Instance.GetCurrentEnemyType();
+            switch (enemyType)
+            {
+                case EnemyType.NONE:
+                    Debug.Log("EnemyType set to none");
+                    break;
+                case EnemyType.SPIDER:
+                    m_enemies[0] = Instantiate(m_spiderPrefab, new Vector3(190, 38, 0), transform.rotation);
+                    m_enemies[1] = Instantiate(m_spiderPrefab, new Vector3(190, -14, 0), transform.rotation);
+                    m_enemies[2] = Instantiate(m_spiderPrefab, new Vector3(190, -60, 0), transform.rotation);
+                    break;
+                case EnemyType.WORM:
+                    m_enemies[0] = Instantiate(m_wormPrefab, new Vector3(190, 38, 0), transform.rotation);
+                    m_enemies[1] = Instantiate(m_wormPrefab, new Vector3(190, -14, 0), transform.rotation);
+                    m_enemies[2] = Instantiate(m_wormPrefab, new Vector3(190, -60, 0), transform.rotation);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+
 
 
 
@@ -92,59 +105,115 @@ public class CombatManager : MonoBehaviour
         }
 
 
-        if (EnemiesDefeated())
-        {
-            UpdateCurrentHP();
-            Invoke("VictoryCanvas", 1f);
-        }
+
         if (Input.GetKeyDown(KeyCode.S))
         {
             startCombat = true;
         }
 
-        if (startCombat && !turnSet) {
-
-            switch (turn)
+        if (bossCombat)
+        {
+            if (BossDefeated())
             {
-                default:
-                    break;
+                Invoke("VictoryCanvas", 1f);
+                turnSet = true;
+            }
 
-                case 0:
-                    m_players[0].GetComponent<PawnController>().SetTurnOn();
-                    turnSet = true;
-                    break;
+            if (startCombat && !turnSet)
+            {
+                switch (turn)
+                {
+                    default:
+                        break;
+                    case 0:
+                        m_boss.GetComponent<EnemyPawn>().SetTurnOn();
+                        turnSet = true;
+                        break;
 
-                case 1:
-                    m_enemies[0].GetComponent<EnemyPawn>().SetTurnOn();
-                    turnSet = true;
-                    break;
+                    case 1:
+                        m_players[0].GetComponent<PawnController>().SetTurnOn();
+                        turnSet = true;
+                        break;
 
-                case 2:
-                    m_players[1].GetComponent<PawnController>().SetTurnOn();
-                    turnSet = true;
-                    break;
+                    case 2:
+                        m_players[1].GetComponent<PawnController>().SetTurnOn();
+                        turnSet = true;
+                        break;
 
-                case 3:
-                    m_enemies[1].GetComponent<PawnController>().SetTurnOn();
-                    turnSet = true;
-                    break;
+                    case 3:
+                        m_players[2].GetComponent<PawnController>().SetTurnOn();
+                        turnSet = true;
+                        break;
 
-                case 4:
-                    m_players[2].GetComponent<PawnController>().SetTurnOn();
-                    turnSet = true;
-                    break;
+                    case 4:
+                        turn = 0;
+                        break;
+                    case 5:
+                        turn = 0;
+                        break;
+                    case 6:
+                        turn = 0;
+                        break;
+                    case 7:
+                        turn = 0;
+                        break;
+                }
+            }
+        }
+        else
+        {
+            if (EnemiesDefeated())
+            {
+                UpdateCurrentHP();
+                Invoke("VictoryCanvas", 1f);
+                turnSet = true;
+            }
 
-                case 5:
-                    m_enemies[2].GetComponent<PawnController>().SetTurnOn();
-                    turnSet = true;
-                    break;
+            if (startCombat && !turnSet)
+            {
 
-                case 6:
-                    turn = 0;
-                    break;
-                case 7:
-                    turn = 0;
-                    break;
+                switch (turn)
+                {
+                    default:
+                        break;
+
+                    case 0:
+                        m_players[0].GetComponent<PawnController>().SetTurnOn();
+                        turnSet = true;
+                        break;
+
+                    case 1:
+                        m_enemies[0].GetComponent<EnemyPawn>().SetTurnOn();
+                        turnSet = true;
+                        break;
+
+                    case 2:
+                        m_players[1].GetComponent<PawnController>().SetTurnOn();
+                        turnSet = true;
+                        break;
+
+                    case 3:
+                        m_enemies[1].GetComponent<PawnController>().SetTurnOn();
+                        turnSet = true;
+                        break;
+
+                    case 4:
+                        m_players[2].GetComponent<PawnController>().SetTurnOn();
+                        turnSet = true;
+                        break;
+
+                    case 5:
+                        m_enemies[2].GetComponent<PawnController>().SetTurnOn();
+                        turnSet = true;
+                        break;
+
+                    case 6:
+                        turn = 0;
+                        break;
+                    case 7:
+                        turn = 0;
+                        break;
+                }
             }
         }
     }
@@ -244,6 +313,16 @@ public class CombatManager : MonoBehaviour
         return false;
     }
 
+    bool BossDefeated()
+    {
+
+        if (!m_boss.GetComponent<PawnController>().IsAlive())
+        {
+            return true;
+        }
+
+        return false;
+    }
     bool PlayersDefeated()
     {
 
@@ -266,9 +345,15 @@ public class CombatManager : MonoBehaviour
     }
 
     public void AssignEnemies() {
-        GridManager.Instance.AssignPawnToTile(m_enemies[0], EnemySpawnTile1);
-        GridManager.Instance.AssignPawnToTile(m_enemies[1], EnemySpawnTile2);
-        GridManager.Instance.AssignPawnToTile(m_enemies[2], EnemySpawnTile3);
+        if (bossCombat)
+        {
+            GridManager.Instance.AssignBossToTile(m_boss, new Vector2(3, 2));
+        }
+        else {
+            GridManager.Instance.AssignPawnToTile(m_enemies[0], EnemySpawnTile1);
+            GridManager.Instance.AssignPawnToTile(m_enemies[1], EnemySpawnTile2);
+            GridManager.Instance.AssignPawnToTile(m_enemies[2], EnemySpawnTile3);
+        }
     }
 
     public void CombatIsOver() {

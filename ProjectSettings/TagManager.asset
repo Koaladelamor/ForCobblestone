@@ -24,6 +24,9 @@ TagManager:
   - EventSystem
   - PatrolPoint
   - Arrow
+  - Gate
+  - BossTrigger
+  - Campfire
   layers:
   - Default
   - TransparentFX

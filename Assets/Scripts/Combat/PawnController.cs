@@ -6,7 +6,7 @@ public enum PAWN_TYPE { RANGED, MELEE, TANK }
 
 public class PawnController : MonoBehaviour
 {
-    public enum CHARACTER { GRODNAR, LANSTAR, SIGFRID, SPIDER, WORM, LAST_NO_USE }
+    public enum CHARACTER { GRODNAR, LANSTAR, SIGFRID, SPIDER, WORM, BOSS, LAST_NO_USE }
     public CHARACTER character;
 
     protected bool draggable;

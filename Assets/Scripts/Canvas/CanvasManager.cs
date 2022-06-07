@@ -19,6 +19,7 @@ public class CanvasManager : MonoBehaviour
     public GameObject m_canvasToCombat;
     public GameObject m_canvasPause;
     public GameObject m_canvasMenu;
+    public GameObject m_canvasCampfire;
     public GameObject blackScreen;
 
     private bool isMenuOnScreen;
@@ -215,4 +216,9 @@ public class CanvasManager : MonoBehaviour
     }
 
     public void SetYawnSoundBool(bool yawn) { yawnSoundStarted = yawn; }
+
+    public void CloseCampfireCanvas() {
+        m_canvasCampfire.SetActive(false);
+        GameManager.Instance.EnablePartyMovement();
+    }
 }
