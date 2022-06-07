@@ -304,9 +304,9 @@ public class GameStats : MonoBehaviour
         if (player._current_xp >= player._required_xp)
         {
 
-            Debug.Log(player._level);
-            Debug.Log(player._current_xp);
-            Debug.Log(player._required_xp);
+            //Debug.Log(player._level);
+            //Debug.Log(player._current_xp);
+            //Debug.Log(player._required_xp);
             return true;
         }
         return false;

@@ -850,7 +850,7 @@ public class PawnController : MonoBehaviour
                 }
                 else if (!GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(2, -1)) && !GridManager.Instance.OutOfGrid(currentTilePosition + new Vector2(2, -1)))
                 {
-                    Debug.Log(GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(2, -1)));
+                    //Debug.Log(GridManager.Instance.IsTileEmpty(currentTilePosition + new Vector2(2, -1)));
                     TileManager enemyTilePosition = GridManager.Instance.GetTile(currentTilePosition + new Vector2(2, -1));
                     m_pawnToAttack = enemyTilePosition.GetPawn();
                     m_positionToGo = GridManager.Instance.GetTile(currentTilePosition + new Vector2(1, -1)).transform;

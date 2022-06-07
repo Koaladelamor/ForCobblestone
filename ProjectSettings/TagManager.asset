@@ -67,6 +67,12 @@ TagManager:
   - name: River
     uniqueID: 2840587927
     locked: 0
+  - name: City
+    uniqueID: 472369611
+    locked: 0
+  - name: CityTower
+    uniqueID: 2688105941
+    locked: 0
   - name: Tree
     uniqueID: 3267353755
     locked: 0

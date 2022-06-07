@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 
 public class EnemyPawn : PawnController
 {
@@ -128,6 +126,7 @@ public class EnemyPawn : PawnController
                 case PAWN_STATUS.IDLE:
                     if (myTurn && alive)
                     {
+                        gfxController.Idle();
                         m_state = PAWN_STATUS.GET_PAWN;
                     }
                     else if (myTurn && !alive)
@@ -140,7 +139,24 @@ public class EnemyPawn : PawnController
                 case PAWN_STATUS.ATTACK:
                     if (!attackPerformed)
                     {
-                        gfxController.Attack();
+                        if (character == CHARACTER.BOSS)
+                        {
+                            int randomAttack = Random.Range(0, 2);
+                            switch (randomAttack)
+                            {
+                                default:
+                                    break;
+                                case 0:
+                                    gfxController.Attack();
+                                    break;
+                                case 1:
+                                    gfxController.FireAttack();
+                                    break;
+                            }
+                        }
+                        else {
+                            gfxController.Attack();
+                        }
                         attackPerformed = true;
                         damage = Random.Range(min_damage, max_damage + 1);
                         

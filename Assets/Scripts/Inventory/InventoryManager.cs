@@ -595,7 +595,7 @@ public class InventoryManager : MonoBehaviour
         confirmChestButton.gameObject.SetActive(false);
         takeChestLootButton.gameObject.SetActive(false);
         inventoryBlackScreen.SetActive(false);
-        GameManager.Instance.pointToGo.SetMovement(true);
+        GameManager.Instance.EnablePartyMovement();
     }
 
     public void ConfirmTrade()

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CharactersAnimBridge : MonoBehaviour
@@ -22,6 +20,11 @@ public class CharactersAnimBridge : MonoBehaviour
     public void ShootArrow()
     {
         gfxController.GetComponent<PawnController>().ShootArrow();
+    }
+
+    public void ShootArrowSound()
+    {
+        AudioManager.Instance.PlayInstant(AudioManager.InstantAudios.ARROWSHOOT);
     }
 
     public void HurtStartSound() {

@@ -14,7 +14,7 @@ public class Arrow : MonoBehaviour
     void Start()
     {
         shoot = false;
-        speed = 250f;
+        speed = 320f;
 
         CombatManager combatManager = GameObject.FindGameObjectWithTag("CombatManager").GetComponent<CombatManager>();
         GameObject[] players = combatManager.GetPlayers();

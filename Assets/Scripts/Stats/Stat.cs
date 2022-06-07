@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 public enum Attributes { CURR_HEALTH, MAX_HEALTH, MIN_DAMAGE, MAX_DAMAGE, STRENGHT, STAMINA, AGILITY, LAST_NO_USE }
 public class Stat

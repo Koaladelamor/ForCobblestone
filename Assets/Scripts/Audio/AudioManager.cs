@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -38,6 +36,10 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip BellSound;
     [SerializeField] private AudioClip snore1;
     [SerializeField] private AudioClip yawn;
+    [SerializeField] private AudioClip arrowShoot;
+    [SerializeField] private AudioClip arrowHit;
+    [SerializeField] private AudioClip dragonAttack;
+    [SerializeField] private AudioClip dragonFire;
 
     [SerializeField] private AudioClip[] grassFootsteps;
     [SerializeField] private AudioClip[] stoneFootsteps;
@@ -52,10 +54,12 @@ public class AudioManager : MonoBehaviour
     public AudioClip menuMusic;
     public AudioClip combatMusic;
     public AudioClip mapMusic;
+    public AudioClip crowdAmbience;
+    public AudioClip endGameVictory;
 
     public enum UIEffects { NONE, SELECT, PRESSED, LIFESOUND };
 
-    public enum InstantAudios { NONE, ENEMYHURT, PLAYERHURT, BAGCLOSE, BAGOPEN, ARROWFLESH, ONGUARD, BIRD, CHESTOPEN, COIN, DRAMATICBIRD, OWL, WOLFHOWL, SWORDFLESH, SWORDOBJECT, SWORDMETAL, GRODNARDEATH, SIGFRIDDEATH, LANSTARDEATH, BELLSOUND, ALERT, SNORE1, YAWN };
+    public enum InstantAudios { NONE, ENEMYHURT, PLAYERHURT, BAGCLOSE, BAGOPEN, ARROWFLESH, ONGUARD, BIRD, CHESTOPEN, COIN, DRAMATICBIRD, OWL, WOLFHOWL, SWORDFLESH, SWORDOBJECT, SWORDMETAL, GRODNARDEATH, SIGFRIDDEATH, LANSTARDEATH, BELLSOUND, ALERT, SNORE1, YAWN, ARROWHIT, ARROWSHOOT, DRAGONFIRE, DRAGONATTACK };
 
     public enum Footsteps { NONE, WOOD, STONE, SAND };
 
@@ -171,6 +175,18 @@ public class AudioManager : MonoBehaviour
             case InstantAudios.YAWN:
                 effectsSounds.PlayOneShot(yawn);
                 break;
+            case InstantAudios.ARROWHIT:
+                effectsSounds.PlayOneShot(arrowHit);
+                break;
+            case InstantAudios.ARROWSHOOT:
+                effectsSounds.PlayOneShot(arrowShoot);
+                break;
+            case InstantAudios.DRAGONATTACK:
+                effectsSounds.PlayOneShot(dragonAttack);
+                break;
+            case InstantAudios.DRAGONFIRE:
+                effectsSounds.PlayOneShot(dragonFire);
+                break;
             default:
                 break;
         }
@@ -216,16 +232,21 @@ public class AudioManager : MonoBehaviour
         switch (ch)
         {
             case PawnController.CHARACTER.GRODNAR:
-
+                PlayInstant(InstantAudios.SWORDFLESH);
+                break;
             case PawnController.CHARACTER.SIGFRID:
                 PlayInstant(InstantAudios.SWORDFLESH);
                 break;
             case PawnController.CHARACTER.LANSTAR:
-
+                PlayInstant(InstantAudios.ARROWHIT);
+                break;
             case PawnController.CHARACTER.SPIDER:
-                
+                PlayInstant(InstantAudios.ARROWFLESH);
+                break;
             case PawnController.CHARACTER.WORM:
                 PlayInstant(InstantAudios.ARROWFLESH);
+                break;
+            case PawnController.CHARACTER.BOSS:
                 break;
             case PawnController.CHARACTER.LAST_NO_USE:
                 break;

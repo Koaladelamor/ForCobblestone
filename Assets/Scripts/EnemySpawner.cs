@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
@@ -15,8 +13,8 @@ public class EnemySpawner : MonoBehaviour
 
     private void Awake()
     {
-        enemyToSpawn = null;
-        enemyOnSpawn = null;
+        //enemyToSpawn = null;
+        //enemyOnSpawn = null;
         //linearPatrol = false;
         spawnerID = -1;
     }
@@ -24,20 +22,26 @@ public class EnemySpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (enemyOnSpawn != null && !GetPatrolAI().IsAlive()) {
+        if (!GetPatrolAI().IsAlive()) {
             //Destroy Enemy + PatrolPoints and Instantiate a new one when spawner is out of camera
             for (int i = 0; i < GetPatrolAI().patrolPoints.Length; i++)
             {
-                Destroy(GetPatrolAI().patrolPoints[i]);
+                GetPatrolAI().patrolPoints[i].SetActive(false);
             }
-            Destroy(enemyOnSpawn);
+            enemyOnSpawn.SetActive(false);
         }
     }
 
     private void OnBecameInvisible()
     {
-        if (enemyOnSpawn == null) {
-            RespawnEnemy(transform.position, spawnerID);
+        if (!GetPatrolAI().IsAlive())
+        {
+            for (int i = 0; i < GetPatrolAI().patrolPoints.Length; i++)
+            {
+                GetPatrolAI().patrolPoints[i].SetActive(true);
+            }
+            enemyOnSpawn.SetActive(true);
+            GetPatrolAI().SetAlive(true);
         }
     }
 
@@ -59,6 +63,11 @@ public class EnemySpawner : MonoBehaviour
         PatrolAI AI = enemy.GetComponent<PatrolAI>();
         if (AI == null) {
             Debug.Log("ERROR SPAWNER PATROL AI NULL");
+            return;
+        }
+        if (enemy == null)
+        {
+            Debug.Log("ERROR SPAWNER Enemy is null");
             return;
         }
 

@@ -25,9 +25,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1603005837341132980}
-  m_LocalRotation: {x: -0.49833605, y: -0.5016585, z: 0.5016585, w: 0.49833605}
+  m_LocalRotation: {x: -0.4983349, y: -0.5016596, z: 0.5016596, w: 0.4983349}
   m_LocalPosition: {x: -1062.7, y: -425.3, z: -2422.7078}
-  m_LocalScale: {x: 11.298635, y: 7.1403623, z: 7.1403623}
+  m_LocalScale: {x: 10.258092, y: 6.482775, z: 6.482775}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -40,7 +40,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1603005837341132980}
   serializedVersion: 7
-  lengthInSec: 0.1
+  lengthInSec: 3
   simulationSpeed: 3
   stopAction: 0
   cullingMode: 0
@@ -48,7 +48,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 1
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 0
   useRigidbodyForVelocity: 1
@@ -4834,9 +4834,9 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: -347023013
+  m_SortingLayer: 8
+  m_SortingOrder: 2
   m_RenderMode: 0
   m_SortMode: 0
   m_MinParticleSize: 0

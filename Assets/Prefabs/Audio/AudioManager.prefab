@@ -324,6 +324,10 @@ MonoBehaviour:
   BellSound: {fileID: 8300000, guid: e826dc757e8fdde4e8e0971649028f09, type: 3}
   snore1: {fileID: 8300000, guid: df7a0abee618d9c4a8f2786e42a70ace, type: 3}
   yawn: {fileID: 8300000, guid: a8c9c01b2c02ecd4a8b55b08afb08426, type: 3}
+  arrowShoot: {fileID: 8300000, guid: eadf945a7a536ae46aa3f30ebbb7b530, type: 3}
+  arrowHit: {fileID: 8300000, guid: c991c315fe4d1064fa9bc2554cc32154, type: 3}
+  dragonAttack: {fileID: 8300000, guid: 86574895425f78b46a3418bd89767724, type: 3}
+  dragonFire: {fileID: 8300000, guid: ad80bf400db9ff54cb8a77a4cef5e0dc, type: 3}
   grassFootsteps:
   - {fileID: 8300000, guid: c6699427e1444704a8d6fb99c6d1f15f, type: 3}
   - {fileID: 8300000, guid: 60aecc4808e6e4648a3e0cc4dc754cd7, type: 3}
@@ -344,6 +348,8 @@ MonoBehaviour:
   menuMusic: {fileID: 8300000, guid: 7d0dbf8c246964c4383777ae58a9c0aa, type: 3}
   combatMusic: {fileID: 8300000, guid: 78b1c5cc6799f7943be5822022c4ace7, type: 3}
   mapMusic: {fileID: 8300000, guid: 1d3554ae33d087c49b23075aaca92566, type: 3}
+  crowdAmbience: {fileID: 8300000, guid: 103d61247758ae641a746b56d912a9e6, type: 3}
+  endGameVictory: {fileID: 8300000, guid: 5a41744ba353b74469b79f7088cdd783, type: 3}
 --- !u!114 &7930205016058839706
 MonoBehaviour:
   m_ObjectHideFlags: 0

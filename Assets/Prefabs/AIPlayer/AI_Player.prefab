@@ -476,6 +476,7 @@ MonoBehaviour:
   tankAnim: {fileID: 3635966325733093826}
   spiderAnim: {fileID: 0}
   wormAnim: {fileID: 0}
+  bossAnim: {fileID: 0}
 --- !u!1 &3635966324328918305
 GameObject:
   m_ObjectHideFlags: 0

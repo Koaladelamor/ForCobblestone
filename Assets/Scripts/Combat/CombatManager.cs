@@ -14,6 +14,7 @@ public class CombatManager : MonoBehaviour
 
     public bool bossCombat;
 
+    public GameObject endGameAnim;
     public GameObject m_canvasToMap;
     public GameObject m_gameOverCanvas;
 
@@ -115,7 +116,7 @@ public class CombatManager : MonoBehaviour
         {
             if (BossDefeated())
             {
-                Invoke("VictoryCanvas", 1f);
+                Invoke("VictoryCanvas", 2f);
                 turnSet = true;
             }
 
@@ -392,7 +393,7 @@ public class CombatManager : MonoBehaviour
         turnSet = false;
     }
 
-    public void StartCombat() { 
+    public void StartCombat() {
         startCombat = true;
         for (int i = 0; i < m_players.Length; i++)
         {
@@ -423,8 +424,25 @@ public class CombatManager : MonoBehaviour
 
     public void RestartGame() {
         GameManager.Instance.RestartGame();
+        AudioManager.Instance.StopMusic();
+        AudioManager.Instance.ChangeBackgroundMusic(AudioManager.Instance.mapMusic);
+        AudioManager.Instance.PlayMusic();
+    }
+
+    public void GoToMainMenu() {
+        GameManager.Instance.MainMenu();
+        AudioManager.Instance.StopMusic();
+        AudioManager.Instance.ChangeBackgroundMusic(AudioManager.Instance.menuMusic);
+        AudioManager.Instance.PlayMusic();
+    }
+
+    public void ExitGame() {
+        GameManager.Instance.QuitGame();
     }
 
     public GameObject[] GetPlayers() { return m_players; }
 
+    public void EndGame() {
+        endGameAnim.SetActive(true);
+    }
 }

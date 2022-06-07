@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class CanvasManager : MonoBehaviour
 {
@@ -14,6 +12,7 @@ public class CanvasManager : MonoBehaviour
         private set { }
     }
 
+    public GameObject m_canvasWelcome;
     public GameObject m_canvasTavern;
     public GameObject m_canvasTown;
     public GameObject m_canvasToCombat;
@@ -220,5 +219,10 @@ public class CanvasManager : MonoBehaviour
     public void CloseCampfireCanvas() {
         m_canvasCampfire.SetActive(false);
         GameManager.Instance.EnablePartyMovement();
+    }
+
+    public void CloseWelcomeMessage() {
+        m_canvasWelcome.SetActive(false);
+        Time.timeScale = 1;
     }
 }

@@ -44,6 +44,7 @@ public class GameManager : MonoBehaviour
         currentEnemyID = -1;
         currentEnemyType = EnemyType.NONE;
         newGamePosition = new Vector3(-720, 271, 0);
+        
     }
 
     // Start is called before the first frame update
@@ -51,13 +52,14 @@ public class GameManager : MonoBehaviour
     {
         if(this == null) { return; }
 
+        SceneManager.sceneLoaded += OnSceneLoaded;
+
         for (int i = 0; i < enemySpawners.Length; i++)
         {
+            if (enemySpawners[i] == null) { Debug.LogError("EnemySpawner is null"); }
             enemySpawners[i].RespawnEnemy(enemySpawners[i].transform.position, i);
             if (enemySpawners[i].GetEnemy() == null) { Debug.LogError("Enemy didn't spawn"); }
         }
-
-        SceneManager.sceneLoaded += OnSceneLoaded;
 
     }
 
@@ -211,6 +213,7 @@ public class GameManager : MonoBehaviour
         party.transform.position = newGamePosition;
         StopMovement();
         EnablePartyMovement();
+        Time.timeScale = 1;
         GameStats.Instance.SetCoins(0);
         InventoryManager.Instance.ClearInventories();
         InventoryManager.Instance.InitTavernLoot();
@@ -262,6 +265,7 @@ public class GameManager : MonoBehaviour
         party.transform.position = newGamePosition;
         StopMovement();
         EnablePartyMovement();
+        Time.timeScale = 1;
         GameStats.Instance.SetCoins(0);
         InventoryManager.Instance.ClearInventories();
         InventoryManager.Instance.InitTavernLoot();

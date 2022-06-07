@@ -206,6 +206,10 @@ public class GFXController : MonoBehaviour
         }
     }
 
+    public void FireAttack() {
+        bossAnim.SetTrigger("Attack2");
+    }
+
     public void SpawnDamageText()
     {
         Vector3 targetPosition = GetComponent<PawnController>().GetCurrentTarget().transform.position;
@@ -219,5 +223,13 @@ public class GFXController : MonoBehaviour
     public void InstantiateArrow() { pawnController.SpawnArrow(); }
 
     public void ShootArrow() { pawnController.ShootArrow(); }
+
+    public void DragonAttackAudio() {
+        AudioManager.Instance.PlayInstant(AudioManager.InstantAudios.DRAGONATTACK);
+    }
+
+    public void DragonFireAudio() {
+        AudioManager.Instance.PlayInstant(AudioManager.InstantAudios.DRAGONFIRE);
+    }
 
 }

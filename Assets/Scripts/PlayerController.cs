@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
         m_pointToGo = GameObject.FindGameObjectWithTag("PointToGo");
         engaged = false;
         footstepsPlaying = false;
+        m_pointToGo.GetComponent<TargetPosition>().SetMovement(false);
     }
 
     // Update is called once per frame
