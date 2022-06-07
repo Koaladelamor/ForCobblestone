@@ -21,7 +21,7 @@ public class PatrolAI : MonoBehaviour
     public EnemyType enemyType;
 
     // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         alive = true;
         currentPatrolPoint = 0;
@@ -30,7 +30,7 @@ public class PatrolAI : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
 
         previousPosition = currentPosition;

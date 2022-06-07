@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         if(this == null) { return; }
 
@@ -63,7 +63,7 @@ public class GameManager : MonoBehaviour
 
     }
 
-    void Update()
+    private void Update()
     {
 
         if (enemyEngaged)

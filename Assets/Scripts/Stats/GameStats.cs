@@ -47,13 +47,13 @@ public class GameStats : MonoBehaviour
         }
 
         Grodnar = InitStats("Grodnar", 160, 5, 15, 20, 20, 2);
-        Lanstar = InitStats("Lanstar", 75, 20, 35, 4, 6, 10);
-        Sigfrid = InitStats("Sigfrid", 124, 15, 30, 16, 14, 20);
+        Lanstar = InitStats("Lanstar", 75, 20, 35, 4, 6, 24);
+        Sigfrid = InitStats("Sigfrid", 124, 15, 30, 16, 14, 16);
 
         Spider = InitStats("Spider", 75, 5, 15, 14, 10, 5);
         Worm = InitStats("Worm", 50, 5, 15, 8, 10, 5);
 
-        Boss = InitStats("Boss", 300, 20, 45, 38, 50, 20);
+        Boss = InitStats("Boss", 350, 20, 45, 38, 50, 20);
 
         coins = 0;
     }
@@ -101,6 +101,18 @@ public class GameStats : MonoBehaviour
         CalculateHealth(statsList, GetStamina(statsList));
         CalculateDamage(statsList, GetStrength(statsList));
         return statsList;
+    }
+
+    public void CalculateMaxHealth(List<Stat> _stats, int _stamina)
+    {
+        for (int i = 0; i < _stats.Count; i++)
+        {
+            if (_stats[i].attribute == Attributes.MAX_HEALTH)
+            {
+                _stats[i].mods = Mathf.RoundToInt(_stamina / 2);
+                _stats[i].value = _stats[i].baseValue + _stats[i].mods;
+            }
+        }
     }
 
     public void CalculateHealth(List<Stat> _stats, int _stamina) 
@@ -181,7 +193,7 @@ public class GameStats : MonoBehaviour
 
                         if (Grodnar._stats[i].attribute == Attributes.STAMINA)
                         {
-                            CalculateHealth(Grodnar._stats, GetStamina(Grodnar._stats));
+                            CalculateMaxHealth(Grodnar._stats, GetStamina(Grodnar._stats));
                         }
                         else if (Grodnar._stats[i].attribute == Attributes.STRENGHT)
                         {
@@ -208,7 +220,7 @@ public class GameStats : MonoBehaviour
 
                         if (Lanstar._stats[i].attribute == Attributes.STAMINA)
                         {
-                            CalculateHealth(Lanstar._stats, GetStamina(Lanstar._stats));
+                            CalculateMaxHealth(Lanstar._stats, GetStamina(Lanstar._stats));
                         }
                         else if (Lanstar._stats[i].attribute == Attributes.STRENGHT)
                         {
@@ -235,7 +247,7 @@ public class GameStats : MonoBehaviour
 
                         if (Sigfrid._stats[i].attribute == Attributes.STAMINA)
                         {
-                            CalculateHealth(Sigfrid._stats, GetStamina(Sigfrid._stats));
+                            CalculateMaxHealth(Sigfrid._stats, GetStamina(Sigfrid._stats));
                         }
                         else if (Sigfrid._stats[i].attribute == Attributes.STRENGHT)
                         {
@@ -257,9 +269,9 @@ public class GameStats : MonoBehaviour
             Grodnar._current_xp -= Grodnar._required_xp;
             Grodnar._required_xp += 700;
             Grodnar._attribute_points += 2;
-            Debug.Log(Grodnar._level);
-            Debug.Log(Grodnar._current_xp);
-            Debug.Log(Grodnar._required_xp);
+            //Debug.Log(Grodnar._level);
+            //Debug.Log(Grodnar._current_xp);
+            //Debug.Log(Grodnar._required_xp);
         }
 
     }
@@ -275,9 +287,9 @@ public class GameStats : MonoBehaviour
             Lanstar._current_xp -= Lanstar._required_xp;
             Lanstar._required_xp += 700;
             Lanstar._attribute_points += 2;
-            Debug.Log(Lanstar._level);
-            Debug.Log(Lanstar._current_xp);
-            Debug.Log(Lanstar._required_xp);
+            //Debug.Log(Lanstar._level);
+            //Debug.Log(Lanstar._current_xp);
+            //Debug.Log(Lanstar._required_xp);
         }
 
     }
@@ -293,9 +305,9 @@ public class GameStats : MonoBehaviour
             Sigfrid._current_xp -= Sigfrid._required_xp;
             Sigfrid._required_xp += 700;
             Sigfrid._attribute_points += 2;
-            Debug.Log(Sigfrid._level);
-            Debug.Log(Sigfrid._current_xp);
-            Debug.Log(Sigfrid._required_xp);
+            //Debug.Log(Sigfrid._level);
+            //Debug.Log(Sigfrid._current_xp);
+            //Debug.Log(Sigfrid._required_xp);
         }
 
     }

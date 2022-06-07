@@ -776,7 +776,7 @@ public class InventoryManager : MonoBehaviour
         }
         usePotion.SetActive(false);
 
-        InventorySlot[] slots = InventoryManager.Instance.m_inventory.GetSlots;
+        /*InventorySlot[] slots = InventoryManager.Instance.m_inventory.GetSlots;
         for (int i = 0; i < slots.Length; i++)
         {
             if (slots[i].ItemObject.Type == ItemType.CONSUMABLE)
@@ -791,21 +791,22 @@ public class InventoryManager : MonoBehaviour
                 }
                 break;
             }
-        }
+        }*/
 
-        /*for (int i = 0; i < InventoryManager.Instance.m_inventory.GetSlots.Length; i++)
+        InventoryManager inventoryManager = InventoryManager.Instance;
+        for (int i = 0; i < inventoryManager.m_inventory.GetSlots.Length; i++)
         {
-            if (InventoryManager.Instance.m_inventory.GetSlots[i].ItemObject.Type == ItemType.CONSUMABLE) {
-                if (InventoryManager.Instance.m_inventory.GetSlots[i].Amount > 1) {
-                    InventoryManager.Instance.m_inventory.GetSlots[i].Amount--;
+            if (inventoryManager.m_inventory.GetSlots[i].ItemObject.Type == ItemType.CONSUMABLE) {
+                if (inventoryManager.m_inventory.GetSlots[i].Amount > 1) {
+                    inventoryManager.m_inventory.GetSlots[i].Amount--;
                 }
-                else if (InventoryManager.Instance.m_inventory.GetSlots[i].Amount == 1)
+                else if (inventoryManager.m_inventory.GetSlots[i].Amount == 1)
                 {
-                    InventoryManager.Instance.m_inventory.GetSlots[i].UpdateSlot(new Item(), 0);
+                    inventoryManager.m_inventory.GetSlots[i].UpdateSlot(new Item(), 0);
                 }
                 break;
             }
-        }*/
+        }
     }
 
     public void InteractableGrodnarButton(bool interactable) { equipmentButtons[2].interactable = interactable; }
